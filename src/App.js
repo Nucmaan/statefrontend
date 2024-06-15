@@ -9,10 +9,9 @@ export default function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/" element={<HomaPage />} />
-        <Route path="/login" element={<Login />} />
+       
       </Routes>
-      <Footer />
+      
     </BrowserRouter>
   );
 }
