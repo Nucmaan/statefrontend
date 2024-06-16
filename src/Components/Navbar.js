@@ -10,7 +10,7 @@ function Navbar() {
   };
 
   return (
-    <div className="h-16  shadow-md mx-auto px-4 text-black">
+    <div className="  shadow-md mx-auto px-4 text-black">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="w-full text-3xl font-bold ">Nucmaan</h1>
