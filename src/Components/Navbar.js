@@ -12,7 +12,7 @@ function Navbar() {
   };
 
   return (
-    <div className="  shadow-md mx-auto px-4 text-black">
+    <div className="  shadow-md mx-auto px-4 text-white bg-blue-600 ">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="w-full text-3xl font-bold "><Link to="/">Nucmaan</Link></h1>
@@ -43,7 +43,7 @@ function Navbar() {
         </div>
       </div>
 
-      <ul className={!navbar ? 'w-full absolute flex flex-col  justify-center items-center left-0 gap-y-2 pt-5  md:hidden' : 'hidden'}>
+      <ul className={!navbar ? 'bg-blue-900 text-white w-full absolute flex flex-col  justify-center items-center left-0 gap-y-2 pt-5  md:hidden' : 'hidden'}>
     
         <li className="w-full flex justify-center border-b border-gray-600 p-4 cursor-pointer uppercase">
         <Link to="Property">Property</Link>
