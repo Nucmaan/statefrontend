@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
 
+import logo from "../Images/MyHomeLogo.png";
+
+
 function Navbar() {
   const [navbar, setNavbar] = useState(false);
 
@@ -15,7 +18,7 @@ function Navbar() {
     <div className="  shadow-md mx-auto px-4 text-white bg-blue-600 ">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="w-full text-3xl font-bold "><Link to="/">Nucmaan</Link></h1>
+          <Link to="/"><img src={logo} alt="Logo" className="w-33 h-12" /></Link>
         </div>
 
         <div>
