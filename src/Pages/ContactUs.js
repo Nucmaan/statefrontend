@@ -17,7 +17,7 @@ function ContactUs() {
         <p className="text-2xl mb-2 pl-5">Address: 123 Main St, Mogadisho, Banadir, 252</p>
       </div>
 
-      <div className="flex flex-col items-center gap-y-5">
+      <div className="flex flex-col items-center gap-y-5 pb-5 mb-5">
         <input
           type="text"
           placeholder="Your Name"
