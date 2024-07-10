@@ -12,6 +12,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Navbar />
+    
       <Routes>
         <Route path="/" element={<Herro />} />
         <Route path="/login" element={<Login />} />
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/Contact" element={<ContactUs />} />
         <Route path="/Property" element={<PropertyList />} />
       </Routes>
+      
       <Footer />
     </BrowserRouter>
   );
