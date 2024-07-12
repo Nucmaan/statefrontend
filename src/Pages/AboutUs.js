@@ -5,13 +5,13 @@ function AboutUs() {
     <div className="mx-auto p-4">
       <h1 className="text-center font-bold text-3xl mt-3">About us</h1>
       <p className=" px-5 pt-2 text-justify leading-8">
-        Welcome to [Your Website Name], your ultimate destination for finding
+        Welcome to MyHome2U, your ultimate destination for finding
         your perfect home. Whether you're looking to rent a cozy apartment or
         buy a luxurious house, we are committed to providing a seamless and
         personalized experience tailored to your unique needs and preferences.
         Our goal is to simplify the real estate process, making it easy and
         enjoyable for you to achieve your homeownership or rental dreams. At
-        [Your Website Name], we understand that finding a home is more than just
+        MyHome2U, we understand that finding a home is more than just
         a transaction; it's about finding a place where you can create memories,
         build your future, and feel truly at home. With our extensive listings,
         user-friendly interface, and expert support, we are here to guide you
@@ -34,7 +34,7 @@ function AboutUs() {
       <h1 className="text-center font-bold text-3xl mt-2">Our Story</h1>
 
       <p className=" px-5 pt-2 text-justify leading-8">
-        [Your Website Name] was founded with the vision of revolutionizing the
+      MyHome2U was founded with the vision of revolutionizing the
         real estate market. Our team, comprised of industry veterans and tech
         enthusiasts, came together to create a platform that bridges the gap
         between technology and real estate. We understand the challenges and
@@ -45,10 +45,10 @@ function AboutUs() {
       <h1 className="text-center font-bold text-3xl mt-1">Join Us Today</h1>
 
       <p className=" px-5 pt-2 pb-2 text-justify leading-8">
-        Start your journey with [Your Website Name] and discover a world of
+        Start your journey with MyHome2U and discover a world of
         possibilities. Whether you're a first-time renter, a seasoned buyer, or
         somewhere in between, we have the resources and expertise to help you
-        every step of the way. Thank you for choosing [Your Website Name]. We
+        every step of the way. Thank you for choosing MyHome2U. We
         look forward to helping you find your perfect home.
       </p>
     </div>
