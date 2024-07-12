@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { MdLogin } from "react-icons/md";
+import { RiLoginCircleFill } from "react-icons/ri";
 
 import logo from "../Images/MyHomeLogo.png";
 
@@ -32,8 +34,8 @@ function Navbar() {
 
         <div>
           <ul className="hidden flex items-center text-center  md:flex">
-            <li className="p-4 cursor-pointer uppercase"><Link to="login">Login</Link></li>
-            <li className="p-4 cursor-pointer uppercase"><Link to="register">Register</Link></li>
+            <li className="p-4 cursor-pointer uppercase flex items-center"><MdLogin className="mr-2" size={21}/><Link to="login">Login</Link></li>
+            <li className="p-4 cursor-pointer uppercase flex items-center"><Link to="register">Register</Link><RiLoginCircleFill className="ml-2 flex items-center" size={24}/></li>
           </ul>
         </div>
 
