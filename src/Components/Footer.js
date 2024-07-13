@@ -1,33 +1,70 @@
 import React from "react";
+import logo from "../Images/MyHomeLogo.png";
+import { FaFacebook } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
+import { IoLogoYoutube } from "react-icons/io";
+import { AiFillTikTok } from "react-icons/ai";
+
+
 
 function Footer() {
   return (
-    <div className="mx-auto px-4 bg-blue-600  text-white   bottom-0 left-0 right-0  w-full">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 ">
-        <div>
-          <h1 className="mb-2 pt-2">MyHome2U</h1>
+    <div className="mx-auto bg-blue-700  text-white mt-4 ">
 
-          <p className="mb-2">Km4,Talex-Street-2671- Mogadisho-Somalia</p>
-          <p className="mb-2">Email : Info@MyHome2U.com</p>
-          <p className="mb-2">Mobile Number : 01113323658</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 p-5">
+
+        <div className="px-5">
+          <p className="uppercase mb-3">MyHome2U</p>
+
+          <div className="flex justify-between">
+          <p className="mb-2 uppercase">123 Main St, Mogadisho, Banadir,</p>
+          <p className="mb-2 uppercase">+601113323658</p>
+          </div> 
+
+          <div className="flex justify-between">
+          <p className="mb-2 uppercase">HOME</p>
+          <p className="mb-2 uppercase">PROPERTY</p>
+          </div>
+
+          <div className="flex justify-between border-b-2 border-white-600 mb-2">
+          <p className="mb-2 uppercase">contact us</p>
+          <p className="mb-2 uppercase">Aboutus</p>
+          </div>
+
+          <div className="flex justify-between">
+          <p className="mb-2 uppercase">login</p>
+          <p className="mb-2 uppercase">register</p>
+          </div>  
+         
         </div>
 
-        <div>
-          <h1 className="mb-2 pt-2">Social Media </h1>
-          <p className="mb-2">Facebook : www.facebook.com/MyHome2U</p>
-          <p className="mb-2">Tiktok : www.tiktok.com/MyHome2U</p>
-          <p className="mb-2">Instagram : www.instagram.com/MyHome2U</p>
-          <p className="mb-2">Youtube : www.youtube.com/MyHome2U</p>
-        </div>
+        <div className="border-l-2 border-white-600 ">
+          <img src={logo} alt="MyHome2U Logo" className="h-12 w-auto flex" />
+          <p className="ml-3 mt-3 uppercase font-bold mb-3">
+          Find your Dream Home Fast And Easy.
+          </p>
 
-        <div className="">
-          <h1 className="mb-2 font-bold pt-2">Links</h1>
-          <p className="mb-2 ">Home</p>
-          <p className="mb-2 ">PropertyList</p>
-          <p className="mb-2 ">Contact Us</p>
-          <p className="mb-2 ">About Us</p>
+          <button className="bg-white shadow-md text-blue-800 px-5 py-2 ml-3 font-bold ">Find Now</button>
+
         </div>
       </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 bg-blue-600 px-5 py-2">
+
+        <div className="">
+        <p className="font-bold text-2xl ">&#xa9; MyHome2U</p>
+        </div>
+
+        <div className="flex items-center">
+        <p className="uppercase ">Social Media Links</p>
+        <FaFacebook className="mx-3" size={30}/> 
+        <FaInstagram className="mx-3" size={30}/>
+        <IoLogoYoutube className="mx-3" size={30}/>
+        <AiFillTikTok className="mx-3" size={30}/>
+        </div>
+
+      </div>
+
     </div>
   );
 }
