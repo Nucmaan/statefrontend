@@ -9,18 +9,15 @@ function FeatureIn() {
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
         <div className="shadow-md rounded-md bg-white p-3 ">
           <img src={herro} alt="Herro" className="w-full object-cover " />
-
-        </div>
-
-        <div className="shadow-md rounded-md bg-white p-3 ">
-          <img src={herro} alt="Herro" className="w-full object-cover " />
-
         </div>
 
         <div className="shadow-md rounded-md bg-white p-3 ">
           <img src={herro} alt="Herro" className="w-full object-cover " />
         </div>
 
+        <div className="shadow-md rounded-md bg-white p-3 ">
+          <img src={herro} alt="Herro" className="w-full object-cover " />
+        </div>
       </div>
     </div>
   );
