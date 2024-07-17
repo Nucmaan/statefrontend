@@ -1,23 +1,28 @@
 import React from "react";
 import herro from "../Images/hormuud.png";
+import Bille from "../Images/BileMedia.png";
+import Astan from "../Images/Astan.png";
 
 function FeatureIn() {
   return (
-    <div className="mx-auto p-8   my-5">
-      <h1 className="text-center font-bold text-2xl mb-8">Featured-in</h1>
+    <div className="mx-auto p-5   mb-5">
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <div className="shadow-md rounded-md bg-white p-3 ">
+      <h1 className="text-center font-bold text-2xl ">Featured-in</h1>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 ">
+
+        <div className=" p-2 flex justify-center items-center">
           <img src={herro} alt="Herro" className="w-full object-cover " />
         </div>
 
-        <div className="shadow-md rounded-md bg-white p-3 ">
-          <img src={herro} alt="Herro" className="w-full object-cover " />
+        <div className="p-2 flex justify-center items-center ">
+          <img src={Bille} alt="Herro" className="w-full object-cover " />
         </div>
 
-        <div className="shadow-md rounded-md bg-white p-3 ">
-          <img src={herro} alt="Herro" className="w-full object-cover " />
+        <div className="p-2 flex justify-center items-center w-[50%]">
+          <img src={Astan} alt="Herro" className="" />
         </div>
+
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ function Navbar() {
   };
 
   return (
-    <div className="  shadow-md mx-auto px-4 text-white bg-blue-600 ">
+    <div className="  shadow-md mx-auto px-4 text-white bg-black ">
       <div className="flex justify-between items-center">
         <div>
           <Link to="/"><img src={logo} alt="Logo" className="w-33 h-12" /></Link>
