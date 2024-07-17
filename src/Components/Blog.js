@@ -4,7 +4,7 @@ import herro from "../Images/Herro.jpg";
 
 function Blog() {
   return (
-    <div className="mx-auto p-8  my-6">
+    <div className="mx-auto p-3  my-3">
       <h1 className="text-center font-bold text-2xl mb-5">Blog</h1>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3">

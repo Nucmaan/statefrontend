@@ -5,7 +5,7 @@ function Login() {
   return (
     <div className="mx-5">
 
-    <div className="flex flex-col justify-center mx-10 shadow-lg mt-10 p-5 rounded-md bg-gray-50">
+    <div className="flex flex-col justify-center mx-10 shadow-lg mt-10 p-5 rounded-md ">
     
     <h1 className=" font-bold text-3xl text-center">Login</h1>
 
@@ -14,7 +14,7 @@ function Login() {
           <input
             type="email"
             placeholder="Email"
-            className="border-2 border-blue-600 p-2 w-full rounded-md"
+            className="border-2 border-black p-2 w-full rounded-md"
           />
         </div>
 
@@ -22,12 +22,12 @@ function Login() {
           <input
             type="password"
             placeholder="Password"
-            className="border-2 border-blue-600 p-2 w-full rounded-md"
+            className="border-2 border-black p-2 w-full rounded-md"
           />
         </div>
 
         <div>
-          <button className="w-full bg-blue-600  mt-6 py-3 rounded-md text-white text-2xl">
+          <button className="w-full bg-black  mt-6 py-3 rounded-md text-white text-2xl">
             Login
           </button>
         </div>

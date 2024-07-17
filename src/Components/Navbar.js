@@ -48,7 +48,7 @@ function Navbar() {
         </div>
       </div>
 
-      <ul className={!navbar ? 'bg-gray-50 text-black w-full absolute flex flex-col  justify-center items-center left-0 gap-y-2 pt-5  md:hidden' : 'hidden'}>
+      <ul className={!navbar ? 'bg-white text-black w-full absolute flex flex-col  justify-center items-center left-0 gap-y-2 pt-5  md:hidden' : 'hidden'}>
     
         <li className="w-full flex justify-center border-b border-gray-600 p-4 cursor-pointer uppercase">
         <Link to="Property">Property</Link>
