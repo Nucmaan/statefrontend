@@ -9,15 +9,16 @@ import PropertyList from "./Pages/PropertyList";
 import Herro from "./Components/Herro";
 import ViewAll from "./Pages/ViewAll";
 import ViewBlog from "./Pages/ViewBlog";
+import ViewProperty from "./Pages/ViewProperty";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Navbar />
-    
+
       <Routes>
         <Route path="/" element={<Herro />} />
-        
+
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/About" element={<AboutUs />} />
@@ -25,8 +26,9 @@ export default function App() {
         <Route path="/Property" element={<PropertyList />} />
         <Route path="/ViewAll" element={<ViewAll />} />
         <Route path="/ViewBlog" element={<ViewBlog />} />
+        <Route path="/ViewSingleProperty" element={<ViewProperty />} />
       </Routes>
-      
+
       <Footer />
     </BrowserRouter>
   );
