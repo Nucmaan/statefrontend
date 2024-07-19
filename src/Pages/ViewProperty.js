@@ -4,6 +4,11 @@ import h1 from "../Images/house.jpg";
 import h2 from "../Images/house1.jpg";
 import h3 from "../Images/house2.jpg";
 
+import { Link } from "react-router-dom";
+import { MdDirectionsCar } from "react-icons/md";
+import { FaBed } from "react-icons/fa6";
+import { PiToiletDuotone } from "react-icons/pi";
+
 function ViewProperty() {
   return (
     <div>
@@ -23,6 +28,7 @@ function ViewProperty() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-[7fr_3fr] gap-2 px-4 ">
+
         <div className="">
           <div className="flex justify-between">
             <div className="flex font-bold py-3">
@@ -67,7 +73,7 @@ function ViewProperty() {
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509433!2d144.953735315316!3d-37.81627927975179!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf5775c2b0a8b9e0!2sGoogle!5e0!3m2!1sen!2sus!4v1610606531694!5m2!1sen!2sus"
                 width="100%"
-                height="450"
+                height="390"
                 allowFullScreen=""
                 loading="lazy"
                 title="Google Map"
@@ -75,7 +81,6 @@ function ViewProperty() {
             </div>
           </div>
         </div>
-
         <div className="p-2  border-2 border-black mt-2 rounded-md">
 
         <div className="p-5  bg-gray-50 text-black rounded-md">
@@ -86,7 +91,97 @@ function ViewProperty() {
         </div>
         
         </div>
+
       </div>
+      <div className="mx-auto p-2 my-9 bg-gray-50 ">
+      <h1 className=" font-bold text-2xl my-2 pl-2">Recommended Properties
+      </h1>
+
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-3 ">
+
+        <div className="shadow-md p-3 rounded-md bg-white">
+          <img src={herro} alt="Herro" className="w-full object-cover " />
+          <div className="flex justify-between mt-2 ">
+            <div>
+              <h1 className="font-bold text-2xl">$3,280</h1>
+            </div>
+            <div>
+              <button className=" px-6 py-1 font-bold bg-black text-white">
+                Rent
+              </button>
+            </div>
+          </div>
+
+          <h1 className="font-bold mb-2 ">Degmada Hodan - Mogadisho </h1>
+          <p className="mb-2 font-bold italic border-b-2 border-black pb-2">Deposite : $ 1200 </p>
+          <div className="flex justify-between mb-2 ">
+            <div className="flex  items-center">
+              <FaBed className="text-black-600" />{" "}
+              <span className="p-2"> 1 Qol</span>
+            </div>
+
+            <div className="flex  items-center">
+              <PiToiletDuotone className="text-black" />{" "}
+              <span className="p-2"> 1 Musqul</span>
+            </div>
+
+            <div className="flex  items-center">
+              <MdDirectionsCar className="text-black" />{" "}
+              <span className="p-2"> 1 Parking</span>
+            </div>
+
+            <div className="flex items-center">
+              <button className=" px-6 py-1 font-bold  border-2 border-black">
+                 <Link to="/ViewSingleProperty">View details</Link>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="shadow-md p-3 rounded-md bg-white">
+        <img src={herro} alt="Herro" className="w-full object-cover " />
+        <div className="flex justify-between mt-2 ">
+          <div>
+            <h1 className="font-bold text-2xl">$3,280</h1>
+          </div>
+          <div>
+            <button className=" px-6 py-1 font-bold bg-black text-white">
+              Rent
+            </button>
+          </div>
+        </div>
+
+        <h1 className="font-bold mb-2 ">Degmada Hodan - Mogadisho </h1>
+        <p className="mb-2 font-bold italic border-b-2 border-black pb-2">Deposite : $ 1200 </p>
+        <div className="flex justify-between mb-2 ">
+          <div className="flex  items-center">
+            <FaBed className="text-black-600" />{" "}
+            <span className="p-2"> 1 Qol</span>
+          </div>
+
+          <div className="flex  items-center">
+            <PiToiletDuotone className="text-black" />{" "}
+            <span className="p-2"> 1 Musqul</span>
+          </div>
+
+          <div className="flex  items-center">
+            <MdDirectionsCar className="text-black" />{" "}
+            <span className="p-2"> 1 Parking</span>
+          </div>
+
+          <div className="flex items-center">
+            <button className=" px-6 py-1 font-bold  border-2 border-black">
+               <Link to="/ViewSingleProperty">View details</Link>
+            </button>
+          </div>
+        </div>
+      </div>
+
+        
+
+      </div>
+
+    </div>
     </div>
   );
 }

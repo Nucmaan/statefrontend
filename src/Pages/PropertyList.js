@@ -134,8 +134,6 @@ function PropertyList() {
 
       </div>
 
-      
-
     </div>
   );
 }
