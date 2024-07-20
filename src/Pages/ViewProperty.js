@@ -17,7 +17,7 @@ function ViewProperty() {
   };
 
   const closebook = () => {
-    setBook(false); 
+    setBook(false);
   };
 
   return (
@@ -108,7 +108,6 @@ function ViewProperty() {
         </h1>
 
         <div className="grid grid-cols-1 gap-3 md:grid-cols-3 ">
-        
           <div className="shadow-md p-3 rounded-md bg-white">
             <img src={herro} alt="Herro" className="w-full object-cover " />
             <div className="flex justify-between mt-2 ">
@@ -190,49 +189,78 @@ function ViewProperty() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
-      <div className={Book ? 'fixed inset-0 p-5 bg-white opacity-70 mt-10' : 'hidden'} >
-      
-      <div className="flex justify-center items-center bg-black opacity-100  py-5 ">
+      <div
+        className={
+          Book
+            ? "fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center p-5"
+            : "hidden"
+        }
+      >
+        <div className="relative text-white bg-black p-4">
+          <button
+            className="text-white font-bold absolute top-0 right-0 pr-3 pl-3 pt-2 text-3xl"
+            onClick={closebook}
+          >
+            X
+          </button>
+    
+          <div className="max-w-lg mx-auto p-6 bg-black shadow-md rounded-lg ">
+  <p className="text-xl font-semibold mb-4 border-b pb-2">Booking Details</p>
 
-  <div className="flex  bg-red-700 px-10">
-
-  <form>
-  <div className="mt-6">
-    <input
-      type="email"
-      placeholder="Email"
-      className="border-2 border-black p-2 w-full rounded-md"
-    />
+  <div className="space-y-3">
+    <div className="flex justify-between">
+      <span className="font-medium">House Location :</span>
+      <span>Hodan</span>
+    </div>
+    <div className="flex justify-between">
+      <span className="font-medium">Price : </span>
+      <span>RM 4500</span>
+    </div>
+    <div className="flex justify-between">
+      <span className="font-medium">Deposit :</span>
+      <span>RM 500</span>
+    </div>
+    <div className="flex justify-between">
+      <span className="font-medium">Total Price :</span>
+      <span>RM 5000</span>
+    </div>
+    <div className="flex justify-between">
+      <span className="font-medium">Check-In :</span>
+      <span>10th Feb 2021</span>
+    </div>
+    <div className="flex justify-between items-center">
+      <span className="font-medium">Visit-In :</span>
+      <input type="date" id="visit-date" className="text-black p-1 border rounded-md"></input>
+    </div>
+    <div className="flex justify-between">
+      <span className="font-medium">House Type :</span>
+      <span>Apartment</span>
+    </div>
+    <div className="flex justify-between">
+      <span className="font-medium">Number of Rooms :</span>
+      <span>3</span>
+    </div>
+    <div className="flex justify-between">
+      <span className="font-medium">Amenities :</span>
+      <span>WiFi, Air Conditioning, Pool</span>
+    </div>
+    <div className="flex justify-between items-center">
+      <span className="font-medium">Special Requests :</span>
+      <textarea className="text-black p-1 border rounded-md ml-2 flex-1"></textarea>
+    </div>
+    <div className="flex justify-end">
+      <button className="bg-blue-500 text-white px-5 py-2 rounded-md hover:bg-blue-600">
+        Confirm
+      </button>
+    </div>
   </div>
+</div>
 
-  <div className="mt-6">
-    <input
-      type="password"
-      placeholder="Password"
-      className="border-2 border-black p-2 w-full rounded-md"
-    />
-  </div>
-
-  <div>
-    <button className="w-full bg-black  mt-6 py-3 rounded-md text-white text-2xl">
-      Login
-    </button>
-  </div>
-</form>
-  
-  </div>
-
-      <button className="px-5 py-2 flex flex-col my-3 bg-blue-700 mt-20 text-white" onClick={closebook}>Close</button>
-
+        </div>
       </div>
-
-      
-      </div>
-
     </div>
   );
 }
