@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import herro from "../Images/Herro.jpg";
 import h1 from "../Images/house.jpg";
 import h2 from "../Images/house1.jpg";
@@ -10,6 +10,16 @@ import { FaBed } from "react-icons/fa6";
 import { PiToiletDuotone } from "react-icons/pi";
 
 function ViewProperty() {
+  const [Book, setBook] = useState(false);
+
+  const BookNow = () => {
+    setBook(true);
+  };
+
+  const closebook = () => {
+    setBook(false); 
+  };
+
   return (
     <div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-1 p-1">
@@ -28,7 +38,6 @@ function ViewProperty() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-[7fr_3fr] gap-2 px-4 ">
-
         <div className="">
           <div className="flex justify-between">
             <div className="flex font-bold py-3">
@@ -38,7 +47,10 @@ function ViewProperty() {
               <p className="my-1  px-2">Vue Residences Titiwangsa</p>
             </div>
             <div className="pt-2">
-              <button className="bg-black text-white px-5 py-2">
+              <button
+                className="bg-black text-white px-5 py-2"
+                onClick={BookNow}
+              >
                 Book Now
               </button>
             </div>
@@ -82,106 +94,145 @@ function ViewProperty() {
           </div>
         </div>
         <div className="p-2  border-2 border-black mt-2 rounded-md">
-
-        <div className="p-5  bg-gray-50 text-black rounded-md">
-        <p className="mb-2 font-bold">To Move In</p>
-        <p className="mb-2">First Month Rental  RM : 950</p>
-        <p className="mb-2">Deposit  RM : 950</p>
-        <p className="mb-2 font-bold">Total  RM : 1,900 </p>
+          <div className="p-5  bg-gray-50 text-black rounded-md">
+            <p className="mb-2 font-bold">To Move In</p>
+            <p className="mb-2">First Month Rental RM : 950</p>
+            <p className="mb-2">Deposit RM : 950</p>
+            <p className="mb-2 font-bold">Total RM : 1,900 </p>
+          </div>
         </div>
-        
-        </div>
-
       </div>
       <div className="mx-auto p-2 my-9 bg-gray-50 ">
-      <h1 className=" font-bold text-2xl my-2 pl-2">Recommended Properties
-      </h1>
+        <h1 className=" font-bold text-2xl my-2 pl-2">
+          Recommended Properties
+        </h1>
 
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-3 ">
-
-        <div className="shadow-md p-3 rounded-md bg-white">
-          <img src={herro} alt="Herro" className="w-full object-cover " />
-          <div className="flex justify-between mt-2 ">
-            <div>
-              <h1 className="font-bold text-2xl">$3,280</h1>
-            </div>
-            <div>
-              <button className=" px-6 py-1 font-bold bg-black text-white">
-                Rent
-              </button>
-            </div>
-          </div>
-
-          <h1 className="font-bold mb-2 ">Degmada Hodan - Mogadisho </h1>
-          <p className="mb-2 font-bold italic border-b-2 border-black pb-2">Deposite : $ 1200 </p>
-          <div className="flex justify-between mb-2 ">
-            <div className="flex  items-center">
-              <FaBed className="text-black-600" />{" "}
-              <span className="p-2"> 1 Qol</span>
-            </div>
-
-            <div className="flex  items-center">
-              <PiToiletDuotone className="text-black" />{" "}
-              <span className="p-2"> 1 Musqul</span>
-            </div>
-
-            <div className="flex  items-center">
-              <MdDirectionsCar className="text-black" />{" "}
-              <span className="p-2"> 1 Parking</span>
-            </div>
-
-            <div className="flex items-center">
-              <button className=" px-6 py-1 font-bold  border-2 border-black">
-                 <Link to="/ViewSingleProperty">View details</Link>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="shadow-md p-3 rounded-md bg-white">
-        <img src={herro} alt="Herro" className="w-full object-cover " />
-        <div className="flex justify-between mt-2 ">
-          <div>
-            <h1 className="font-bold text-2xl">$3,280</h1>
-          </div>
-          <div>
-            <button className=" px-6 py-1 font-bold bg-black text-white">
-              Rent
-            </button>
-          </div>
-        </div>
-
-        <h1 className="font-bold mb-2 ">Degmada Hodan - Mogadisho </h1>
-        <p className="mb-2 font-bold italic border-b-2 border-black pb-2">Deposite : $ 1200 </p>
-        <div className="flex justify-between mb-2 ">
-          <div className="flex  items-center">
-            <FaBed className="text-black-600" />{" "}
-            <span className="p-2"> 1 Qol</span>
-          </div>
-
-          <div className="flex  items-center">
-            <PiToiletDuotone className="text-black" />{" "}
-            <span className="p-2"> 1 Musqul</span>
-          </div>
-
-          <div className="flex  items-center">
-            <MdDirectionsCar className="text-black" />{" "}
-            <span className="p-2"> 1 Parking</span>
-          </div>
-
-          <div className="flex items-center">
-            <button className=" px-6 py-1 font-bold  border-2 border-black">
-               <Link to="/ViewSingleProperty">View details</Link>
-            </button>
-          </div>
-        </div>
-      </div>
-
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-3 ">
         
+          <div className="shadow-md p-3 rounded-md bg-white">
+            <img src={herro} alt="Herro" className="w-full object-cover " />
+            <div className="flex justify-between mt-2 ">
+              <div>
+                <h1 className="font-bold text-2xl">$3,280</h1>
+              </div>
+              <div>
+                <button className=" px-6 py-1 font-bold bg-black text-white">
+                  Rent
+                </button>
+              </div>
+            </div>
+
+            <h1 className="font-bold mb-2 ">Degmada Hodan - Mogadisho </h1>
+            <p className="mb-2 font-bold italic border-b-2 border-black pb-2">
+              Deposite : $ 1200{" "}
+            </p>
+            <div className="flex justify-between mb-2 ">
+              <div className="flex  items-center">
+                <FaBed className="text-black-600" />{" "}
+                <span className="p-2"> 1 Qol</span>
+              </div>
+
+              <div className="flex  items-center">
+                <PiToiletDuotone className="text-black" />{" "}
+                <span className="p-2"> 1 Musqul</span>
+              </div>
+
+              <div className="flex  items-center">
+                <MdDirectionsCar className="text-black" />{" "}
+                <span className="p-2"> 1 Parking</span>
+              </div>
+
+              <div className="flex items-center">
+                <button className=" px-6 py-1 font-bold  border-2 border-black">
+                  <Link to="/ViewSingleProperty">View details</Link>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="shadow-md p-3 rounded-md bg-white">
+            <img src={herro} alt="Herro" className="w-full object-cover " />
+            <div className="flex justify-between mt-2 ">
+              <div>
+                <h1 className="font-bold text-2xl">$3,280</h1>
+              </div>
+              <div>
+                <button className=" px-6 py-1 font-bold bg-black text-white">
+                  Rent
+                </button>
+              </div>
+            </div>
+
+            <h1 className="font-bold mb-2 ">Degmada Hodan - Mogadisho </h1>
+            <p className="mb-2 font-bold italic border-b-2 border-black pb-2">
+              Deposite : $ 1200{" "}
+            </p>
+            <div className="flex justify-between mb-2 ">
+              <div className="flex  items-center">
+                <FaBed className="text-black-600" />{" "}
+                <span className="p-2"> 1 Qol</span>
+              </div>
+
+              <div className="flex  items-center">
+                <PiToiletDuotone className="text-black" />{" "}
+                <span className="p-2"> 1 Musqul</span>
+              </div>
+
+              <div className="flex  items-center">
+                <MdDirectionsCar className="text-black" />{" "}
+                <span className="p-2"> 1 Parking</span>
+              </div>
+
+              <div className="flex items-center">
+                <button className=" px-6 py-1 font-bold  border-2 border-black">
+                  <Link to="/ViewSingleProperty">View details</Link>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div className={Book ? 'fixed inset-0 p-5 bg-white opacity-70 mt-10' : 'hidden'} >
+      
+      <div className="flex justify-center items-center bg-black opacity-100  py-5 ">
+
+  <div className="flex  bg-red-700 px-10">
+
+  <form>
+  <div className="mt-6">
+    <input
+      type="email"
+      placeholder="Email"
+      className="border-2 border-black p-2 w-full rounded-md"
+    />
+  </div>
+
+  <div className="mt-6">
+    <input
+      type="password"
+      placeholder="Password"
+      className="border-2 border-black p-2 w-full rounded-md"
+    />
+  </div>
+
+  <div>
+    <button className="w-full bg-black  mt-6 py-3 rounded-md text-white text-2xl">
+      Login
+    </button>
+  </div>
+</form>
+  
+  </div>
+
+      <button className="px-5 py-2 flex flex-col my-3 bg-blue-700 mt-20 text-white" onClick={closebook}>Close</button>
 
       </div>
 
-    </div>
+      
+      </div>
+
     </div>
   );
 }
