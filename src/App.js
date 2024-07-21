@@ -10,6 +10,10 @@ import Herro from "./Components/Herro";
 import ViewAll from "./Pages/ViewAll";
 import ViewBlog from "./Pages/ViewBlog";
 import ViewProperty from "./Pages/ViewProperty";
+import UserDashboard from "./Renter/UserDashboard";
+import Booking from "./Renter/Booking";
+import Profile from "./Renter/Profile";
+import Welcome from "./Renter/Welcome";
 
 export default function App() {
   return (
@@ -27,6 +31,14 @@ export default function App() {
         <Route path="/ViewAll" element={<ViewAll />} />
         <Route path="/ViewBlog" element={<ViewBlog />} />
         <Route path="/ViewSingleProperty" element={<ViewProperty />} />
+
+        <Route path="/UserDashboard" element={<UserDashboard />} />
+
+        <Route path="/Booking" element={<Booking />} />
+        <Route path="/Profile" element={<Profile />} />
+        <Route path="/WelcomeUser" element={<Welcome />} />
+        
+
       </Routes>
 
       <Footer />
