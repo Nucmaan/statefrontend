@@ -3,9 +3,9 @@ import React from "react";
 
 function Login() {
   return (
-    <div className="mx-5">
+    <div className="mx-5 ">
 
-    <div className="flex flex-col justify-center mx-10 shadow-lg mt-10 p-5 rounded-md ">
+    <div className="flex flex-col justify-center mx-10 shadow-lg mt-7 p-5 rounded-md ">
     
     <h1 className=" font-bold text-3xl text-center">Login</h1>
 

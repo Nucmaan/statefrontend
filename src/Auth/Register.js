@@ -3,8 +3,8 @@ import React from "react";
 
 function Register() {
   return (
-    <div className="mx-5">
-      <div className="flex flex-col justify-center mx-10 shadow-lg mt-10 px-5 rounded-md mb-10 ">
+    <div className="mx-5 ">
+      <div className="flex flex-col justify-center mx-10 shadow-lg mt-10 px-5 rounded-md mb-10 mt-5">
         <h1 className=" font-bold text-3xl text-center pt-3">Create Account</h1>
 
         <form>

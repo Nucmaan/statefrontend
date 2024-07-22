@@ -1,9 +1,9 @@
-import React from "react";
-import SideBar from "./SideBar";
+import React from 'react'
+import SideBar from './SideBar'
 
-function Booking() {
+function Bills() {
   return (
-
+    
     <div className="grid grid-cols-[1fr_3fr] md:grid-cols-[1fr_10fr]  text-white   ">
 
     <div className=" ">
@@ -19,7 +19,7 @@ function Booking() {
 
   </div>
 
-  );
+  )
 }
 
-export default Booking;
+export default Bills

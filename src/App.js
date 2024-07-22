@@ -14,6 +14,7 @@ import UserDashboard from "./Renter/UserDashboard";
 import Booking from "./Renter/Booking";
 import Profile from "./Renter/Profile";
 import Welcome from "./Renter/Welcome";
+import Bills from "./Renter/Bills";
 
 export default function App() {
   return (
@@ -37,6 +38,7 @@ export default function App() {
         <Route path="/Booking" element={<Booking />} />
         <Route path="/Profile" element={<Profile />} />
         <Route path="/WelcomeUser" element={<Welcome />} />
+        <Route path="/Bills" element={<Bills />} />
         
 
       </Routes>

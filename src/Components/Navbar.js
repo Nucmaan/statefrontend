@@ -16,7 +16,9 @@ function Navbar() {
   };
 
   return (
-    <div className="  shadow-md mx-auto px-4 text-white bg-black fixed top-0 left-0 right-0 ">
+
+    <div className="shadow-md mx-auto px-4 text-white bg-black sticky top-0 left-0 right-0 ">
+
       <div className="flex justify-between items-center">
         <div>
           <Link to="/">

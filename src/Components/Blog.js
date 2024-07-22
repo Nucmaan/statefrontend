@@ -4,12 +4,12 @@ import herro from "../Images/Herro.jpg";
 
 function Blog() {
   return (
-    <div className="mx-auto p-3  my-3">
-      <h1 className="text-center font-bold text-2xl mb-5">Blog</h1>
+    <div className="mx-auto py-5  px-5  ">
+      <h1 className="text-center font-bold text-2xl mb-3">Blog</h1>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
         <Link to="/ViewBlog">
-          <div className="shadow-md rounded-md bg-white p-1 hover:bg-black hover:text-white">
+          <div className="shadow-md rounded-md bg-white   ">
             <img src={herro} alt="Herro" className="w-full object-cover " />
 
             <h1 className=" mb-2 mt-2 px-2  text-2xl">
@@ -20,7 +20,7 @@ function Blog() {
         </Link>
 
         <Link to="/ViewBlog">
-          <div className="shadow-md rounded-md bg-white p-1 hover:bg-black hover:text-white">
+          <div className="shadow-md rounded-md bg-white  ">
             <img src={herro} alt="Herro" className="w-full object-cover " />
 
             <h1 className=" mb-2 mt-2 px-2  text-2xl">
@@ -31,7 +31,7 @@ function Blog() {
         </Link>
 
         <Link to="/ViewBlog">
-          <div className="shadow-md rounded-md bg-white p-1 hover:bg-black hover:text-white">
+          <div className="shadow-md rounded-md bg-white ">
             <img src={herro} alt="Herro" className="w-full object-cover " />
 
             <h1 className=" mb-2 mt-2 px-2  text-2xl">

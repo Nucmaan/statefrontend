@@ -9,7 +9,7 @@ import { AiFillTikTok } from "react-icons/ai";
 
 function Footer() {
   return (
-    <div className="mx-auto bg-black  text-white mt-4 ">
+    <div className="mx-auto bg-black  text-white mt-1 static left-0 bottom-0 w-full">
 
       <div className="grid grid-cols-1 md:grid-cols-2 p-5">
 
