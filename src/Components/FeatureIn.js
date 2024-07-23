@@ -5,9 +5,9 @@ import Astan from "../Images/Astan.png";
 
 function FeatureIn() {
   return (
-    <div className="mx-auto shadow-sm py-5  bg-gray-50">
+    <div className="mx-auto shadow-sm px-5 pt-3 pb-10  bg-gray-50">
 
-      <h1 className="text-center font-bold text-2xl mb-5">Featured-in</h1>
+      <h1 className="text-center font-bold text-2xl mb-3">Featured-in</h1>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5 px-5">
 

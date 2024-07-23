@@ -4,11 +4,20 @@ import herro from "../Images/Herro.jpg";
 import { MdDirectionsCar } from "react-icons/md";
 import { FaBed } from "react-icons/fa6";
 import { PiToiletDuotone } from "react-icons/pi";
+import { CiSearch } from "react-icons/ci";
 
 function Rent() {
   return (
     <div className="mx-auto p-3">
-    <h1 className="text-center font-bold text-2xl mb-1">Rent Houses</h1>
+    
+    <div className="flex border-2 border-black rounded-md overflow-hidden">
+    <input
+      type="text"
+      placeholder="Type in Area / city Name"
+      className="w-full p-2 border-r-2 border-black focus:outline-none focus:border-black"
+    />
+    <CiSearch className="p-2 text-black  cursor-pointer" size={60} />
+  </div>
 
     <div className="grid grid-cols-1 gap-3 md:grid-cols-3 ">
 

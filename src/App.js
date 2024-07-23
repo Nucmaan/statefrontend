@@ -6,7 +6,6 @@ import Register from "./Auth/Register";
 import AboutUs from "./Pages/AboutUs";
 import ContactUs from "./Pages/ContactUs";
 import PropertyList from "./Pages/PropertyList";
-import Herro from "./Components/Herro";
 import ViewAll from "./Pages/ViewAll";
 import ViewBlog from "./Pages/ViewBlog";
 import ViewProperty from "./Pages/ViewProperty";
@@ -17,6 +16,7 @@ import Welcome from "./Renter/Welcome";
 import Bills from "./Renter/Bills";
 import Rent from "./Pages/Rent";
 import Buy from "./Pages/Buy";
+import SinglePage from "./Pages/SinglePage";
 
 export default function App() {
   return (
@@ -24,7 +24,7 @@ export default function App() {
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<Herro />} />
+        <Route path="/" element={<SinglePage />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -43,8 +43,6 @@ export default function App() {
         <Route path="/Profile" element={<Profile />} />
         <Route path="/WelcomeUser" element={<Welcome />} />
         <Route path="/Bills" element={<Bills />} />
-        
-
       </Routes>
 
       <Footer />

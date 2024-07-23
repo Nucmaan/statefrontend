@@ -1,46 +1,26 @@
 import React from "react";
 import herro from "../Images/HerroImage.png";
-import Blog from "./Blog";
-import FeatureIn from "./FeatureIn";
-import { MdHomeWork } from "react-icons/md";
-import { FaUsers } from "react-icons/fa";
-import { FaBuildingShield } from "react-icons/fa6";
-import WhyUs from "../Pages/WhyUs";
-import Search from "../Pages/Search";
+import { Link } from "react-router-dom";
 
 function Herro() {
   return (
-    <div className="">
-      <div className="mx-auto p-3 grid grid-cols-1 md:grid-cols-2 pt-2 pr-2 mb-14 ">
+    <div className="py-8 px-5 bg-gray-50">
+      <div className="mx-auto  grid grid-cols-1 md:grid-cols-2 ">
+        <div className="flex flex-col px-5 mt-5">
+          <div>
+            <h1 className="text-black font-bold text-3xl lg:text-6xl">
+              Find your next <span className="text-black">perfect</span>
+              <br />
+              place with ease
+            </h1>
+          </div>
 
-        <div className="flex flex-col items-center md:pt-3">
-          <p className="mb-3 text-2xl font-bold">Welcome To Our Website</p>
-          <h2 className="mb-2 text-2xl font-semibold">
-            Find Your Dream Home Easy And Faster.
-          </h2>
-          <button className="bg-black text-white px-3 py-1 rounded-md text-2xl hover:bg-black-500 mt-4">
-            Find Now
-          </button>
-
-          <div className="grid grid-cols-3 gap-5 md:grid-cols-3 mt-8 mb-4">
-            <div className="flex flex-col justify-center items-center">
-              <FaBuildingShield size={80} />
-              <h1 className="text-3xl mt-2 mb-1">8500+</h1>
-              <p className="font-bold">Complete Property</p>
-            </div>
-
-            <div className="flex flex-col justify-center items-center">
-              <MdHomeWork size={80} />
-              <h1 className="text-3xl mt-2 mb-1">8500+</h1>
-              <p className="font-bold">Property Sales</p>
-            </div>
-
-            <div className="flex flex-col justify-center items-center">
-              <FaUsers size={80} />
-              <h1 className="text-3xl mt-2 mb-1">2500+</h1>{" "}
-              {/* Corrected this line */}
-              <p className="font-bold">Happy Clients</p>
-            </div>
+          <div className="my-4 text-gray-400 text-xs sm:text-2xl leading-6 md:leading-8 md:text-2xl md:text-justify">
+            MyHome2U is the best place to find your next perfect place to live.
+            We have a wide range of properties for you to choose from.
+          </div>
+          <div className="mb-4 md:">
+            <button className="bg-black px-7 py-2 text-2xl text-white"><Link to="/Rent">Find Now</Link> </button>
           </div>
         </div>
 
@@ -51,13 +31,7 @@ function Herro() {
             className="w-full max-h-96 object-cover rounded-md"
           />
         </div>
-
       </div>
-
-      <WhyUs />
-      <Search />
-      <FeatureIn />
-      <Blog />
     </div>
   );
 }
