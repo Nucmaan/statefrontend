@@ -15,6 +15,8 @@ import Booking from "./Renter/Booking";
 import Profile from "./Renter/Profile";
 import Welcome from "./Renter/Welcome";
 import Bills from "./Renter/Bills";
+import Rent from "./Pages/Rent";
+import Buy from "./Pages/Buy";
 
 export default function App() {
   return (
@@ -29,6 +31,8 @@ export default function App() {
         <Route path="/About" element={<AboutUs />} />
         <Route path="/Contact" element={<ContactUs />} />
         <Route path="/Property" element={<PropertyList />} />
+        <Route path="/Rent" element={<Rent />} />
+        <Route path="/Buy" element={<Buy />} />
         <Route path="/ViewAll" element={<ViewAll />} />
         <Route path="/ViewBlog" element={<ViewBlog />} />
         <Route path="/ViewSingleProperty" element={<ViewProperty />} />

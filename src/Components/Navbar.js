@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { MdLogin } from "react-icons/md";
-import { RiLoginCircleFill } from "react-icons/ri";
+
 
 import logo from "../Images/MyHomeLogo.png";
 
@@ -32,7 +31,10 @@ function Navbar() {
               <Link to="/">Home</Link>{" "}
             </li>
             <li className="p-4 cursor-pointer  uppercase">
-              <Link to="Property">Property</Link>
+              <Link to="Rent">Rent</Link>
+            </li>
+            <li className="p-4 cursor-pointer  uppercase">
+              <Link to="Buy">Buy</Link>
             </li>
             <li className="p-4 cursor-pointer uppercase">
               <Link to="About">About Us</Link>
@@ -46,12 +48,12 @@ function Navbar() {
         <div>
           <ul className="hidden flex items-center text-center  md:flex">
             <li className="p-4 cursor-pointer uppercase flex items-center">
-              <MdLogin className="mr-2" size={21} />
+             
               <Link to="login">Login</Link>
             </li>
             <li className="p-4 cursor-pointer uppercase flex items-center">
               <Link to="register">Register</Link>
-              <RiLoginCircleFill className="ml-2 flex items-center" size={24} />
+              
             </li>
           </ul>
         </div>
@@ -73,7 +75,10 @@ function Navbar() {
         }
       >
         <li className="w-full flex justify-center border-b border-gray-600 p-4 cursor-pointer uppercase">
-          <Link to="Property">Property</Link>
+          <Link to="Rent">Rent</Link>
+        </li>
+        <li className="w-full flex justify-center border-b border-gray-600 p-4 cursor-pointer uppercase">
+          <Link to="Buy">Buy</Link>
         </li>
         <li className="w-full flex justify-center border-b border-gray-600  p-4 cursor-pointer uppercase">
           <Link to="About">About Us</Link>
@@ -91,6 +96,7 @@ function Navbar() {
         </div>
       </ul>
     </div>
+
   );
 }
 

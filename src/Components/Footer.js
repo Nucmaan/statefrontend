@@ -4,66 +4,93 @@ import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { IoLogoYoutube } from "react-icons/io";
 import { AiFillTikTok } from "react-icons/ai";
-
-
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <div className="mx-auto bg-black  text-white mt-1 static left-0 bottom-0 w-full">
+    <div className="mx-auto bg-black  text-white  static left-0 bottom-0 w-full py-5 px-5 border-t-2 border-white">
 
-      <div className="grid grid-cols-1 md:grid-cols-2 p-5">
-
-        <div className="px-5">
-          <p className="uppercase mb-3">MyHome2U</p>
-
-          <div className="flex justify-between">
-          <p className="mb-2 uppercase">123 Main St, Mogadisho, Banadir,</p>
-          <p className="mb-2 uppercase">+601113323658</p>
-          </div> 
-
-          <div className="flex justify-between">
-          <p className="mb-2 uppercase">HOME</p>
-          <p className="mb-2 uppercase">PROPERTY</p>
-          </div>
-
-          <div className="flex justify-between border-b-2 border-white-600 mb-2">
-          <p className="mb-2 uppercase">contact us</p>
-          <p className="mb-2 uppercase">Aboutus</p>
-          </div>
-
-          <div className="flex justify-between">
-          <p className="mb-2 uppercase">login</p>
-          <p className="mb-2 uppercase">register</p>
-          </div>  
-         
-        </div>
-
-        <div className="border-l-2 border-white-600 ">
-          <img src={logo} alt="MyHome2U Logo" className="h-12 w-auto flex" />
-          <p className="ml-3 mt-3 uppercase font-bold mb-3">
-          Find your Dream Home Fast And Easy.
-          </p>
-
-          <button className="bg-white shadow-md text-black px-5 py-2 ml-3 font-bold ">Find Now</button>
-
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 bg-black text-white px-5 py-2">
+      <div className="grid grid-cols-2 md:grid-cols-2 border-b-2 border-white  pb-2">
 
         <div className="">
-        <p className="font-bold text-2xl ">&#xa9; MyHome2U</p>
+          <img src={logo} alt="MyHome Logo" className="w-[240px]" />
         </div>
 
-        <div className="flex items-center">
-        <p className="uppercase ">Social Media Links</p>
-        <FaFacebook className="mx-3" size={30}/> 
-        <FaInstagram className="mx-3" size={30}/>
-        <IoLogoYoutube className="mx-3" size={30}/>
-        <AiFillTikTok className="mx-3" size={30}/>
+        <div className="grid grid-cols-3 md:grid-cols-3 ">
+        
+          <div className="flex flex-col ">
+            <h1 className="  md:text-2xl font-bold uppercase mb-2">Links</h1>
+
+            <Link to="/" className="text-white hover:text-gray-500 pl-2 mb-2">
+              Home
+            </Link>
+            <Link to="/blog" className="text-white hover:text-gray-500 pl-2 mb-2">
+              Rent
+            </Link>
+            <Link to="/blog" className="text-white hover:text-gray-500 pl-2 mb-2">
+              Buy
+            </Link>
+            <Link to="/About" className="text-white hover:text-gray-500 pl-2 mb-2">
+              About
+            </Link>
+            <Link to="/Contact" className="text-white hover:text-gray-500 pl-2 mb-2">
+              Contact
+            </Link>
+          </div>
+
+          <div className="flex flex-col ">
+            <h1 className=" md:text-2xl font-bold uppercase mb-2">FollowUs</h1>
+
+            <Link to="/" className="text-white hover:text-gray-500 pl-2 mb-2">
+              Facebook
+            </Link>
+            <Link to="/blog" className="text-white hover:text-gray-500 pl-2 mb-2">
+              Instagram
+            </Link>
+            <Link to="/blog" className="text-white hover:text-gray-500 pl-2 mb-2">
+              TikTok
+            </Link>
+          
+          </div>
+
+          <div className="flex flex-col ml-5 md:ml-1 ">
+            <h1 className=" md:text-2xl font-bold uppercase mb-2">Legal</h1>
+
+            <Link to="/" className="text-white hover:text-gray-500 pl-2 mb-2">
+              Privacy Policy
+            </Link>
+            <Link to="/blog" className="text-white hover:text-gray-500 pl-2 mb-2">
+              Terms & Conditions
+            </Link>
+          </div>
+
         </div>
 
       </div>
+
+      <div className="flex  justify-between items-center text-white text-sm py-2">
+
+        &copy; 2024 MyHome2U. All rights reserved.
+
+
+        <div className="flex  justify-center items-center text-white text-sm py-2">
+        <Link to="/" className="px-2">
+          <FaFacebook size={30} />
+        </Link>
+        <Link to="/" className="px-2">
+          <FaInstagram size={30} />
+        </Link>
+        <Link to="/" className="px-2">
+          <IoLogoYoutube size={30} />
+        </Link>
+        <Link to="/" className="px-2">
+          <AiFillTikTok size={30} />
+        </Link>
+      </div>
+
+      </div>
+
+    
 
     </div>
   );
