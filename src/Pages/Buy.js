@@ -9,15 +9,21 @@ import { CiSearch } from "react-icons/ci";
 
 function Buy() {
   return (
-    <div className="mx-auto p-3">
-    <div className="flex border-2 border-black rounded-md overflow-hidden">
+    
+    <div className="mx-auto p-2">
+
+    <div className="flex border-2 border-black rounded-md overflow-hidden sticky left-0 right-0 top-14 bg-white ">
+    <select className="p-2 border-r-2 border-black focus:outline-none focus:border-black bg-white text-black">
+          <option className="bg-white text-black  ">BUY</option>
+          <option className="bg-white text-black">RENT</option>
+        </select>
     <input
       type="text"
       placeholder="Type in Area / city Name"
       className="w-full p-2 border-r-2 border-black focus:outline-none focus:border-black"
     />
     <CiSearch className="p-2 text-black  cursor-pointer" size={60} />
-  </div>
+    </div>
 
     <div className="grid grid-cols-1 gap-3 md:grid-cols-3 pt-2">
 
