@@ -18,8 +18,8 @@ function EditProfile() {
 
       <div className="border-t-2 border-black">
 
-      <div className="relative">
-      <div className="absolute top-28 right-3">
+      <div className="relative ">
+      <div className="absolute top-28 right-3 z-10">
         <Link to="/Profile">
           <button className="px-6 py-2 z-0 bg-black hover:bg-black text-white rounded-md text-lg md:text-2xl transition duration-300">
         SAVE

@@ -12,7 +12,7 @@ function Navbar() {
   };
 
   return (
-    <div className="shadow-md mx-auto px-4 text-white bg-black sticky top-0 left-0 right-0">
+    <div className="shadow-md mx-auto px-4 text-white bg-black sticky top-0 left-0 right-0 z-50">
       <div className="flex justify-between items-center py-2">
         <div>
           <Link to="/">

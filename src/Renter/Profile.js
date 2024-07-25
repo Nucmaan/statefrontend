@@ -14,7 +14,7 @@ function Profile() {
           Profile Information
         </h1>
         <div className="relative">
-          <div className="absolute top-14 right-3">
+          <div className="absolute top-14 right-3 z-10">
             <Link to="/EditProfile">
               <button className="px-6 py-2 z-0 bg-green-700 hover:bg-green-800 text-white rounded-md text-lg md:text-2xl transition duration-300">
             EDIT
