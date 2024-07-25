@@ -4,6 +4,8 @@ import { IoBookmarksOutline } from "react-icons/io5";
 import { FaRegMoneyBill1 } from "react-icons/fa6";
 import { CiLogin } from "react-icons/ci";
 import { MdDashboard } from "react-icons/md";
+import { RiSecurePaymentFill } from "react-icons/ri";
+
 
 import { Link } from "react-router-dom";
 
@@ -34,9 +36,16 @@ function SideBar() {
       <Link to="/Bills">
         <div className="flex flex-col justify-center items-center mb-2 ">
           <FaRegMoneyBill1 size={30} className="text-white " />
-          <p className="text-white font-bold mt-2  mb-2">Bills</p>
+          <p className="text-white font-bold mt-2  mb-2">Billing</p>
         </div>
       </Link>
+
+      <Link to="/Payment">
+      <div className="flex flex-col justify-center items-center mb-2 ">
+        <RiSecurePaymentFill size={30} className="text-white " />
+        <p className="text-white font-bold mt-2  mb-2">Payment</p>
+      </div>
+    </Link>
 
       <Link to="/">
         <div className="flex flex-col justify-center items-center mb-2 ">

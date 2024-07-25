@@ -17,6 +17,8 @@ import Bills from "./Renter/Bills";
 import Rent from "./Pages/Rent";
 import Buy from "./Pages/Buy";
 import SinglePage from "./Pages/SinglePage";
+import EditProfile from "./Renter/EditProfile";
+import Payment from "./Renter/Payment";
 
 export default function App() {
   return (
@@ -41,8 +43,10 @@ export default function App() {
 
         <Route path="/Booking" element={<Booking />} />
         <Route path="/Profile" element={<Profile />} />
+        <Route path="/EditProfile" element={<EditProfile />} />
         <Route path="/WelcomeUser" element={<Welcome />} />
         <Route path="/Bills" element={<Bills />} />
+        <Route path="/Payment" element={<Payment />} />
       </Routes>
 
       <Footer />

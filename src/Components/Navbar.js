@@ -52,7 +52,11 @@ function Navbar() {
         </div>
 
         <div className="md:hidden flex items-center" onClick={handlenav}>
-          {navbar ? <AiOutlineClose size={30} className="text-white" /> : <GiHamburgerMenu size={30} className="text-white" />}
+          {navbar ? (
+            <AiOutlineClose size={30} className="text-white" />
+          ) : (
+            <GiHamburgerMenu size={30} className="text-white" />
+          )}
         </div>
       </div>
 
