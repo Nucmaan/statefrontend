@@ -38,8 +38,6 @@ export default function App() {
         <Route path="/ViewBlog" element={<ViewBlog />} />
         <Route path="/ViewSingleProperty" element={<ViewProperty />} />
 
-      
-
         <Route path="/Booking" element={<Booking />} />
         <Route path="/Profile" element={<Profile />} />
         <Route path="/EditProfile" element={<EditProfile />} />

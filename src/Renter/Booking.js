@@ -3,7 +3,7 @@ import SideBar from "./SideBar";
 
 function Booking() {
   return (
-    <div className="sm:grid grid-cols-1 md:grid-cols-[1fr_10fr]">
+    <div className="sm:grid grid-cols-1 md:grid-cols-[1fr_10fr] min-h-screen">
       <div className="bg-black text-white">
         <SideBar />
       </div>
@@ -14,7 +14,7 @@ function Booking() {
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
             <thead className="bg-black text-white">
-              <tr>
+              <tr className="">
                 <th className="py-2 px-4 text-left text-sm sm:text-base">House Address/Location</th>
                 <th className="py-2 px-4 text-left text-sm sm:text-base">House Type</th>
                 <th className="py-2 px-4 text-left text-sm sm:text-base">No. Rooms</th>

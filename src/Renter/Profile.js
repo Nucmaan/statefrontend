@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 
 function Profile() {
   return (
-    <div className="grid grid-cols-[1fr_3fr] md:grid-cols-[1fr_10fr] text-white bg-gray-50">
-      <div>
+    <div className="grid grid-cols-[1fr_3fr] md:grid-cols-[1fr_10fr] text-white bg-gray-50 min-h-screen">
+      <div className="bg-black">
         <SideBar />
       </div>
       <div className="pl-5 text-black">
