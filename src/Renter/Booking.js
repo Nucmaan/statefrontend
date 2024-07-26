@@ -15,7 +15,7 @@ function Booking() {
           <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
             <thead className="bg-black text-white">
               <tr>
-                <th className="py-2 px-4 text-left text-sm sm:text-base">House Location</th>
+                <th className="py-2 px-4 text-left text-sm sm:text-base">House Address/Location</th>
                 <th className="py-2 px-4 text-left text-sm sm:text-base">House Type</th>
                 <th className="py-2 px-4 text-left text-sm sm:text-base">No. Rooms</th>
                 <th className="py-2 px-4 text-left text-sm sm:text-base">Price</th>
@@ -23,6 +23,7 @@ function Booking() {
                 <th className="py-2 px-4 text-left text-sm sm:text-base">Check-in Date</th>
                 <th className="py-2 px-4 text-left text-sm sm:text-base">Visiting Date</th>
                 <th className="py-2 px-4 text-left text-sm sm:text-base">Status</th>
+                <th className="py-2 px-4 text-left text-sm sm:text-base">Contract</th>
                 <th className="py-2 px-4 text-left text-sm sm:text-base">Action</th>
               </tr>
             </thead>
@@ -36,6 +37,7 @@ function Booking() {
                 <td className="py-2 px-4 text-sm sm:text-base">12/7/2024</td>
                 <td className="py-2 px-4 text-sm sm:text-base">12/8/2024</td>
                 <td className="py-2 px-4 text-sm sm:text-base">Pending</td>
+                <td className="py-2 px-4 text-sm sm:text-base">Not Signed</td>
                 <td className="py-2 px-4 text-sm sm:text-base">
                   <button className="bg-red-500 text-white py-1 px-3 rounded-md hover:bg-red-600 transition duration-300">
                     Cancel

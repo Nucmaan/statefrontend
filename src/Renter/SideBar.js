@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 function SideBar() {
   return (
     <div className="pt-1 flex flex-col  bg-black border-t-2 border-white ">
-      <Link to="/WelcomeUser">
+      <Link to="/Dashboard">
         <div className="flex flex-col justify-center items-center mb-2 mt-2">
           <MdDashboard size={30} className="text-white " />
           <p className="text-white font-bold mt-2 mb-2">Dashboard</p>

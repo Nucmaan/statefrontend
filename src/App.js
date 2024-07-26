@@ -12,7 +12,6 @@ import ViewProperty from "./Pages/ViewProperty";
 import UserDashboard from "./Renter/UserDashboard";
 import Booking from "./Renter/Booking";
 import Profile from "./Renter/Profile";
-import Welcome from "./Renter/Welcome";
 import Bills from "./Renter/Bills";
 import Rent from "./Pages/Rent";
 import Buy from "./Pages/Buy";
@@ -39,12 +38,12 @@ export default function App() {
         <Route path="/ViewBlog" element={<ViewBlog />} />
         <Route path="/ViewSingleProperty" element={<ViewProperty />} />
 
-        <Route path="/UserDashboard" element={<UserDashboard />} />
+      
 
         <Route path="/Booking" element={<Booking />} />
         <Route path="/Profile" element={<Profile />} />
         <Route path="/EditProfile" element={<EditProfile />} />
-        <Route path="/WelcomeUser" element={<Welcome />} />
+        <Route path="/Dashboard" element={<UserDashboard />} />
         <Route path="/Bills" element={<Bills />} />
         <Route path="/Payment" element={<Payment />} />
       </Routes>
