@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { FaUserCircle } from "react-icons/fa";
 import logo from "../Images/MyHomeLogo.png";
+import IstarProfileImage from "../Images/IstarProfileImage.jpg";
 
 function Navbar() {
   const [navbar, setNavbar] = useState(false);
@@ -50,8 +50,15 @@ function Navbar() {
         <div>
           {isLogin ? (
             <div className="relative">
-              <div className="p-4 cursor-pointer uppercase flex items-center hover:text-gray-400" onClick={handleDropdown}>
-                <FaUserCircle size={30} />
+              <div
+                className="p-4 cursor-pointer uppercase flex items-center hover:text-gray-400"
+                onClick={handleDropdown}
+              >
+                <img
+                  src={IstarProfileImage}
+                  alt="Profile"
+                  className="w-10 h-10 rounded-full object-cover"
+                />
               </div>
               {dropdown && (
                 <ul className="absolute right-0 mt-2 w-48 bg-white text-black shadow-lg rounded-lg overflow-hidden z-20">

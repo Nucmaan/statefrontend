@@ -3,18 +3,17 @@ import SideBar from "./SideBar";
 
 function Payment() {
   return (
-    <div className="grid grid-cols-[1fr_3fr] md:grid-cols-[1fr_10fr] min-h-screen text-white">
+    <div className="grid grid-cols-1 md:grid-cols-[1fr_10fr] min-h-screen text-white">
 
       <div className="bg-black">
         <SideBar />
       </div>
-
-      <div className="p3 md:p-5 bg-white">
-
+      
+      <div className="p-3 md:p-5 bg-white">
         <h1 className="text-center text-xl md:text-2xl text-black font-bold mb-4">Here Is Your Payment Details</h1>
         
         <div className="overflow-x-auto">
-          <table className="min-w-full border-collapse">
+          <table className="min-w-full table-auto">
             <thead className="bg-black text-white">
               <tr>
                 <th className="p-2 border">Ref No</th>
@@ -43,7 +42,6 @@ function Payment() {
             </tbody>
           </table>
         </div>
-        
       </div>
 
     </div>
