@@ -9,8 +9,10 @@ function Payment() {
         <SideBar />
       </div>
 
-      <div className="p-4 md:p-5 bg-white">
+      <div className="p3 md:p-5 bg-white">
+
         <h1 className="text-center text-xl md:text-2xl text-black font-bold mb-4">Here Is Your Payment Details</h1>
+        
         <div className="overflow-x-auto">
           <table className="min-w-full border-collapse">
             <thead className="bg-black text-white">
@@ -41,6 +43,7 @@ function Payment() {
             </tbody>
           </table>
         </div>
+        
       </div>
 
     </div>
