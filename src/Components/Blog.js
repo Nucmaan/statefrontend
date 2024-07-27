@@ -4,8 +4,8 @@ import herro from "../Images/Herro.jpg";
 
 function Blog() {
   return (
-    <div className="mx-auto py-5  px-5  ">
-      <h1 className="text-center font-bold text-2xl mb-3">Blog</h1>
+    <div className="mx-auto py-7  px-10  ">
+      <h1 className="text-center font-bold text-2xl mb-5">Blog</h1>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
         <Link to="/ViewBlog">
