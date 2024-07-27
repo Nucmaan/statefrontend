@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
 import logo from "../Images/MyHomeLogo.png";
@@ -9,6 +9,7 @@ function Navbar() {
   const [navbar, setNavbar] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [dropdown, setDropdown] = useState(false);
+  const dropdownRef = useRef(null);
 
   const handleNav = () => {
     setNavbar(!navbar);
@@ -17,6 +18,19 @@ function Navbar() {
   const handleDropdown = () => {
     setDropdown(!dropdown);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
 
   return (
     <div className="shadow-md mx-auto px-4 text-white bg-black sticky top-0 left-0 right-0 z-50">
@@ -61,7 +75,10 @@ function Navbar() {
                 />
               </div>
               {dropdown && (
-                <ul className="absolute right-0 mt-2 w-48 bg-white text-black shadow-lg rounded-lg overflow-hidden z-20">
+                <ul
+                  className="absolute right-0 mt-2 w-48 border-l-2 border-r-2 border-b-2 shadow-md border-black bg-white text-black overflow-hidden z-20"
+                  ref={dropdownRef}
+                >
                   <li className="p-2 hover:bg-gray-200">
                     <Link to="/Dashboard">Dashboard</Link>
                   </li>
@@ -69,7 +86,9 @@ function Navbar() {
                     <Link to="/Profile">Profile</Link>
                   </li>
                   <li className="p-2 hover:bg-gray-200">
-                    <Link to="/" onClick={() => setIsLogin(false)}>Logout</Link>
+                    <Link to="/" onClick={() => setIsLogin(false)}>
+                      Logout
+                    </Link>
                   </li>
                 </ul>
               )}
