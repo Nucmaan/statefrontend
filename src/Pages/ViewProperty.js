@@ -1,16 +1,17 @@
-import React, { useState } from "react";
-import herro from "../Images/Herro.jpg";
-import h1 from "../Images/house.jpg";
-import h2 from "../Images/house1.jpg";
-import h3 from "../Images/house2.jpg";
-
-import { Link } from "react-router-dom";
-import { MdDirectionsCar } from "react-icons/md";
-import { FaBed } from "react-icons/fa6";
-import { PiToiletDuotone } from "react-icons/pi";
+import axios from "axios";
+import React, { useEffect, useState, useCallback } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useSnackbar } from 'notistack';
 
 function ViewProperty() {
   const [Book, setBook] = useState(false);
+  const [processing, setProcessing] = useState(false); // Add processing state
+  const { id } = useParams(); // Destructure id from useParams
+  const [visitingDate, setVisitingDate] = useState(null); // Corrected typo
+
+  const { user } = useSelector((state) => state.user);
+  const { enqueueSnackbar } = useSnackbar(); // Hook for Notistack
 
   const BookNow = () => {
     setBook(true);
@@ -20,247 +21,156 @@ function ViewProperty() {
     setBook(false);
   };
 
+  const [property, setProperty] = useState(null); // Initialize with null
+
+  const getProperty = useCallback(async () => {
+    try {
+      const response = await axios.get(`/api/MyHome2U/property/getsingleproperty/${id}`);
+      setProperty(response.data.property);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    getProperty();
+  }, [getProperty]);
+
+  if (!property) {
+    return <div>Loading...</div>; // Render loading state
+  }
+
+  const handleBooking = async () => {
+    setProcessing(true); // Set processing to true when booking starts
+    try {
+      const response = await axios.post("/api/MyHome2U/Booking/AddNewBooking/", {
+        property: property._id,
+        user: user._id,
+        visitingDate: visitingDate,
+      });
+
+      enqueueSnackbar('Booking confirmed successfully!', { variant: 'success' });
+      console.log(response.data);
+    } catch (error) {
+      enqueueSnackbar('Failed to confirm booking. Please try again.', { variant: 'error' });
+      console.error(error);
+    } finally {
+      setProcessing(false); // Set processing to false when booking ends
+    }
+  };
+
   return (
-    <div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-1 p-1">
-        <div className="">
-          <img src={herro} alt="Herro" className="w-full h-full object-cover" />
+    <div className="container mx-auto p-4">
+      <div className="w-full max-w-4xl mx-auto mb-6">
+        <img
+          src={property.image.url}
+          alt="Property"
+          className="w-full h-96 object-cover rounded-md shadow-lg"
+        />
+      </div>
+
+      <div className="mt-6 grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6">
+        <div>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+            <div className="flex flex-wrap font-bold py-3 space-x-2 items-center">
+              <p className="text-gray-600 mb-1">
+                <span className="text-black"></span> {property.city}
+              </p>
+              <p className="text-gray-600 mb-1">
+                <span className="text-black">| </span> {property.title}
+              </p>
+              <p className="text-gray-600 mb-1">
+                <span className="text-black">|</span> {property.houseType}
+              </p>
+            </div>
+            <button
+              className="bg-black text-white px-5 py-2 rounded-md hover:bg-gray-800 transition-colors duration-300"
+              onClick={BookNow}
+            >
+              Book Now
+            </button>
+          </div>
+
+          <h1 className="text-2xl font-bold text-gray-700 mb-4">
+            ${property.price}/month
+          </h1>
+
+          <h2 className="text-lg font-bold text-gray-700 mb-2">Description</h2>
+          <p className="text-gray-600 mb-4">{property.description}</p>
+
+          <h2 className="text-lg font-bold text-gray-700 mb-2">Details</h2>
+          <p className="text-gray-600 mb-4">
+            Address: {property.address}, {property.city}
+          </p>
+          <p className="text-gray-600 mb-4">
+            Bedrooms: {property.bedrooms} | Bathrooms: {property.bathrooms} | Parking: {property.parking}
+          </p>
         </div>
-        <div className="">
-          <img src={h1} alt="House 1" className="w-full h-full object-cover" />
-        </div>
-        <div className="">
-          <img src={h2} alt="House 2" className="w-full h-full object-cover" />
-        </div>
-        <div className="">
-          <img src={h3} alt="House 3" className="w-full h-full object-cover" />
+
+        <div className="p-4 border-2 border-black rounded-md bg-white shadow-lg">
+          <h3 className="font-bold text-xl mb-2">Booking Details</h3>
+          <p className="mb-2">First Month Rental: ${property.price}</p>
+          <p className="mb-2">Deposit: ${property.deposit}</p>
+          <p className="font-bold mb-2">Total: ${property.price + property.deposit}</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-[7fr_3fr] gap-2 px-4 ">
-        <div className="">
-          <div className="flex justify-between">
-            <div className="flex font-bold py-3">
-              <p className="my-1 border-r-2 border-black pr-2 ">Location</p>
-              <p className="my-1 border-r-2 border-black px-2">Mogadisho</p>
-              <p className="my-1 border-r-2 border-black px-2">Hodan</p>
-              <p className="my-1  px-2">Vue Residences Titiwangsa</p>
-            </div>
-            <div className="pt-2">
+      {Book && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-5">
+          <div className="relative text-white bg-black p-6 rounded-md shadow-lg max-w-lg w-full">
+            <button className="absolute top-2 right-2 text-2xl font-bold" onClick={closebook}>
+              &times;
+            </button>
+            <div>
+              <h3 className="text-xl font-semibold mb-4 border-b pb-2">Booking Details</h3>
+              <div className="space-y-3">
+                <div className="flex justify-between">
+                  <span className="font-medium">House Location:</span>
+                  <span>{property.address}, {property.city}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium">Price:</span>
+                  <span>${property.price}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium">Deposit:</span>
+                  <span>${property.deposit}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium">Total Price:</span>
+                  <span>${property.price + property.deposit}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium">Status :</span>
+                  <span>{property.status}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="font-medium">Visit Date:</span>
+                  <input 
+                    type="date"
+                    id="visit-date"
+                    value={visitingDate}
+                    onChange={(e) => setVisitingDate(e.target.value)}
+                    className="text-black p-1 border rounded-md"
+                  />
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="font-medium">More Information :</span>
+                  <span>Info@MyHome2U.com</span>
+                </div>
+              </div>
               <button
-                className="bg-black text-white px-5 py-2"
-                onClick={BookNow}
+                type="submit"
+                className={`px-6 py-2 mt-4 ${processing ? 'bg-gray-600' : 'bg-green-600'} text-white rounded-md w-full hover:${processing ? 'bg-gray-700' : 'bg-green-700'} transition-colors duration-300`}
+                onClick={handleBooking}
+                disabled={processing} // Disable button while processing
               >
-                Book Now
+                {processing ? 'Processing...' : 'Confirm Booking'}
               </button>
             </div>
           </div>
-
-          <div className="">
-            <h1 className="  px-1 font-bold pb-1">RM 950/month</h1>
-          </div>
-
-          <div className="">
-            <h1 className="my-2  px-1 font-bold">Description</h1>
-            <p className="px-1 leading-8 text-justify">
-              This Is A Small Room In A Mixed Gender Unit, 3-Bedrooms Unit At
-              Vue Residences, Titiwangsa. The Unit Has 3 Bedrooms, 1 Is Master
-              Room, 1 Is Medium Room And 1 Is Small Room. Master Room Is
-              Occupied With A Male Doctor. Medium Room And Small Room Are
-              Vacant.
-            </p>
-          </div>
-
-          <div className="">
-            <h1 className="mt-2  px-1 font-bold ">Facilities</h1>
-            <p className="px-1 leading-8 text-justify">
-              Security 24 Hr,Swimming,Elevator,Gym
-            </p>
-          </div>
-
-          <h1 className="mt-1  px-1 font-bold ">Location</h1>
-
-          <div>
-            <div className="mt-4 ">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509433!2d144.953735315316!3d-37.81627927975179!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf5775c2b0a8b9e0!2sGoogle!5e0!3m2!1sen!2sus!4v1610606531694!5m2!1sen!2sus"
-                width="100%"
-                height="390"
-                allowFullScreen=""
-                loading="lazy"
-                title="Google Map"
-              ></iframe>
-            </div>
-          </div>
         </div>
-        <div className="p-2  border-2 border-black mt-2 rounded-md">
-          <div className="p-5  bg-gray-50 text-black rounded-md">
-            <p className="mb-2 font-bold">To Move In</p>
-            <p className="mb-2">First Month Rental RM : 950</p>
-            <p className="mb-2">Deposit RM : 950</p>
-            <p className="mb-2 font-bold">Total RM : 1,900 </p>
-          </div>
-        </div>
-      </div>
-      <div className="mx-auto p-2 my-9 bg-gray-50 ">
-        <h1 className=" font-bold text-2xl my-2 pl-2">
-          Recommended Properties
-        </h1>
-
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-3 ">
-          <div className="shadow-md p-3 rounded-md bg-white">
-            <img src={herro} alt="Herro" className="w-full object-cover " />
-            <div className="flex justify-between mt-2 ">
-              <div>
-                <h1 className="font-bold text-2xl">$3,280</h1>
-              </div>
-              <div>
-                <button className=" px-6 py-1 font-bold bg-black text-white">
-                  Rent
-                </button>
-              </div>
-            </div>
-
-            <h1 className="font-bold mb-2 ">Degmada Hodan - Mogadisho </h1>
-            <p className="mb-2 font-bold italic border-b-2 border-black pb-2">
-              Deposite : $ 1200{" "}
-            </p>
-            <div className="flex justify-between mb-2 ">
-              <div className="flex  items-center">
-                <FaBed className="text-black-600" />{" "}
-                <span className="p-2"> 1 Qol</span>
-              </div>
-
-              <div className="flex  items-center">
-                <PiToiletDuotone className="text-black" />{" "}
-                <span className="p-2"> 1 Musqul</span>
-              </div>
-
-              <div className="flex  items-center">
-                <MdDirectionsCar className="text-black" />{" "}
-                <span className="p-2"> 1 Parking</span>
-              </div>
-
-              <div className="flex items-center">
-                <button className=" px-6 py-1 font-bold  border-2 border-black">
-                  <Link to="/ViewSingleProperty">View details</Link>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="shadow-md p-3 rounded-md bg-white">
-            <img src={herro} alt="Herro" className="w-full object-cover " />
-            <div className="flex justify-between mt-2 ">
-              <div>
-                <h1 className="font-bold text-2xl">$3,280</h1>
-              </div>
-              <div>
-                <button className=" px-6 py-1 font-bold bg-black text-white">
-                  Rent
-                </button>
-              </div>
-            </div>
-
-            <h1 className="font-bold mb-2 ">Degmada Hodan - Mogadisho </h1>
-            <p className="mb-2 font-bold italic border-b-2 border-black pb-2">
-              Deposite : $ 1200{" "}
-            </p>
-            <div className="flex justify-between mb-2 ">
-              <div className="flex  items-center">
-                <FaBed className="text-black-600" />{" "}
-                <span className="p-2"> 1 Qol</span>
-              </div>
-
-              <div className="flex  items-center">
-                <PiToiletDuotone className="text-black" />{" "}
-                <span className="p-2"> 1 Musqul</span>
-              </div>
-
-              <div className="flex  items-center">
-                <MdDirectionsCar className="text-black" />{" "}
-                <span className="p-2"> 1 Parking</span>
-              </div>
-
-              <div className="flex items-center">
-                <button className=" px-6 py-1 font-bold  border-2 border-black">
-                  <Link to="/ViewSingleProperty">View details</Link>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        className={
-          Book
-            ? "fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center p-5"
-            : "hidden"
-        }
-      >
-        <div className="relative text-white bg-black p-4">
-          <button
-            className="text-white font-bold absolute top-0 right-0 pr-3 pl-3 pt-2 text-3xl"
-            onClick={closebook}
-          >
-            X
-          </button>
-    
-          <div className="max-w-lg mx-auto p-6 bg-black shadow-md rounded-lg ">
-  <p className="text-xl font-semibold mb-4 border-b pb-2">Booking Details</p>
-
-  <div className="space-y-3">
-    <div className="flex justify-between">
-      <span className="font-medium">House Location :</span>
-      <span>Hodan</span>
-    </div>
-    <div className="flex justify-between">
-      <span className="font-medium">Price : </span>
-      <span>RM 4500</span>
-    </div>
-    <div className="flex justify-between">
-      <span className="font-medium">Deposit :</span>
-      <span>RM 500</span>
-    </div>
-    <div className="flex justify-between">
-      <span className="font-medium">Total Price :</span>
-      <span>RM 5000</span>
-    </div>
-    <div className="flex justify-between">
-      <span className="font-medium">Check-In :</span>
-      <span>10th Feb 2021</span>
-    </div>
-    <div className="flex justify-between items-center">
-      <span className="font-medium">Visit-In :</span>
-      <input type="date" id="visit-date" className="text-black p-1 border rounded-md"></input>
-    </div>
-    <div className="flex justify-between">
-      <span className="font-medium">House Type :</span>
-      <span>Apartment</span>
-    </div>
-    <div className="flex justify-between">
-      <span className="font-medium">Number of Rooms :</span>
-      <span>3</span>
-    </div>
-    <div className="flex justify-between">
-      <span className="font-medium">Amenities :</span>
-      <span>WiFi, Air Conditioning, Pool</span>
-    </div>
-    <div className="flex justify-between items-center">
-      <span className="font-medium">Special Requests :</span>
-      <textarea className="text-black p-1 border rounded-md ml-2 flex-1"></textarea>
-    </div>
-    <div className="flex justify-end">
-      <button className="bg-blue-500 text-white px-5 py-2 rounded-md hover:bg-blue-600">
-        Confirm
-      </button>
-    </div>
-  </div>
-</div>
-
-        </div>
-      </div>
+      )}
     </div>
   );
 }

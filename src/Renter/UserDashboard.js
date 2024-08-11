@@ -1,52 +1,86 @@
-import React from "react";
-import { FaHome, FaBell, FaUser, FaCog, FaChartBar, FaEnvelope } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaRegNewspaper, FaCalendarAlt, FaUserCheck, FaClock } from "react-icons/fa";
 import SideBar from "./SideBar";
 
-function UserDashboard() {
+const UserDashboard = () => {
+  const announcements = [
+    { id: 1, title: "New Policy Update", date: "2024-08-01" },
+    { id: 2, title: "Maintenance Notice", date: "2024-08-05" },
+    { id: 3, title: "Community Event", date: "2024-08-10" },
+  ];
+
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatDate = (date) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleDateString(undefined, options);
+  };
+
+  const formatTime = (date) => {
+    const options = { hour: "2-digit", minute: "2-digit", second: "2-digit" };
+    return date.toLocaleTimeString(undefined, options);
+  };
+
   return (
-    <div className="grid grid-cols-[1fr_3fr] md:grid-cols-[1fr_10fr] min-h-screen text-white">
-
-      <div className="bg-black">
+    <div className="flex flex-col min-h-screen bg-black">
+      <div className="flex flex-1">
         <SideBar />
-      </div>
+        <div className="flex-1 bg-gray-100 p-4">
+          <h1 className="text-2xl font-semibold mb-6">User Dashboard</h1>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* User Status Card */}
+            <div className="bg-white shadow-md rounded-lg p-4 flex items-center">
+              <FaUserCheck className="text-green-500 text-3xl mr-4" />
+              <div>
+                <h2 className="text-xl font-semibold">User Status: Active</h2>
+                <p className="text-gray-600">Date: {formatDate(currentTime)}</p>
+              </div>
+            </div>
+            
+            {/* Current Time Card */}
+            <div className="bg-white shadow-md rounded-lg p-4 flex items-center">
+              <FaClock className="text-blue-500 text-3xl mr-4" />
+              <div>
+                <h2 className="text-xl font-semibold">Current Time</h2>
+                <p className="text-gray-600">{formatTime(currentTime)}</p>
+              </div>
+            </div>
+          </div>
 
-      <div className="py-10 bg-gray-100 text-black flex flex-col items-center  space-y-4">
-        <div className="text-center">
-          <FaHome className="text-5xl text-blue-500 mb-4 mx-auto animate-bounce" />
-          <p className="text-3xl font-semibold mb-2">
-            Welcome to your dashboard.
-          </p>
-          <p className="text-lg">
-            Explore your personalized dashboard to manage your account and stay updated.
-          </p>
+          {/* Announcements */}
+          <div className="bg-white shadow-md rounded-lg p-6 mt-6">
+            <h2 className="text-xl font-semibold mb-4">News & Announcements</h2>
+            <div className="space-y-4">
+              {announcements.map((announcement) => (
+                <div
+                  key={announcement.id}
+                  className="flex justify-between items-center p-3 border-b border-gray-300"
+                >
+                  <div className="flex items-center">
+                    <FaRegNewspaper className="text-gray-500 mr-3" />
+                    <h3 className="text-lg font-semibold">{announcement.title}</h3>
+                  </div>
+                  <div className="flex items-center text-sm text-gray-500">
+                    <FaCalendarAlt className="mr-1" />
+                    <span>{announcement.date}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
-          <div className="text-center bg-white p-4 rounded-lg shadow-md">
-            <FaBell className="text-4xl text-green-500 mb-2 mx-auto animate-pulse" />
-            <p className="text-lg font-medium">Notifications</p>
-          </div>
-          <div className="text-center bg-white p-4 rounded-lg shadow-md">
-            <FaUser className="text-4xl text-purple-500 mb-2 mx-auto" />
-            <p className="text-lg font-medium">Profile</p>
-          </div>
-          <div className="text-center bg-white p-4 rounded-lg shadow-md">
-            <FaCog className="text-4xl text-red-500 mb-2 mx-auto" />
-            <p className="text-lg font-medium">Settings</p>
-          </div>
-          <div className="text-center bg-white p-4 rounded-lg shadow-md">
-            <FaChartBar className="text-4xl text-yellow-500 mb-2 mx-auto animate-spin" />
-            <p className="text-lg font-medium">Analytics</p>
-          </div>
-          <div className="text-center bg-white p-4 rounded-lg shadow-md">
-            <FaEnvelope className="text-4xl text-blue-500 mb-2 mx-auto" />
-            <p className="text-lg font-medium">Messages</p>
-          </div>
-        </div>
       </div>
-
     </div>
   );
-}
+};
 
 export default UserDashboard;

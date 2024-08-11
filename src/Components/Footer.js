@@ -1,98 +1,58 @@
 import React from "react";
 import logo from "../Images/MyHomeLogo.png";
-import { FaFacebook } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
+import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { IoLogoYoutube } from "react-icons/io";
 import { AiFillTikTok } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <div className="mx-auto bg-black  text-white  static left-0 bottom-0 w-full py-5 px-5 border-t-2 border-white">
-
-      <div className="grid grid-cols-2 md:grid-cols-2 border-b-2 border-white  pb-2">
-
-        <div className="">
-          <img src={logo} alt="MyHome Logo" className="w-[240px]" />
+    <footer className="bg-black text-white py-8 px-5 border-t-2 border-white">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 border-b-2 border-white pb-4">
+        <div className="flex flex-col items-center md:items-start">
+          <img src={logo} alt="MyHome Logo" className="w-[240px] mb-4" />
+          <p className="text-center md:text-left">Find your dream home with us</p>
         </div>
-
-        <div className="grid grid-cols-3 md:grid-cols-3 ">
-        
-          <div className="flex flex-col ">
-            <h1 className="  md:text-2xl font-bold uppercase mb-2">Links</h1>
-
-            <Link to="/" className="text-white hover:text-gray-500 pl-2 mb-2">
-              Home
-            </Link>
-            <Link to="/blog" className="text-white hover:text-gray-500 pl-2 mb-2">
-              Rent
-            </Link>
-            <Link to="/blog" className="text-white hover:text-gray-500 pl-2 mb-2">
-              Buy
-            </Link>
-            <Link to="/About" className="text-white hover:text-gray-500 pl-2 mb-2">
-              About
-            </Link>
-            <Link to="/Contact" className="text-white hover:text-gray-500 pl-2 mb-2">
-              Contact
-            </Link>
+        <div className="flex justify-center md:justify-around">
+          <div className="flex flex-col text-left md:text-left mb-4 md:mb-0">
+            <h2 className="text-lg md:text-xl font-bold uppercase mb-2">Links</h2>
+            <Link to="/" className="hover:text-gray-500 mb-1">Home</Link>
+            <Link to="/rent" className="hover:text-gray-500 mb-1">Rent</Link>
+            <Link to="/buy" className="hover:text-gray-500 mb-1">Buy</Link>
+            <Link to="/about" className="hover:text-gray-500 mb-1">About</Link>
+            <Link to="/contact" className="hover:text-gray-500">Contact</Link>
           </div>
-
-          <div className="flex flex-col ">
-            <h1 className=" md:text-2xl font-bold uppercase mb-2">FollowUs</h1>
-
-            <Link to="/" className="text-white hover:text-gray-500 pl-2 mb-2">
-              Facebook
-            </Link>
-            <Link to="/blog" className="text-white hover:text-gray-500 pl-2 mb-2">
-              Instagram
-            </Link>
-            <Link to="/blog" className="text-white hover:text-gray-500 pl-2 mb-2">
-              TikTok
-            </Link>
-          
+          <div className="flex flex-col text-left md:text-left mb-4 md:mb-0">
+            <h2 className="text-lg pl-4 md:text-xl font-bold uppercase mb-2">Follow Us</h2>
+            <Link to="/" className="hover:text-gray-500 mb-1 pl-4">Facebook</Link>
+            <Link to="/instagram" className="pl-4 hover:text-gray-500 mb-1">Instagram</Link>
+            <Link to="/tiktok" className="pl-4 hover:text-gray-500">TikTok</Link>
           </div>
-
-          <div className="flex flex-col ml-5 md:ml-1 ">
-            <h1 className=" md:text-2xl font-bold uppercase mb-2">Legal</h1>
-
-            <Link to="/" className="text-white hover:text-gray-500 pl-2 mb-2">
-              Privacy Policy
-            </Link>
-            <Link to="/blog" className="text-white hover:text-gray-500 pl-2 mb-2">
-              Terms & Conditions
-            </Link>
+          <div className="flex flex-col text-left md:text-left">
+            <h2 className="text-lg pl-4 md:text-xl font-bold uppercase mb-2">Legal</h2>
+            <Link to="/privacy" className="pl-4 hover:text-gray-500 mb-1">Privacy Policy</Link>
+            <Link to="/terms" className="pl-4 hover:text-gray-500">Terms & Conditions</Link>
           </div>
-
         </div>
-
       </div>
-
-      <div className="flex  justify-between items-center text-white text-sm py-2">
-
-        &copy; 2024 MyHome2U. All rights reserved.
-
-
-        <div className="flex  justify-center items-center text-white text-sm py-2">
-        <Link to="/" className="px-2">
-          <FaFacebook size={30} />
-        </Link>
-        <Link to="/" className="px-2">
-          <FaInstagram size={30} />
-        </Link>
-        <Link to="/" className="px-2">
-          <IoLogoYoutube size={30} />
-        </Link>
-        <Link to="/" className="px-2">
-          <AiFillTikTok size={30} />
-        </Link>
+      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center py-4">
+        <p className="text-sm">&copy; 2024 MyHome2U. All rights reserved.</p>
+        <div className="flex space-x-4 mt-4 md:mt-0">
+          <Link to="/" className="hover:text-gray-500">
+            <FaFacebook size={30} />
+          </Link>
+          <Link to="/" className="hover:text-gray-500">
+            <FaInstagram size={30} />
+          </Link>
+          <Link to="/" className="hover:text-gray-500">
+            <IoLogoYoutube size={30} />
+          </Link>
+          <Link to="/" className="hover:text-gray-500">
+            <AiFillTikTok size={30} />
+          </Link>
+        </div>
       </div>
-
-      </div>
-
-    
-
-    </div>
+    </footer>
   );
 }
 

@@ -1,57 +1,57 @@
-import React from "react";
-import SideBar from "./SideBar";
-import UserImage from "../Images/profileImage.jpg";
-import { Link } from "react-router-dom";
+import React from 'react';
+import SideBar from './SideBar';
+import { FaUserEdit } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-function Profile() {
+const Profile = () => {
+  const { user } = useSelector((state) => state.user);
+
+  const formatJoinedDate = (date) => {
+    const options = {day: 'numeric', weekday: 'long', year: 'numeric', month: 'long' };
+    return new Date(date).toLocaleDateString(undefined, options);
+  };
+
   return (
-    <div className="grid grid-cols-[1fr_3fr] md:grid-cols-[1fr_10fr] text-white bg-gray-50 min-h-screen">
-      <div className="bg-black">
-        <SideBar />
-      </div>
-      <div className="pl-5 text-black">
-        <h1 className="text-center py-2 text-2xl md:text-3xl font-medium">
-          Profile Information
-        </h1>
-        <div className="relative">
-          <div className="absolute top-14 right-3 z-10">
-            <Link to="/EditProfile">
-              <button className="px-6 py-2 z-0 bg-green-700 hover:bg-green-800 text-white rounded-md text-lg md:text-2xl transition duration-300">
-            EDIT
-              </button>
-            </Link>
-          </div>
-        </div>
-        <div className="border-t-2 border-black">
-          <div className="flex justify-center mt-2">
-            <img
-              src={UserImage}
-              alt="UserProfile"
-              className="w-32 h-32 md:w-44 md:h-44 rounded-full border-4 border-gray-300 object-cover"
-            />
-          </div>
-          <div>
-            <div className="flex flex-col md:flex-row mt-3">
-              <div className="md:w-1/3 font-semibold">Name:</div>
-              <div className="md:w-2/3">John Doe</div>
+    <div className="flex h-screen">
+      <SideBar />
+      <div className="flex-1 bg-gray-100 p-6">
+        <div className="bg-white shadow-md rounded-lg p-6">
+          <h1 className="text-2xl font-semibold mb-4">User Profile</h1>
+          <div className="flex flex-col md:flex-row items-center md:items-start">
+            <div className="flex-shrink-0 mb-4 md:mb-0 md:mr-6">
+              <img
+                src={user.avatar.url}
+                alt="Admin Avatar"
+                className="w-32 h-32 rounded-full border-2 border-gray-300 object-cover"
+              />
             </div>
-            <div className="flex flex-col md:flex-row mt-2">
-              <div className="md:w-1/3 font-semibold">Mobile:</div>
-              <div className="md:w-2/3">+601113323658</div>
-            </div>
-            <div className="flex flex-col md:flex-row mt-2">
-              <div className="md:w-1/3 font-semibold">Email:</div>
-              <div className="md:w-2/3">lucmaan1999@gmail.com</div>
-            </div>
-            <div className="flex flex-col md:flex-row mt-2">
-              <div className="md:w-1/3 font-semibold">Address:</div>
-              <div className="md:w-2/3">Hodan Taleex Mogadisho Somalia</div>
+            <div>
+              <h2 className="text-xl font-semibold">{user.name}</h2>
+              <p className="text-gray-600">{user.role}</p>
+              <div className="mt-4 space-y-2">
+                <div>
+                  <span className="font-medium">Email:</span> {user.email}
+                </div>
+                <div>
+                  <span className="font-medium">Phone:</span> {user.phone}
+                </div>
+                <div>
+                  <span className="font-medium">Joined:</span> {formatJoinedDate(user.createdAt)}
+                </div>
+              </div>
+              <Link to={`/user/profile/edit-profile/${user._id}`}>
+                <button className="mt-4 flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                  <FaUserEdit className="mr-2" />
+                  Edit Profile
+                </button>
+              </Link>
             </div>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Profile;

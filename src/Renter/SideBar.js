@@ -1,56 +1,74 @@
-import React from "react";
-import { FaRegUserCircle } from "react-icons/fa";
-import { IoBookmarksOutline } from "react-icons/io5";
-import { FaRegMoneyBill1 } from "react-icons/fa6";
-import { CiLogin } from "react-icons/ci";
-import { MdDashboard } from "react-icons/md";
-import { RiSecurePaymentFill } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { FaUser, FaCalendarAlt, FaSignOutAlt, FaTachometerAlt, FaMoneyBillWave, FaCreditCard } from 'react-icons/fa';
+import { BsThreeDotsVertical } from 'react-icons/bs';
+import axios from 'axios';
+import { useSnackbar } from 'notistack'; // Import useSnackbar
+import { logoutStart, logoutSuccess, logoutFailure } from "../Redux/User/UserSlice";
+import { useDispatch } from 'react-redux';
 
 function SideBar() {
+  const [isOpen, setIsOpen] = useState(true);
+
+  const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar(); // Get enqueueSnackbar
+  const navigate = useNavigate(); // Get navigate
+
+  const handleLogout = async () => {
+    try {
+      dispatch(logoutStart());
+      const response = await axios.get("/api/MyHome2U/user/logout");
+      if (response.status === 200) {
+        console.log("Logged Out");
+        enqueueSnackbar("Logged Out Successfully", { variant: 'success', anchorOrigin: { vertical: 'top', horizontal: 'center' } });
+        dispatch(logoutSuccess());
+        navigate('/'); // Navigate to home page
+      }
+    } catch (error) {
+      dispatch(logoutFailure("Cannot log out now, check your settings"));
+      console.log(error);
+      enqueueSnackbar("Failed to log out. Please try again.", { variant: 'error', anchorOrigin: { vertical: 'top', horizontal: 'center' } });
+    }
+  };
+
   return (
-    <div className="pt-4 flex flex-col bg-black h-full border-t-2 border-white text-center">
-      <Link to="/Dashboard">
-        <div className="flex flex-col justify-center items-center mb-4 hover:bg-gray-800 p-2 rounded-md transition duration-300">
-          <MdDashboard size={30} className="text-blue-400" />
-          <p className="text-white font-bold mt-2">Dashboard</p>
-        </div>
-      </Link>
-
-      <Link to="/Profile">
-        <div className="flex flex-col justify-center items-center mb-4 hover:bg-gray-800 p-2 rounded-md transition duration-300">
-          <FaRegUserCircle size={30} className="text-green-400" />
-          <p className="text-white font-bold mt-2">Profile</p>
-        </div>
-      </Link>
-
-      <Link to="/Booking">
-        <div className="flex flex-col justify-center items-center mb-4 hover:bg-gray-800 p-2 rounded-md transition duration-300">
-          <IoBookmarksOutline size={30} className="text-yellow-400" />
-          <p className="text-white font-bold mt-2">Booking</p>
-        </div>
-      </Link>
-
-      <Link to="/Bills">
-        <div className="flex flex-col justify-center items-center mb-4 hover:bg-gray-800 p-2 rounded-md transition duration-300">
-          <FaRegMoneyBill1 size={30} className="text-red-400" />
-          <p className="text-white font-bold mt-2">Billing</p>
-        </div>
-      </Link>
-
-      <Link to="/Payment">
-        <div className="flex flex-col justify-center items-center mb-4 hover:bg-gray-800 p-2 rounded-md transition duration-300">
-          <RiSecurePaymentFill size={30} className="text-purple-400" />
-          <p className="text-white font-bold mt-2">Payment</p>
-        </div>
-      </Link>
-
-      <Link to="/">
-        <div className="flex flex-col justify-center items-center mb-4 hover:bg-gray-800 p-2 rounded-md transition duration-300">
-          <CiLogin size={30} className="text-pink-400" />
-          <p className="text-white font-bold mt-2">Logout</p>
-        </div>
-      </Link>
+    <div className={`flex flex-col h-screen bg-black border-t-2 border-white text-white transition-all duration-300  ${isOpen ? 'w-48' : 'w-16'}`}>
+      <div className="flex items-center justify-between p-4">
+        <span className={`text-xl font-semibold ${!isOpen && 'hidden'}`}>Admin Panel</span>
+        <button onClick={() => setIsOpen(!isOpen)} className="text-xl focus:outline-none">
+          <BsThreeDotsVertical />
+        </button>
+      </div>
+      <nav className="flex flex-col mt-4 space-y-2">
+        <Link to="/user/Dashboard" className="flex items-center p-2 text-base hover:bg-gray-700">
+          <FaTachometerAlt size={30} className="mr-3" />
+          <span className={`${!isOpen && 'hidden'}`}>Dashboard</span>
+        </Link>
+        <Link to="/user/profile" className="flex items-center p-2 text-base hover:bg-gray-700">
+          <FaUser size={30} className="mr-3" />
+          <span className={`${!isOpen && 'hidden'}`}>Profile</span>
+        </Link>
+        <Link to="/user/Bookings" className="flex items-center p-2 text-base hover:bg-gray-700">
+          <FaCalendarAlt size={30} className="mr-3" />
+          <span className={`${!isOpen && 'hidden'}`}>Bookings</span>
+        </Link>
+        <Link to="/user/contract" className="flex items-center p-2 text-base hover:bg-gray-700">
+          <FaCalendarAlt size={30} className="mr-3" />
+          <span className={`${!isOpen && 'hidden'}`}>My Contracts</span>
+        </Link>
+        <Link to="/user/Bills" className="flex items-center p-2 text-base hover:bg-gray-700">
+          <FaMoneyBillWave size={30} className="mr-3" />
+          <span className={`${!isOpen && 'hidden'}`}>Bills</span>
+        </Link>
+        <Link to="/user/Payments" className="flex items-center p-2 text-base hover:bg-gray-700">
+          <FaCreditCard size={30} className="mr-3" />
+          <span className={`${!isOpen && 'hidden'}`}>Payments</span>
+        </Link>
+        <button className="flex items-center p-2 text-base hover:bg-gray-700" onClick={handleLogout}>
+          <FaSignOutAlt size={30} className="mr-3" />
+          <span className={`${!isOpen && 'hidden'}`}>Logout</span>
+        </button>
+      </nav>
     </div>
   );
 }
