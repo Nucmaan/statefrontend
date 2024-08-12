@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack'; // Import Notistack hook
+import api from "../api"; 
+
 
 function Register() {
   const [name, setName] = useState('');
@@ -13,6 +14,7 @@ function Register() {
   const [loading, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar(); // Use Notistack hook
   const navigate = useNavigate();
+  
 
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
@@ -38,7 +40,7 @@ function Register() {
 
     setLoading(true);
     try {
-      const response = await axios.post('/api/MyHome2U/user/register', {
+      const response = await api.post('/api/MyHome2U/user/register', {
         name,
         email,
         password,
