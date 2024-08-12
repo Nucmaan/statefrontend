@@ -4,8 +4,8 @@ import { MdDirectionsCar } from "react-icons/md";
 import { FaBed } from "react-icons/fa6";
 import { PiToiletDuotone } from "react-icons/pi";
 import { CiSearch } from "react-icons/ci";
-import axios from "axios";
 import Swal from 'sweetalert2';
+import api from "../api"; // Adjust the path if necessary
 
 function Buy() {
   const [propertyList, setPropertyList] = useState(null);
@@ -23,17 +23,26 @@ function Buy() {
         }
       });
 
-      const response = await axios.get("/api/MyHome2U/property/getallproperty");
+      // Fetch properties using the API instance
+      const response = await api.get("/api/MyHome2U/property/getallproperty");
+
+      console.log("API response:", response.data);
 
       // Filter properties where houseType is "Buy" and status is "Available"
       const buyAvailableProperties = response.data.properties.filter(
         property => property.houseType === "Buy" && property.status === "Available"
       );
+
+      console.log("Filtered properties:", buyAvailableProperties);
+
       setPropertyList(buyAvailableProperties);
 
       // Close the loading alert
       Swal.close();
     } catch (error) {
+      // Log the error for debugging
+      console.error("Error fetching properties:", error.response ? error.response.data : error.message);
+
       // Close the loading alert and show an error alert
       Swal.close();
       Swal.fire({
@@ -42,7 +51,6 @@ function Buy() {
         icon: 'error',
         confirmButtonText: 'OK'
       });
-      console.log(error);
     }
   };
 
@@ -85,8 +93,8 @@ function Buy() {
               <div className="flex justify-between items-center mb-4 relative">
                 <h1 className="font-bold text-2xl">${property.price}</h1>
                 <div className="absolute bottom-2 right-2 bg-blue-500 text-white px-3 py-1 rounded-md">
-                {property.houseType}
-              </div>
+                  {property.houseType}
+                </div>
               </div>
               <h2 className="font-bold mb-2">{property.city}</h2>
               <p className="mb-2 font-bold italic border-b-2 border-black pb-2">
