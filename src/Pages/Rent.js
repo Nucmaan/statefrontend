@@ -10,9 +10,9 @@ import Swal from 'sweetalert2';
 function Rent() {
   const [propertyList, setPropertyList] = useState([]); // Initialize as an empty array
 
-  // Filter properties where houseType is "Rent"
+  // Filter properties where houseType is "Rent" and status is "Available"
   const rentProperties = propertyList.filter(
-    (property) => property.houseType === "Rent"
+    (property) => property.houseType === "Rent" && property.status === "Available"
   );
 
   const getProperty = async () => {
@@ -76,8 +76,15 @@ function Rent() {
             return (
               <div
                 key={index}
-                className="shadow-md p-4 rounded-md hover:shadow-lg transition-shadow duration-300 bg-white"
+                className="shadow-md p-4 rounded-md hover:shadow-lg transition-shadow duration-300 bg-white relative"
               >
+                {/* Available Badge */}
+                {property.status === "Available" && (
+                  <div className="absolute top-2 left-2 bg-green-500 text-white px-3 py-1 rounded-md">
+                    Available
+                  </div>
+                )}
+                
                 <img
                   src={property.image.url}
                   alt={property.title}

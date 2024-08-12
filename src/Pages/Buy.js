@@ -8,7 +8,7 @@ import axios from "axios";
 import Swal from 'sweetalert2';
 
 function Buy() {
-  const [propertyList, setPropertyList] = useState(null); // Initialize with null
+  const [propertyList, setPropertyList] = useState(null);
 
   const getProperty = async () => {
     try {
@@ -24,11 +24,14 @@ function Buy() {
       });
 
       const response = await axios.get("/api/MyHome2U/property/getallproperty");
-      // Filter properties where houseType is "Buy"
-      const buyProperties = response.data.properties.filter(property => property.houseType === "Buy");
-      setPropertyList(buyProperties);
 
-      // Close the loading alert and show a success alert (optional)
+      // Filter properties where houseType is "Buy" and status is "Available"
+      const buyAvailableProperties = response.data.properties.filter(
+        property => property.houseType === "Buy" && property.status === "Available"
+      );
+      setPropertyList(buyAvailableProperties);
+
+      // Close the loading alert
       Swal.close();
     } catch (error) {
       // Close the loading alert and show an error alert
@@ -65,26 +68,25 @@ function Buy() {
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3 mt-6">
         {propertyList.map((property, index) => {
-          // Define button color based on houseType
-          const buttonClass = "bg-blue-500";
-
           return (
             <div
               key={index}
-              className="shadow-md p-4 rounded-md hover:shadow-lg transition-shadow duration-300 bg-white"
+              className="shadow-md p-4 rounded-md hover:shadow-lg transition-shadow duration-300 bg-white relative"
             >
+              {/* Status and House Type Labels */}
+              <div className="absolute top-2 left-2 bg-green-500 text-white px-3 py-1 rounded-md">
+                {property.status}
+              </div>
               <img
                 src={property.image.url}
                 alt={property.title}
                 className="w-full h-48 object-cover rounded-md mb-4"
               />
-              <div className="flex justify-between items-center mb-4">
+              <div className="flex justify-between items-center mb-4 relative">
                 <h1 className="font-bold text-2xl">${property.price}</h1>
-                <button
-                  className={`px-6 py-1 font-bold text-white rounded-md ${buttonClass}`}
-                >
-                  {property.houseType}
-                </button>
+                <div className="absolute bottom-2 right-2 bg-blue-500 text-white px-3 py-1 rounded-md">
+                {property.houseType}
+              </div>
               </div>
               <h2 className="font-bold mb-2">{property.city}</h2>
               <p className="mb-2 font-bold italic border-b-2 border-black pb-2">
