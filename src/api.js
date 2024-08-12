@@ -7,7 +7,7 @@ const baseURL = process.env.NODE_ENV === 'production'
 
 const api = axios.create({
   baseURL: baseURL,
-  withCredentials: true, // This allows sending and receiving cookies
+  withCredentials: true, 
 });
 
 export default api;

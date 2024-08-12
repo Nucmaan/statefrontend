@@ -31,7 +31,7 @@ const UserDashboard = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
-      <div className="flex flex-1">
+      <div className="flex flex-1 bg-black">
         <SideBar />
         <div className="flex-1 bg-white p-6">
           <h1 className="text-3xl font-bold text-gray-800 mb-6">User Dashboard</h1>
