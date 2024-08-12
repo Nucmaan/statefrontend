@@ -3,33 +3,26 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import { persistor, store } from './Redux/Store'; // Correctly import the named export
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import "slick-carousel/slick/slick.css"; // Import slick carousel CSS
+import "slick-carousel/slick/slick-theme.css"; // Import slick carousel theme CSS
 
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 
-if (process.env.NODE_ENV === 'production') disableReactDevTools();
+// Check the custom environment variable
+if (process.env.REACT_APP_NODE_ENV === 'production') {
+  disableReactDevTools();
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-
-if (process.env.NODE_ENV !== 'production') {
-  const { Provider } = require('react-redux');
-  const { PersistGate } = require('redux-persist/integration/react');
-  const { store, persistor } = require('./Redux/Store');
-
-  root.render(
-    <React.StrictMode>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <App />
-        </PersistGate>
-      </Provider>
-    </React.StrictMode>
-  );
-} else {
-  root.render(
-    <React.StrictMode>
+root.render(
+  <React.StrictMode>
+    <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}> 
       <App />
-    </React.StrictMode>
-  );
-}
+      </PersistGate>
+    </Provider>
+  </React.StrictMode>
+);

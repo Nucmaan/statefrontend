@@ -25,6 +25,8 @@ export const store = configureStore({
     serializableCheck: false,
     
   }),
+  devTools : false
+
 });
 
 export const persistor = persistStore(store); 
