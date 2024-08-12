@@ -80,16 +80,16 @@ function Navbar() {
               <Link to="/">Home</Link>
             </li>
             <li className="p-4 cursor-pointer uppercase hover:text-gray-400">
-              <Link to="Rent">Rent</Link>
+              <Link to="/Rent">Rent</Link>
             </li>
             <li className="p-4 cursor-pointer uppercase hover:text-gray-400">
-              <Link to="Buy">Buy</Link>
+              <Link to="/Buy">Buy</Link>
             </li>
             <li className="p-4 cursor-pointer uppercase hover:text-gray-400">
-              <Link to="About">About Us</Link>
+              <Link to="/About">About Us</Link>
             </li>
             <li className="p-4 cursor-pointer uppercase hover:text-gray-400">
-              <Link to="Contact">Contact Us</Link>
+              <Link to="/Contact">Contact Us</Link>
             </li>
           </ul>
         </div>
@@ -172,24 +172,24 @@ function Navbar() {
         }
       >
         <li className="w-full flex justify-center border-b border-gray-600 p-4 cursor-pointer uppercase hover:bg-gray-200">
-          <Link to="Rent">Rent</Link>
+          <Link to="/Rent">Rent</Link>
         </li>
         <li className="w-full flex justify-center border-b border-gray-600 p-4 cursor-pointer uppercase hover:bg-gray-200">
-          <Link to="Buy">Buy</Link>
+          <Link to="/Buy">Buy</Link>
         </li>
         <li className="w-full flex justify-center border-b border-gray-600 p-4 cursor-pointer uppercase hover:bg-gray-200">
-          <Link to="About">About Us</Link>
+          <Link to="/About">About Us</Link>
         </li>
         <li className="w-full flex justify-center border-b border-gray-600 p-4 cursor-pointer uppercase hover:bg-gray-200">
-          <Link to="Contact">Contact Us</Link>
+          <Link to="/Contact">Contact Us</Link>
         </li>
         {!user && (
           <div className="w-full flex flex-col items-center">
             <button className="mb-4 bg-blue-600 text-white p-2 font-bold uppercase w-3/4">
-              <Link to="login">Login</Link>
+              <Link to="/login">Login</Link>
             </button>
             <button className="mb-4 bg-blue-600 text-white p-2 font-bold uppercase w-3/4">
-              <Link to="register">Register</Link>
+              <Link to="/register">Register</Link>
             </button>
           </div>
         )}
