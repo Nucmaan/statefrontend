@@ -57,7 +57,7 @@ function Buy() {
   return (
     <div className="mx-auto px-4 pb-4">
       {/* Search Bar */}
-      <div className="flex border-2 border-black rounded-md overflow-hidden sticky top-[89px] z-50 bg-white shadow-md">
+      <div className="flex border-2 border-black rounded-md overflow-hidden sticky top-[89px] z-40 bg-white shadow-md">
         <input
           type="text"
           placeholder="Type in Area / City Name"

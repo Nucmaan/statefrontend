@@ -6,13 +6,14 @@ import logo from "../Images/MyHomeLogo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { SignOutStart, SignOutSuccess, SignOutFailure } from "../Redux/User/UserSlice";
 import axios from "axios";
-import Swal from 'sweetalert2';
+import { useSnackbar } from 'notistack';
 
 function Navbar() {
   const [navbar, setNavbar] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -31,24 +32,15 @@ function Navbar() {
       const response = await axios.get("/api/MyHome2U/user/logout");
       if (response.status === 200) {
         console.log("Logged Out");
-        Swal.fire({
-          icon: 'success',
-          title: 'Logged Out Successfully',
-          text: 'You have successfully logged out.',
-        }).then(() => {
-          dispatch(SignOutSuccess());
-          navigate('/');
-          setDropdown(false);
-        });
+        enqueueSnackbar('Logged Out Successfully', { variant: 'success' });
+        dispatch(SignOutSuccess());
+        navigate('/');
+        setDropdown(false);
       }
     } catch (error) {
       dispatch(SignOutFailure("Cannot log out now, check your settings"));
       console.log(error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Logout Failed',
-        text: 'Failed to log out. Please try again.',
-      });
+      enqueueSnackbar('Failed to log out. Please try again.', { variant: 'error' });
     }
   };
 
@@ -65,7 +57,6 @@ function Navbar() {
     };
   }, [dropdownRef]);
 
-  // Close the navbar when a menu item is clicked
   const closeNavbar = () => {
     setNavbar(false);
   };
@@ -114,7 +105,7 @@ function Navbar() {
               </div>
               {dropdown && (
                 <ul
-                  className="absolute right-0 mt-2 w-48 border-l-2 border-r-2 border-b-2 shadow-md border-black bg-white text-black overflow-hidden z-40"
+                  className="absolute right-0 mt-2 w-48 border-l-2 border-r-2 border-b-2 shadow-md border-black bg-white text-black overflow-hidden z-50"
                   ref={dropdownRef}
                 >
                   <li className="p-2 hover:bg-gray-200">
