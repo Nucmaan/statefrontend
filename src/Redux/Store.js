@@ -25,7 +25,6 @@ export const store = configureStore({
     serializableCheck: false,
     
   }),
-  devTools : false
 
 });
 

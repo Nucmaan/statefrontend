@@ -7,11 +7,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import "slick-carousel/slick/slick.css"; // Import slick carousel CSS
 import "slick-carousel/slick/slick-theme.css"; // Import slick carousel theme CSS
-import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 
-if (process.env.REACT_APP_NODE_ENV === 'production') {
-  disableReactDevTools();
-}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
