@@ -5,10 +5,8 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import logo from "../Images/MyHomeLogo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { SignOutStart, SignOutSuccess, SignOutFailure } from "../Redux/User/UserSlice";
-import axios from "axios";
 import { useSnackbar } from 'notistack';
 import api from "../api"; 
-
 
 function Navbar() {
   const [navbar, setNavbar] = useState(false);
@@ -33,7 +31,6 @@ function Navbar() {
       dispatch(SignOutStart());
       const response = await api.get("/api/MyHome2U/user/logout");
       if (response.status === 200) {
-        console.log("Logged Out");
         enqueueSnackbar('Logged Out Successfully', { variant: 'success' });
         dispatch(SignOutSuccess());
         navigate('/');
@@ -41,7 +38,6 @@ function Navbar() {
       }
     } catch (error) {
       dispatch(SignOutFailure("Cannot log out now, check your settings"));
-      console.log(error);
       enqueueSnackbar('Failed to log out. Please try again.', { variant: 'error' });
     }
   };
