@@ -41,7 +41,7 @@ const EditUserProfile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/MyHome2U/user/getSingleUser/${id}`);
+        const response = await axios.get(`/api/MyHome2U/user/getSingleUser/${id}`);
         if (response.status === 200) {
           const userData = response.data.user;
           setName(userData.name);
@@ -76,7 +76,7 @@ const EditUserProfile = () => {
 
     try {
       dispatch(userUpdateStarted());
-      const response = await axios.put(`http://localhost:5000/api/MyHome2U/user/updateSingleUser/${id}`, {
+      const response = await axios.put(`/api/MyHome2U/user/updateSingleUser/${id}`, {
         name,
         email,
         password,

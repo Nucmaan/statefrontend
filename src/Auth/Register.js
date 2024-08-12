@@ -1,28 +1,24 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2"; // Import SweetAlert
+import React, { useState } from 'react';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSnackbar } from 'notistack'; // Import Notistack hook
 
 function Register() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [phone, setPhone] = useState("");
-  const [avatar, setAvatar] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [phone, setPhone] = useState('');
+  const [avatar, setAvatar] = useState('');
   const [loading, setLoading] = useState(false);
-
+  const { enqueueSnackbar } = useSnackbar(); // Use Notistack hook
   const navigate = useNavigate();
 
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       if (file.size > 10 * 1024 * 1024) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "File is too large. Please select a file smaller than 10MB.",
-        });
+        enqueueSnackbar('File is too large. Please select a file smaller than 10MB.', { variant: 'error' }); // Notistack error message
         return;
       }
       const reader = new FileReader();
@@ -36,18 +32,13 @@ function Register() {
   const handleRegistration = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Passwords do not match.",
-      });
+      enqueueSnackbar('Passwords do not match.', { variant: 'error' }); // Notistack error message
       return;
     }
 
     setLoading(true);
-
     try {
-      const response = await axios.post("/api/MyHome2U/user/register", {
+      const response = await axios.post('/api/MyHome2U/user/register', {
         name,
         email,
         password,
@@ -55,35 +46,18 @@ function Register() {
         avatar,
       });
       if (response.status === 201) {
-        Swal.fire({
-          icon: "success",
-          title: "Registration Successful",
-          text: "You have successfully registered.",
-        }).then(() => {
-          navigate("/login");
-        });
+        enqueueSnackbar('Registration Successful. You have successfully registered.', { variant: 'success' }); // Notistack success message
+        navigate('/login');
       } else {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: response.data.message,
-        });
+        enqueueSnackbar(response.data.message, { variant: 'error' }); // Notistack error message
       }
     } catch (error) {
       console.error(error);
-      if (error.response && error.response.data && error.response.data.message) {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: error.response.data.message,
-        });
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Failed to register.",
-        });
-      }
+      const errorMessage =
+        error.response && error.response.data && error.response.data.message
+          ? error.response.data.message
+          : 'Failed to register.';
+      enqueueSnackbar(errorMessage, { variant: 'error' }); // Notistack error message
     } finally {
       setLoading(false);
     }
@@ -175,15 +149,15 @@ function Register() {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full ${loading ? "bg-gray-500" : "bg-black"} mt-6 py-3 rounded-md text-white text-2xl hover:${loading ? "bg-gray-500" : "bg-gray-800"}`}
+                className={`w-full ${loading ? 'bg-gray-500' : 'bg-black'} mt-6 py-3 rounded-md text-white text-2xl hover:${loading ? 'bg-gray-500' : 'bg-gray-800'}`}
               >
-                {loading ? "Processing..." : "Register"}
+                {loading ? 'Processing...' : 'Register'}
               </button>
             </div>
           </form>
 
           <p className="text-black mt-3 text-center">
-            Have an account?{" "}
+            Have an account?{' '}
             <Link to="/login" className="text-blue-500 hover:underline">
               Login
             </Link>

@@ -3,17 +3,17 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { SignInStart, SignInSuccess, SignInFailure } from '../Redux/User/UserSlice';
-import Swal from 'sweetalert2'; // Import SweetAlert
+import { useSnackbar } from 'notistack';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-
+  const { enqueueSnackbar } = useSnackbar(); // Use Notistack hook
   const { loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  axios.defaults.withCredentials = true; 
+  axios.defaults.withCredentials = true;
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,29 +23,20 @@ function Login() {
       const response = await axios.post('/api/MyHome2U/user/login', { email, password });
       if (response.status === 200) {
         dispatch(SignInSuccess(response.data.user));
-        Swal.fire({
-          icon: 'success',
-          title: 'Login Successful',
-          text: 'You have successfully logged in.',
-        }).then(() => {
-          const userRole = response.data.user.role;
-          if (userRole === 'user') {
-            navigate('/user/Dashboard');
-          } else if (userRole === 'admin') {
-            navigate('/admin/dashboard');
-          } else if (userRole === 'agent') {
-            navigate('/agent/Dashboard');
-          } else {
-            dispatch(SignInFailure(response.data.message));
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: response.data.message,
-            });
-          }
-          setEmail('');
-          setPassword('');
-        });
+        enqueueSnackbar('Login Successful', { variant: 'success' }); // Notistack success message
+        const userRole = response.data.user.role;
+        if (userRole === 'user') {
+          navigate('/user/Dashboard');
+        } else if (userRole === 'admin') {
+          navigate('/admin/dashboard');
+        } else if (userRole === 'agent') {
+          navigate('/agent/Dashboard');
+        } else {
+          dispatch(SignInFailure(response.data.message));
+          enqueueSnackbar(response.data.message, { variant: 'error' }); // Notistack error message
+        }
+        setEmail('');
+        setPassword('');
       }
     } catch (error) {
       const errorMessage =
@@ -53,11 +44,7 @@ function Login() {
           ? error.response.data.message
           : 'Failed to login';
       dispatch(SignInFailure(errorMessage));
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: errorMessage,
-      });
+      enqueueSnackbar(errorMessage, { variant: 'error' }); // Notistack error message
     }
   };
 

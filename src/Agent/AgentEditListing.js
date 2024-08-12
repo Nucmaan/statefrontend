@@ -36,7 +36,7 @@ const AgentEditListing = () => {
   useEffect(() => {
     const fetchProperty = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/MyHome2U/property/getsingleproperty/${id}`);
+        const response = await axios.get(`/api/MyHome2U/property/getsingleproperty/${id}`);
         const property = response.data.property;
         setFormData({
           title: property.title,
@@ -90,7 +90,7 @@ const AgentEditListing = () => {
     dispatch(UpdatePropertyStart());
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/MyHome2U/property/updatesingleproperty/${id}`,
+        `/api/MyHome2U/property/updatesingleproperty/${id}`,
         {
           ...formData,
           owner: user._id

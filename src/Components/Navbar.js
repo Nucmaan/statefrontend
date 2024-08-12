@@ -6,7 +6,7 @@ import logo from "../Images/MyHomeLogo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { SignOutStart, SignOutSuccess, SignOutFailure } from "../Redux/User/UserSlice";
 import axios from "axios";
-import Swal from 'sweetalert2'; // Import SweetAlert
+import Swal from 'sweetalert2';
 
 function Navbar() {
   const [navbar, setNavbar] = useState(false);
@@ -65,6 +65,11 @@ function Navbar() {
     };
   }, [dropdownRef]);
 
+  // Close the navbar when a menu item is clicked
+  const closeNavbar = () => {
+    setNavbar(false);
+  };
+
   return (
     <div className="shadow-md mx-auto px-4 text-white bg-black sticky top-0 left-0 right-0 z-50">
       <div className="flex justify-between items-center py-2">
@@ -102,7 +107,7 @@ function Navbar() {
                 onClick={handleDropdown}
               >
                 <img
-                  src={user.avatar.url} // Correctly using user's avatar from Redux state
+                  src={user.avatar.url}
                   alt="Profile"
                   className="w-10 h-10 rounded-full object-cover"
                 />
@@ -122,6 +127,7 @@ function Navbar() {
                         ? '/agent/Dashboard'
                         : '/login'
                     }
+                    onClick={closeNavbar}
                     >Dashboard</Link>
                   </li>
                   <li className="p-2 hover:bg-gray-200">
@@ -133,7 +139,7 @@ function Navbar() {
                         : user.role === 'agent'
                         ? '/Agent/Profile'
                         : '/'
-                    }>Profile</Link>
+                    } onClick={closeNavbar}>Profile</Link>
                   </li>
                   <li className="p-2 hover:bg-gray-200">
                     <button onClick={handleLogout} className="w-full text-left">
@@ -146,10 +152,10 @@ function Navbar() {
           ) : (
             <ul className="hidden md:flex space-x-4">
               <li className="p-4 cursor-pointer uppercase flex items-center hover:text-gray-400">
-                <Link to="login">Login</Link>
+                <Link to="login" onClick={closeNavbar}>Login</Link>
               </li>
               <li className="p-4 cursor-pointer uppercase flex items-center hover:text-gray-400">
-                <Link to="register">Register</Link>
+                <Link to="register" onClick={closeNavbar}>Register</Link>
               </li>
             </ul>
           )}
@@ -172,24 +178,24 @@ function Navbar() {
         }
       >
         <li className="w-full flex justify-center border-b border-gray-600 p-4 cursor-pointer uppercase hover:bg-gray-200">
-          <Link to="/Rent">Rent</Link>
+          <Link to="/Rent" onClick={closeNavbar}>Rent</Link>
         </li>
         <li className="w-full flex justify-center border-b border-gray-600 p-4 cursor-pointer uppercase hover:bg-gray-200">
-          <Link to="/Buy">Buy</Link>
+          <Link to="/Buy" onClick={closeNavbar}>Buy</Link>
         </li>
         <li className="w-full flex justify-center border-b border-gray-600 p-4 cursor-pointer uppercase hover:bg-gray-200">
-          <Link to="/About">About Us</Link>
+          <Link to="/About" onClick={closeNavbar}>About Us</Link>
         </li>
         <li className="w-full flex justify-center border-b border-gray-600 p-4 cursor-pointer uppercase hover:bg-gray-200">
-          <Link to="/Contact">Contact Us</Link>
+          <Link to="/Contact" onClick={closeNavbar}>Contact Us</Link>
         </li>
         {!user && (
           <div className="w-full flex flex-col items-center">
             <button className="mb-4 bg-blue-600 text-white p-2 font-bold uppercase w-3/4">
-              <Link to="/login">Login</Link>
+              <Link to="/login" onClick={closeNavbar}>Login</Link>
             </button>
             <button className="mb-4 bg-blue-600 text-white p-2 font-bold uppercase w-3/4">
-              <Link to="/register">Register</Link>
+              <Link to="/register" onClick={closeNavbar}>Register</Link>
             </button>
           </div>
         )}

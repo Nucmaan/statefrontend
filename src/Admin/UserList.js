@@ -13,7 +13,7 @@ const UserList = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/MyHome2U/user/users');
+      const response = await axios.get('/api/MyHome2U/user/users');
       setUsers(response.data.users);
       setFilteredUsers(response.data.users);
       console.log(response.data.users);
@@ -45,7 +45,7 @@ const UserList = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/MyHome2U/user/delete/${id}`);
+        await axios.delete(`/api/MyHome2U/user/delete/${id}`);
         enqueueSnackbar('User deleted successfully', { variant: 'success' });
         fetchUsers(); // Refetch users after deletion
       } catch (error) {
