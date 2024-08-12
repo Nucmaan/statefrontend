@@ -5,7 +5,7 @@ import { FaBed } from "react-icons/fa6";
 import { PiToiletDuotone } from "react-icons/pi";
 import { CiSearch } from "react-icons/ci";
 import Swal from 'sweetalert2';
-import api from "../api"; // Adjust the path if necessary
+import api from "../api"; 
 
 function Buy() {
   const [propertyList, setPropertyList] = useState(null);

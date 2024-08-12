@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { SignInStart, SignInSuccess, SignInFailure } from '../Redux/User/UserSlice';
 import { useSnackbar } from 'notistack';
+import api from "../api"; 
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -13,14 +13,12 @@ function Login() {
   const { loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  axios.defaults.withCredentials = true;
-
   const handleLogin = async (e) => {
     e.preventDefault();
     dispatch(SignInStart());
 
     try {
-      const response = await axios.post('/api/MyHome2U/user/login', { email, password });
+      const response = await api.post('/api/MyHome2U/user/login', { email, password });
       if (response.status === 200) {
         dispatch(SignInSuccess(response.data.user));
         enqueueSnackbar('Login Successful', { variant: 'success' }); // Notistack success message
