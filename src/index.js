@@ -9,7 +9,6 @@ import "slick-carousel/slick/slick.css"; // Import slick carousel CSS
 import "slick-carousel/slick/slick-theme.css"; // Import slick carousel theme CSS
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 
-// Check the custom environment variable
 if (process.env.REACT_APP_NODE_ENV === 'production') {
   disableReactDevTools();
 }
