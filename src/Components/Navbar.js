@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { SignOutStart, SignOutSuccess, SignOutFailure } from "../Redux/User/UserSlice";
 import axios from "axios";
 import { useSnackbar } from 'notistack';
+import api from "../api"; 
+
 
 function Navbar() {
   const [navbar, setNavbar] = useState(false);
@@ -29,7 +31,7 @@ function Navbar() {
   const handleLogout = async () => {
     try {
       dispatch(SignOutStart());
-      const response = await axios.get("/api/MyHome2U/user/logout");
+      const response = await api.get("/api/MyHome2U/user/logout");
       if (response.status === 200) {
         console.log("Logged Out");
         enqueueSnackbar('Logged Out Successfully', { variant: 'success' });
