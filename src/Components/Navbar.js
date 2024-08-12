@@ -25,11 +25,10 @@ function Navbar() {
   const handleDropdown = () => {
     setDropdown(!dropdown);
   };
-
   const handleLogout = async () => {
     try {
       dispatch(SignOutStart());
-      const response = await api.get("/api/MyHome2U/user/logout");
+      const response = await api.get("/api/MyHome2U/user/logout", { withCredentials: true }); // Ensure withCredentials is true
       if (response.status === 200) {
         enqueueSnackbar('Logged Out Successfully', { variant: 'success' });
         dispatch(SignOutSuccess());
@@ -41,6 +40,8 @@ function Navbar() {
       enqueueSnackbar('Failed to log out. Please try again.', { variant: 'error' });
     }
   };
+  
+  
 
   useEffect(() => {
     const handleClickOutside = (event) => {
