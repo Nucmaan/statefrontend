@@ -11,7 +11,7 @@ function AddUser() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
-  const [avatar, setAvatar] = useState(null); // Changed to null to better handle file input
+  const [avatar, setAvatar] = useState(null); 
   const [role, setRole] = useState("user");
   const [isActive, setIsActive] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -63,7 +63,6 @@ function AddUser() {
         enqueueSnackbar(response.data.message, { variant: "error" });
       }
     } catch (error) {
-      console.error(error);
       if (
         error.response &&
         error.response.data &&

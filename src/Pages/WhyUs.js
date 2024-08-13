@@ -1,46 +1,46 @@
 import React from "react";
-
 import { SiStreamrunners } from "react-icons/si";
 import { AiFillSafetyCertificate } from "react-icons/ai";
 import { HiDocumentSearch } from "react-icons/hi";
 
-
-
 function WhyUs() {
   return (
     <div className="px-10 py-10 bg-white">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-center text-3xl md:text-4xl font-bold mb-10 text-black">
+          Why Choose Us?
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="flex flex-col justify-center items-center p-6 bg-gray-100 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+            <div className="bg-indigo-600 p-4 rounded-full mb-4">
+              <SiStreamrunners className="text-white" size={60} />
+            </div>
+            <h3 className="text-2xl font-bold text-black mb-2">Speed</h3>
+            <p className="text-center text-gray-700 leading-6">
+              Rent your property 5x faster than traditional rental platforms, hassle-free!
+            </p>
+          </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="flex flex-col justify-center items-center p-6 bg-gray-100 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+            <div className="bg-indigo-600 p-4 rounded-full mb-4">
+              <HiDocumentSearch className="text-white" size={60} />
+            </div>
+            <h3 className="text-2xl font-bold text-black mb-2">Transparent</h3>
+            <p className="text-center text-gray-700 leading-6">
+              Enjoy zero hidden charges and surprises. Tenants and landlords deal directly.
+            </p>
+          </div>
 
-        <div className="flex flex-col justify-center items-center p-3 ">
-          <SiStreamrunners className="" size={90} />
-          <h1 className=" mb-2  text-center text-2xl font-bold">Speed</h1>
-          <p className="mb-2 leading-5 text-center leading-7 ">
-            Rent your property 5x faster than traditional rental platforms,
-            hassle-free!
-          </p>
+          <div className="flex flex-col justify-center items-center p-6 bg-gray-100 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+            <div className="bg-indigo-600 p-4 rounded-full mb-4">
+              <AiFillSafetyCertificate className="text-white" size={60} />
+            </div>
+            <h3 className="text-2xl font-bold text-black mb-2">Safe</h3>
+            <p className="text-center text-gray-700 leading-6">
+              Get peace of mind with Allianz protection and a lawyer-approved digital tenancy agreement signing service.
+            </p>
+          </div>
         </div>
-
-        <div className="flex flex-col justify-center items-center p-3 ">
-        <HiDocumentSearch className="" size={90} />
-        <h1 className=" mb-2 mt-2  text-center text-2xl font-bold">Transparent</h1>
-        <p className="mb-2 leading-5 text-center leading-7 ">
-        Enjoy zero hidden charges and surprises. Tenants and landlords deal direct.
-        </p>
-      </div>
-
-
-      <div className="flex flex-col justify-center items-center p-3 ">
-      <AiFillSafetyCertificate className="" size={90} />
-      <h1 className=" mb-2 mt-2  text-center text-2xl font-bold">Safe</h1>
-      <p className="mb-2 leading-5 text-center leading-7 ">
-      Get peace of mind with Allianz protection and a lawyer approved digital tenancy agreement signing service.
-      </p>
-    </div>
-
-
-
-
       </div>
     </div>
   );

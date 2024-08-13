@@ -69,7 +69,7 @@ function Buy() {
             className="shadow-md p-4 rounded-md hover:shadow-lg transition-shadow duration-300 bg-white relative"
           >
             {/* Status and House Type Labels */}
-            <div className="absolute top-2 left-2 bg-green-500 text-white px-3 py-1 rounded-md">
+            <div className="absolute top-2 left-2 bg-indigo-600 text-white px-3 py-1 rounded-md">
               {property.status}
             </div>
             <img
@@ -79,7 +79,7 @@ function Buy() {
             />
             <div className="flex justify-between items-center mb-4 relative">
               <h1 className="font-bold text-2xl">${property.price}</h1>
-              <div className="absolute bottom-2 right-2 bg-blue-500 text-white px-3 py-1 rounded-md">
+              <div className="absolute bottom-2 right-2 bg-indigo-600 text-white px-3 py-1 rounded-md">
                 {property.houseType}
               </div>
             </div>

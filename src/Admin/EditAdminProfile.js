@@ -55,7 +55,6 @@ const EditAdminProfile = () => {
           enqueueSnackbar(response.data.message, { variant: "error" });
         }
       } catch (error) {
-        console.error(error);
         if (error.response && error.response.data && error.response.data.message) {
           enqueueSnackbar(error.response.data.message, { variant: "error" });
         } else {

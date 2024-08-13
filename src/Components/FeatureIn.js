@@ -5,24 +5,35 @@ import Astan from "../Images/Astan.png";
 
 function FeatureIn() {
   return (
-    <div className="mx-auto shadow-sm px-5 pt-3 pb-10  bg-gray-50">
+    <div className="mx-auto px-5 pt-6 pb-10 bg-gray-50">
+      <h1 className="text-center font-bold text-3xl md:text-4xl mb-8 text-black">
+        Featured In
+      </h1>
 
-      <h1 className="text-center font-bold text-2xl mb-3">Featured-in</h1>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 px-5">
-
-        <div className="  flex justify-center items-center bg-white rounded-md">
-          <img src={herro} alt="Herro" className="w-full object-cover " />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="flex justify-center items-center bg-white p-4 rounded-lg shadow-md">
+          <img
+            src={herro}
+            alt="Herro"
+            className="object-contain h-24 w-auto md:h-32"
+          />
         </div>
 
-        <div className=" flex justify-center items-center bg-white rounded-md">
-          <img src={Bille} alt="Herro" className="w-full object-cover " />
+        <div className="flex justify-center items-center bg-white p-4 rounded-lg shadow-md">
+          <img
+            src={Bille}
+            alt="Bille"
+            className="object-contain h-24 w-auto md:h-32"
+          />
         </div>
 
-        <div className=" flex justify-center items-center bg-white py-4 rounded-md">
-          <img src={Astan} alt="Herro" className="" />
+        <div className="flex justify-center items-center bg-white p-4 rounded-lg shadow-md">
+          <img
+            src={Astan}
+            alt="Astan"
+            className="object-contain h-24 w-auto md:h-32"
+          />
         </div>
-
       </div>
     </div>
   );

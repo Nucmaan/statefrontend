@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AdminSidebar from './AdminSidebar';
-import axios from "axios";
 import { useSnackbar } from 'notistack';
+import api from "../api";
+import Swal from 'sweetalert2';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -13,14 +14,18 @@ const UserList = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('/api/MyHome2U/user/users');
+      const response = await api.get('/api/MyHome2U/user/users');
       setUsers(response.data.users);
       setFilteredUsers(response.data.users);
-      console.log(response.data.users);
     } catch (error) {
-      console.error(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        footer: error.message || 'Please try again later.'
+      });
     }
-  }
+  };
 
   useEffect(() => {
     fetchUsers();
@@ -34,7 +39,7 @@ const UserList = () => {
     }
 
     if (searchQuery) {
-      filtered = filtered.filter(user => 
+      filtered = filtered.filter(user =>
         user.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
@@ -43,38 +48,47 @@ const UserList = () => {
   }, [selectedRole, searchQuery, users]);
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this user?')) {
-      try {
-        await axios.delete(`/api/MyHome2U/user/delete/${id}`);
+    try {
+      const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+      });
+
+      if (result.isConfirmed) {
+        await api.delete(`/api/MyHome2U/user/delete/${id}`);
         enqueueSnackbar('User deleted successfully', { variant: 'success' });
-        fetchUsers(); // Refetch users after deletion
-      } catch (error) {
-        console.error('Error deleting user:', error);
-        enqueueSnackbar('Error deleting user', { variant: 'error' });
+        fetchUsers();
       }
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      enqueueSnackbar('Error deleting user', { variant: 'error' });
     }
   };
 
   return (
-    <div className="flex min-h-screen bg-black">
+    <div className="flex min-h-screen bg-gray-100">
       <AdminSidebar />
-      <main className="flex-1 p-6 bg-gray-100">
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="text-2xl font-semibold">User List</h1>
+      <main className="flex-1 p-8">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-semibold text-gray-800">User List</h1>
           <Link to="/admin/users/add-new-user">
-            <button
-              className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600"
-            >
+            <button className="bg-blue-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-700 transition-colors">
               Add New User
             </button>
           </Link>
         </div>
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex items-center">
-            <label htmlFor="role" className="text-gray-700 mr-2">Filter by Role:</label>
+        <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+          <div className="flex items-center mb-4 md:mb-0">
+            <label htmlFor="role" className="text-gray-700 font-medium mr-2">Filter by Role:</label>
             <select
               id="role"
-              className="bg-white border border-gray-300 rounded-md shadow-sm p-2 mr-4"
+              className="bg-white border border-gray-300 rounded-md shadow-sm p-2"
               value={selectedRole}
               onChange={(e) => setSelectedRole(e.target.value)}
             >
@@ -85,7 +99,7 @@ const UserList = () => {
             </select>
           </div>
           <div className="flex items-center">
-            <label htmlFor="search" className="text-gray-700 mr-2">Search by Name:</label>
+            <label htmlFor="search" className="text-gray-700 font-medium mr-2">Search by Name:</label>
             <input
               id="search"
               type="text"
@@ -96,22 +110,22 @@ const UserList = () => {
             />
           </div>
         </div>
-        <div className="overflow-auto">
+        <div className="overflow-x-auto">
           <table className="w-full bg-white border border-gray-200 rounded-lg shadow-md">
             <thead>
               <tr className="bg-gray-200 border-b">
-                <th className="py-2 px-4 text-left text-gray-600 font-semibold">ID</th>
-                <th className="py-2 px-4 text-left text-gray-600 font-semibold">Name</th>
-                <th className="py-2 px-4 text-left text-gray-600 font-semibold">Email</th>
-                <th className="py-2 px-4 text-left text-gray-600 font-semibold">Role</th>
-                <th className="py-2 px-4 text-left text-gray-600 font-semibold">Mobile</th>
-                <th className="py-2 px-4 text-left text-gray-600 font-semibold">Status</th>
-                <th className="py-2 px-4 text-left text-gray-600 font-semibold">Actions</th>
+                <th className="py-3 px-4 text-left text-gray-700 font-medium">ID</th>
+                <th className="py-3 px-4 text-left text-gray-700 font-medium">Name</th>
+                <th className="py-3 px-4 text-left text-gray-700 font-medium">Email</th>
+                <th className="py-3 px-4 text-left text-gray-700 font-medium">Role</th>
+                <th className="py-3 px-4 text-left text-gray-700 font-medium">Mobile</th>
+                <th className="py-3 px-4 text-left text-gray-700 font-medium">Status</th>
+                <th className="py-3 px-4 text-left text-gray-700 font-medium">Actions</th>
               </tr>
             </thead>
-            <tbody className='divide-y'>
+            <tbody className="divide-y">
               {filteredUsers.map((user, index) => (
-                <tr key={user._id} className="border-b hover:bg-gray-50">
+                <tr key={user._id} className="hover:bg-gray-50 transition-colors">
                   <td className="py-2 px-4">{index + 1}</td>
                   <td className="py-2 px-4">{user.name}</td>
                   <td className="py-2 px-4">{user.email}</td>
@@ -119,21 +133,21 @@ const UserList = () => {
                   <td className="py-2 px-4">{user.phone}</td>
                   <td className="py-2 px-4">
                     {user.isActive ? (
-                      <span className="text-green-500">Active</span>
+                      <span className="text-green-500 font-medium">Active</span>
                     ) : (
-                      <span className="text-red-500">Inactive</span>
+                      <span className="text-red-500 font-medium">Inactive</span>
                     )}
                   </td>
                   <td className="py-2 px-4">
                     <div className="flex space-x-2">
                       <Link to={`/admin/users/edit-user/${user._id}`}>
-                        <button className="bg-yellow-500 text-white px-2 py-1 rounded-md shadow-md hover:bg-yellow-600">
+                        <button className="bg-yellow-500 text-white px-3 py-1 rounded-md shadow-md hover:bg-yellow-600 transition-colors">
                           Edit
                         </button>
                       </Link>
                       <button
                         onClick={() => handleDelete(user._id)}
-                        className="bg-red-500 text-white px-2 py-1 rounded-md shadow-md hover:bg-red-600"
+                        className="bg-red-500 text-white px-3 py-1 rounded-md shadow-md hover:bg-red-600 transition-colors"
                       >
                         Delete
                       </button>

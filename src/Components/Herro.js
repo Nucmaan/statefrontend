@@ -1,46 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
-// Custom Arrow Component
-const CustomPrevArrow = ({ className, onClick }) => (
-  <div
-    className={`${className} custom-arrow custom-prev`}
-    onClick={onClick}
-  >
-    &#10094; {/* Left Arrow Unicode */}
-  </div>
-);
-
-const CustomNextArrow = ({ className, onClick }) => (
-  <div
-    className={`${className} custom-arrow custom-next`}
-    onClick={onClick}
-  >
-    &#10095; {/* Right Arrow Unicode */}
-  </div>
-);
 
 function Herro() {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    prevArrow: <CustomPrevArrow />,
-    nextArrow: <CustomNextArrow />,
-  };
-
-  // Image URLs
-  const images = [
-    "https://images.pexels.com/photos/7534285/pexels-photo-7534285.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "https://images.pexels.com/photos/4247768/pexels-photo-4247768.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "https://images.pexels.com/photos/6140198/pexels-photo-6140198.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "https://images.pexels.com/photos/6140198/pexels-photo-6140198.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  ];
+  // Image URL
+  const imageUrl = "https://d1y9xwfspocdum.cloudfront.net/story1/2246/4d2c3609329fa253d7a4e9e56b106dee8870_1280x720.jpg";
 
   return (
     <div className="pb-5 pt-4 px-5 bg-gray-50 md:pt-2">
@@ -65,40 +28,10 @@ function Herro() {
         </div>
         <div className="relative flex justify-center">
           <div className="w-full h-auto object-cover rounded-md shadow-lg overflow-hidden">
-            <Slider {...settings}>
-              {images.map((url, index) => (
-                <div key={index}>
-                  <img src={url} alt={`${index}`} className="w-full h-auto object-cover" />
-                </div>
-              ))}
-            </Slider>
+            <img src={imageUrl} alt="Hero" className="w-full h-full object-cover" />
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        /* Custom Arrow Styles */
-        .custom-arrow {
-          font-size: 24px; /* Smaller size for the arrow */
-          color: white; /* Arrow color */
-          z-index: 1000; /* Ensure arrows are above other elements */
-          cursor: pointer;
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .custom-prev {
-          left: 10px; /* Position from the left */
-        }
-
-        .custom-next {
-          right: 10px; /* Position from the right */
-        }
-      `}</style>
     </div>
   );
 }

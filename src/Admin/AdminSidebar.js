@@ -57,10 +57,10 @@ function AdminSidebar() {
           <FaUsers size={30} className="mr-3" />
           <span className={`${!isOpen && 'hidden'}`}>User List</span>
         </Link>
-        <Link to="/admin/setting" className="flex items-center p-2 text-base hover:bg-gray-700">
-          <FaCog size={30} className="mr-3" />
-          <span className={`${!isOpen && 'hidden'}`}>Settings</span>
-        </Link>
+        <Link to="/admin/social-Media-Links" className="flex items-center p-2 text-base hover:bg-gray-700">
+        <FaCog size={30} className="mr-3" />
+        <span className={`${!isOpen && 'hidden'}`}>Settings</span>
+      </Link>
         <Link to="/admin/report" className="flex items-center p-2 text-base hover:bg-gray-700">
           <FaChartLine size={30} className="mr-3" />
           <span className={`${!isOpen && 'hidden'}`}>Reports</span>

@@ -1,51 +1,47 @@
 import React from "react";
-import { HiArrowLongRight } from "react-icons/hi2";
+import { HiArrowRight } from "react-icons/hi";
 
 function Search() {
   return (
-    <div className="py-10 bg-gray-50  ">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-5 ">
-        <div className="flex flex-col p-4 ">
-          <div>
-            <h1 className="mb-2 font-bold text-2xl">Landlord</h1>
-          </div>
-          <div>
-            <p className="mb-2 font-medium">
+    <div className="py-10 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Landlord Section */}
+          <div className="flex flex-col p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+            <h2 className="text-2xl font-bold text-black mb-2">Landlord</h2>
+            <p className="text-gray-700 mb-4 font-medium">
               Rent out with up to 20x Better Protection
             </p>
+            <div className="flex items-center justify-between bg-black text-white p-4 rounded-lg cursor-pointer hover:bg-gray-900 transition-colors duration-300">
+              <span className="text-lg font-semibold">POST PROPERTY FREE+</span>
+              <HiArrowRight size={30} />
+            </div>
           </div>
-          <div className="flex justify-between items-center bg-black text-white p-3">
-            <h1 className=" ">POST PROPERTY FREE+</h1>
-            <HiArrowLongRight className="" size={40} />
+
+          {/* Tenant Section */}
+          <div className="flex flex-col p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+            <h2 className="text-2xl font-bold text-black mb-2">Tenant</h2>
+            <p className="text-gray-700 mb-4 font-medium">
+              Rent a Home with Zero Deposit
+            </p>
+            <div className="flex items-center justify-between bg-black text-white p-4 rounded-lg cursor-pointer hover:bg-gray-900 transition-colors duration-300">
+              <span className="text-lg font-semibold">Search Property Now</span>
+              <HiArrowRight size={30} />
+            </div>
+          </div>
+
+          {/* New Launches Section */}
+          <div className="flex flex-col p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+            <h2 className="text-2xl font-bold text-black mb-2">New Launches</h2>
+            <p className="text-gray-700 mb-4 font-medium">
+              Explore Upcoming Projects
+            </p>
+            <div className="flex items-center justify-between bg-black text-white p-4 rounded-lg cursor-pointer hover:bg-gray-900 transition-colors duration-300">
+              <span className="text-lg font-semibold">Buy New Property Now</span>
+              <HiArrowRight size={30} />
+            </div>
           </div>
         </div>
-
-        <div className="flex flex-col p-4  ">
-          <div>
-            <h1 className="mb-2 font-bold text-2xl">Tenant</h1>
-          </div>
-          <div>
-            <p className="mb-2 font-medium">Rent a Home with Zero Deposit</p>
-          </div>
-          <div className="flex justify-between items-center bg-black text-white p-3">
-            <h1 className=" ">Search Property Now</h1>
-            <HiArrowLongRight className="" size={40} />
-          </div>
-        </div>
-
-        <div className="flex flex-col p-4">
-          <div>
-            <h1 className="mb-2 font-bold text-2xl">New Launches</h1>
-          </div>
-          <div>
-            <p className="mb-2 font-medium">Explore Upcoming Projects</p>
-          </div>
-          <div className="flex justify-between items-center bg-black text-white p-3">
-            <h1 className=" ">Buy New Property Now</h1>
-            <HiArrowLongRight className="" size={40} />
-          </div>
-        </div>
-
       </div>
     </div>
   );
