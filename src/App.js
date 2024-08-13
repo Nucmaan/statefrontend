@@ -126,7 +126,7 @@ function App() {
               <Route path="/agent/property-list/add-property" element={<AgentAddListing />} />
             </Route>
             <Route path="/agent/property-list/edit-property/:id" element={<AgentEditListing />} />
-            <Route path="/agent/Bookings/" element={<AgentBookings />} />
+            <Route path="/agent/Bookings" element={<AgentBookings />} />
             <Route path="/agent/Bookings/House-Details/:id" element={<AgentViewHouseDetails />} />
             <Route path="/agent/Booking/update-Booking/:id" element={<EditBooking />} />
             <Route path="/agent/Booking/Add-Contract/:id" element={<AddContract />} />
