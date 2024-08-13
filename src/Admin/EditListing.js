@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import AdminSidebar from './AdminSidebar';
-import axios from 'axios';
 import { enqueueSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
 import { 
@@ -10,6 +9,8 @@ import {
   UpdatePropertySuccess,
   UpdatePropertyFailure
 } from '../Redux/PropertyList/PropertySlice.js';
+import api from "../api";
+
 
 const EditListing = () => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const EditListing = () => {
   useEffect(() => {
     const fetchProperty = async () => {
       try {
-        const response = await axios.get(`/api/MyHome2U/property/getsingleproperty/${id}`);
+        const response = await api.get(`/api/MyHome2U/property/getsingleproperty/${id}`);
         const property = response.data.property;
         setFormData({
           title: property.title,
@@ -89,7 +90,7 @@ const EditListing = () => {
     setIsLoading(true);
     dispatch(UpdatePropertyStart());
     try {
-      const response = await axios.put(
+      const response = await api.put(
         `/api/MyHome2U/property/updatesingleproperty/${id}`,
         {
           ...formData,

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import AdminSidebar from './AdminSidebar'; // Adjust the path as needed
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { userUpdateStarted, userUpdateSuccess, userUpdateFailure } from "../Redux/User/UserSlice";
 import { useDispatch, useSelector } from 'react-redux'; // Added useSelector
+import api from "../api";
+
 
 const EditAdminProfile = () => {
   const [name, setName] = useState("");
@@ -41,7 +42,7 @@ const EditAdminProfile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`/api/MyHome2U/user/getSingleUser/${id}`);
+        const response = await api.get(`/api/MyHome2U/user/getSingleUser/${id}`);
         if (response.status === 200) {
           const userData = response.data.user;
           setName(userData.name);
@@ -76,7 +77,7 @@ const EditAdminProfile = () => {
 
     try {
       dispatch(userUpdateStarted());
-      const response = await axios.put(`/api/MyHome2U/user/updateSingleUser/${id}`, {
+      const response = await api.put(`/api/MyHome2U/user/updateSingleUser/${id}`, {
         name,
         email,
         password,

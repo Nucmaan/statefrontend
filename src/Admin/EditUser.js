@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import AdminSidebar from './AdminSidebar'; // Adjust the path as needed
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
+import api from "../api";
+
 
 function EditUser() {
   
@@ -38,7 +39,7 @@ function EditUser() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`/api/MyHome2U/user/getSingleUser/${id}`);
+        const response = await api.get(`/api/MyHome2U/user/getSingleUser/${id}`);
         if (response.status === 200) {
           const userData = response.data.user;
           setName(userData.name);
@@ -74,7 +75,7 @@ function EditUser() {
     setLoading(true);
 
     try {
-      const response = await axios.put(`/api/MyHome2U/user/updateSingleUser/${id}`, {
+      const response = await api.put(`/api/MyHome2U/user/updateSingleUser/${id}`, {
         name,
         email,
         password,

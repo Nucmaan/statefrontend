@@ -4,7 +4,8 @@ import AdminSidebar from "./AdminSidebar";
 import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
+import api from "../api";
+
 import {
   PropertyListStart,
   PropertyListSuccess,
@@ -25,7 +26,7 @@ const Listings = () => {
   const fetchProperties = useCallback(async () => {
     dispatch(PropertyListStart());
     try {
-      const response = await axios.get("/api/MyHome2U/property/getallproperty");
+      const response = await api.get("/api/MyHome2U/property/getallproperty");
       dispatch(PropertyListSuccess(response.data.properties));
     } catch (error) {
       dispatch(PropertyListFailure("Failed to fetch properties"));
@@ -40,7 +41,7 @@ const Listings = () => {
   const deleteProperty = async (id) => {
     dispatch(DeletePropertyStart());
     try {
-      const response = await axios.delete(`/api/MyHome2U/property/deleteproperty/${id}`);
+      const response = await api.delete(`/api/MyHome2U/property/deleteproperty/${id}`);
       if (response.status === 200) {
         dispatch(DeletePropertySuccess(id));
         enqueueSnackbar("Property deleted successfully", { variant: "success" });

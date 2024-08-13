@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminSidebar from "./AdminSidebar";
-import axios from "axios";
 import { enqueueSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
 import { 
@@ -9,6 +8,8 @@ import {
   AddPropertySuccess, 
   AddPropertyFailure 
 } from "../Redux/PropertyList/PropertySlice.js";
+import api from "../api";
+
 
 const AddListing = () => {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ const AddListing = () => {
     setIsLoading(true);
     dispatch(AddPropertyStart());
     try {
-      const response = await axios.post(
+      const response = await api.post(
         '/api/MyHome2U/property/addproperty',
         {
           title,

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import AdminSidebar from './AdminSidebar'; // Adjust the path as needed
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
+import api from "../api";
+
 
 function AddUser() {
   const [name, setName] = useState("");
@@ -44,7 +45,7 @@ function AddUser() {
     setLoading(true); // Set loading to true
 
     try {
-      const response = await axios.post("/api/MyHome2U/user/register", {
+      const response = await api.post("/api/MyHome2U/user/register", {
         name,
         email,
         password,
