@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import api from "../api"; 
-
 import Swal from 'sweetalert2';
 import { FaMapMarkerAlt, FaBed, FaBath, FaParking, FaDollarSign, FaHome } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
@@ -12,9 +11,9 @@ function ViewProperty() {
   const [processing, setProcessing] = useState(false);
   const { id } = useParams();
   const [visitingDate, setVisitingDate] = useState(null);
-
   const { user } = useSelector((state) => state.user);
-  
+  const [property, setProperty] = useState(null);
+
   const BookNow = () => {
     setBook(true);
   };
@@ -23,13 +22,12 @@ function ViewProperty() {
     setBook(false);
   };
 
-  const [property, setProperty] = useState(null);
-
   const getProperty = useCallback(async () => {
     try {
+      // Show loading alert
       Swal.fire({
         title: 'Loading...',
-        text: 'Please wait ........',
+        text: 'Please wait while we fetch the property details.',
         icon: 'info',
         allowOutsideClick: false,
         didOpen: () => {
@@ -39,8 +37,20 @@ function ViewProperty() {
 
       const response = await api.get(`/api/MyHome2U/property/getsingleproperty/${id}`);
       setProperty(response.data.property);
+      // Close loading alert after fetching data
+      Swal.close();
     } catch (error) {
-      console.log(error);
+      // Close loading alert in case of error
+      Swal.close();
+
+      // Show error alert
+      Swal.fire({
+        icon: 'error',
+        title: 'server error',  
+        text: 'Please try again later.',
+        showConfirmButton: true,
+      });
+
     }
   }, [id]);
 
@@ -96,6 +106,7 @@ function ViewProperty() {
 
   return (
     <div className="container mx-auto p-4">
+      {/* Property Details */}
       <div className="w-full max-w-4xl mx-auto mb-8">
         <img
           src={property.image.url}
@@ -166,6 +177,7 @@ function ViewProperty() {
         </div>
       </div>
 
+      {/* Booking Confirmation Modal */}
       {Book && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-5 z-50">
           <div className="relative text-gray-900 bg-white p-8 rounded-md shadow-lg max-w-lg w-full">
@@ -206,12 +218,11 @@ function ViewProperty() {
               </div>
             </div>
             <button
-              type="submit"
-              className={`mt-6 px-6 py-3 text-white rounded-md w-full ${processing ? 'bg-gray-600' : 'bg-green-600'} hover:${processing ? 'bg-gray-700' : 'bg-green-700'} transition-colors duration-300`}
               onClick={handleBooking}
               disabled={processing}
+              className="bg-black text-white mt-6 py-2 px-6 rounded-md w-full hover:bg-gray-800 transition-colors duration-300"
             >
-              {processing ? 'Processing...' : 'Confirm Booking'}
+              {processing ? "Processing..." : "Confirm Booking"}
             </button>
           </div>
         </div>

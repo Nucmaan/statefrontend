@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import { useNavigate, useParams } from "react-router-dom";
+import api from "../api"; 
 
 function ResetPassword() {
   const [password, setPassword] = useState('');
@@ -15,15 +15,25 @@ function ResetPassword() {
     setLoading(true);
 
     try {
-      const response = await axios.post(`/api/MyHome2U/user/changePassword/${token}`, { newPassword: password });
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait ..........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
+      const response = await api.post(`/api/MyHome2U/user/changePassword/${token}`, { newPassword: password });
       if (response.status === 200) {
         enqueueSnackbar('Password changed successfully.', { variant: 'success' });
         navigate('/login'); // Redirect to login page after password reset success.
       } else {
         enqueueSnackbar(response.data.message, { variant: 'error' });
       }
+      Swal.close();
     } catch (error) {
-      console.error("Client-side error:", error);
       if (error.response && error.response.data && error.response.data.message) {
         enqueueSnackbar(error.response.data.message, { variant: 'error' });
       } else {
