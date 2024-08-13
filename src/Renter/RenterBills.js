@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useState, useMemo } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { useTable, useSortBy, useFilters, useGlobalFilter, usePagination } from 'react-table';
 import SideBar from "./SideBar";
+import Swal from "sweetalert2";
+import api from "../api";
+
 
 function GlobalFilter({ globalFilter, setGlobalFilter }) {
   return (
@@ -24,10 +26,15 @@ function RenterBills() {
 
   const fetchBills = useCallback(async () => {
     try {
-      const response = await axios.get(`/api/MyHome2U/bills/getUserBills/${user._id}`);
+      const response = await api.get(`/api/MyHome2U/bills/getUserBills/${user._id}`);
       setBills(response.data.bills);
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'server error',
+        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
+        showConfirmButton: true,
+      });
     }
   }, [user._id]);
 

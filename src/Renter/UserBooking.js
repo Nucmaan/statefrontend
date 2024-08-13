@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import SideBar from './SideBar';
-import axios from 'axios';
 import { useSelector } from 'react-redux';
+import api from "../api";
+import Swal from 'sweetalert2';
 
 const UserBooking = () => {
   const [userBooking, setUserBooking] = useState([]);
@@ -10,7 +11,7 @@ const UserBooking = () => {
 
   const fetchUserBookings = useCallback(async () => {
     try {
-      const response = await axios.get(`/api/MyHome2U/Booking/GetUserBookings/${user._id}`);
+      const response = await api.get(`/api/MyHome2U/Booking/GetUserBookings/${user._id}`);
       const data = response.data.bookings;
 
       const filteredBookings = data.filter(booking =>
@@ -25,7 +26,12 @@ const UserBooking = () => {
 
       setUserBooking(filteredBookings);
     } catch (error) {
-      console.error("Error fetching user bookings:", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'server error',
+        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
+        showConfirmButton: true,
+      });
     }
   }, [user._id]);
 
@@ -36,12 +42,17 @@ const UserBooking = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to cancel this booking?')) {
       try {
-        await axios.delete(`/api/MyHome2U/Booking/DeleteBooking/${id}`);
+        await api.delete(`/api/MyHome2U/Booking/DeleteBooking/${id}`);
         setUserBooking((prevBookings) =>
           prevBookings.filter((booking) => booking._id !== id)
         );
       } catch (error) {
-        console.error("Error deleting booking:", error);
+        Swal.fire({
+          icon: 'error',
+          title: 'server error',
+          text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
+          showConfirmButton: true,
+        });
       }
     }
   };

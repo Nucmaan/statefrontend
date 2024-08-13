@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { FaDownload } from "react-icons/fa"; // Import the download icon
 import SideBar from "./SideBar";
+import Swal from "sweetalert2";
+import api from "../api";
 
 function RenterPayments() {
   const [bills, setBills] = useState([]);
@@ -11,11 +12,16 @@ function RenterPayments() {
 
   const fetchBills = useCallback(async () => {
     try {
-      const response = await axios.get(`/api/MyHome2U/bills/getUserBills/${user._id}`);
+      const response = await api.get(`/api/MyHome2U/bills/getUserBills/${user._id}`);
       const paidBills = response.data.bills.filter(bill => bill.status === 'Paid');
       setBills(paidBills);
     } catch (error) {
-      console.error("Error fetching bills:", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'server error',
+        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
+        showConfirmButton: true,
+      });
     }
   }, [user._id]);
 

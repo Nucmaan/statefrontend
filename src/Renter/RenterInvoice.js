@@ -3,7 +3,9 @@ import SideBar from "./SideBar";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import Swal from "sweetalert2";
+import api from "../api";
+
 
 function RenterInvoice() {
   const [invoiceInfo, setInvoiceInfo] = useState(null);
@@ -13,11 +15,16 @@ function RenterInvoice() {
   useEffect(() => {
     const fetchBillInfo = async () => {
       try {
-        const response = await axios.get(`/api/MyHome2U/bills/GetSingleBill/${id}`);
+        const response = await api.get(`/api/MyHome2U/bills/GetSingleBill/${id}`);
         console.log(response.data.bill);
         setInvoiceInfo(response.data.bill);
       } catch (error) {
-        console.error(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'server error',
+          text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
+          showConfirmButton: true,
+        });
       }
     };
 

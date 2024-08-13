@@ -126,7 +126,7 @@ const EditUserProfile = () => {
       <SideBar />
       <div className="flex-1 bg-gray-100 p-6">
         <div className="bg-white shadow-md rounded-lg p-6 max-w-3xl mx-auto">
-          <h1 className="text-2xl font-semibold mb-4">Edit Admin Profile</h1>
+          <h1 className="text-2xl font-semibold mb-4">Edit User Profile</h1>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="name" className="block text-gray-700">Name</label>

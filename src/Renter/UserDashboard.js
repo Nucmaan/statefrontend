@@ -37,7 +37,7 @@ const UserDashboard = () => {
           <h1 className="text-3xl font-bold text-gray-800 mb-6">User Dashboard</h1>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* User Status Card */}
+          
             <div className="bg-green-100 shadow-md rounded-lg p-4 flex items-center">
               <FaUserCheck className="text-green-500 text-3xl mr-4" />
               <div>

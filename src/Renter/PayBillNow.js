@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { FaDollarSign, FaPhoneAlt, FaUser, FaMoneyBillWave } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import SideBar from "./SideBar";
+import Swal from "sweetalert2";
+import api from "../api"; 
+
 
 function PayBillNow() {
   const [amount, setAmount] = useState("");
@@ -22,7 +24,7 @@ function PayBillNow() {
   const fetchPayment = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`/api/MyHome2U/bills/GetSingleBill/${id}`);
+      const response = await api.get(`/api/MyHome2U/bills/GetSingleBill/${id}`);
       const payment = response.data.bill;
       setAmount(payment.amount);
       setUtilities(payment.utilities);
@@ -32,7 +34,12 @@ function PayBillNow() {
       setUserMobile(payment.user.phone);
       setUserName(payment.user.name);
     } catch (error) {
-      setError("Failed to fetch bill details.");
+      Swal.fire({
+        icon: 'error',
+        title: 'server error',
+        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
+        showConfirmButton: true,
+      });
     } finally {
       setLoading(false);
     }
@@ -48,7 +55,7 @@ function PayBillNow() {
     setError("");
 
     try {
-      const response = await axios.put(`/api/MyHome2U/bills/updateUserBill/${id}`, {
+      const response = await api.put(`/api/MyHome2U/bills/updateUserBill/${id}`, {
         paymentMethod,
       });
       if (response.status === 200) {
