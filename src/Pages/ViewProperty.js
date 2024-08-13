@@ -42,7 +42,6 @@ function ViewProperty() {
     } catch (error) {
       // Close loading alert in case of error
       Swal.close();
-
       // Show error alert
       Swal.fire({
         icon: 'error',

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from 'axios';
 import { useSnackbar } from 'notistack';
+import api from "../api"; 
 
 function ForgetPassword() {
   const [email, setEmail] = useState('');
@@ -12,22 +12,35 @@ function ForgetPassword() {
     setLoading(true);
 
     try {
-      const response = await axios.post('/api/MyHome2U/user/ForgetPassword', { email });
+
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait..........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
+      const response = await api.post('/api/MyHome2U/user/ForgetPassword', { email });
       if (response.status === 200) {
-        console.log(response.data.user);
+        Swal.close();
         enqueueSnackbar('We sent a link to your email. Please check your inbox.', { variant: 'success' });
       } else {
-        console.log(response.data.message);
+        Swal.close();
         enqueueSnackbar(response.data.message, { variant: 'error' });
       }
     } catch (error) {
-      console.error(error);
       if (error.response && error.response.data && error.response.data.message) {
+        Swal.close();
         enqueueSnackbar(error.response.data.message, { variant: 'error' });
       } else {
+        Swal.close();
         enqueueSnackbar('Unable to reset your password now. Please try again later.', { variant: 'error' });
       }
     } finally {
+      Swal.close();
       setLoading(false);
     }
   }
