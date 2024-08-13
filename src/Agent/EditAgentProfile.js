@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import AgentSidebar from './AgentSidebar'; // Adjust the path as needed
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { userUpdateStarted, userUpdateSuccess, userUpdateFailure } from "../Redux/User/UserSlice";
 import { useDispatch, useSelector } from 'react-redux'; // Added useSelector
+import api from "../api";
 
 const EditAgentProfile = () => {
   const [name, setName] = useState("");
@@ -41,7 +41,7 @@ const EditAgentProfile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`/api/MyHome2U/user/getSingleUser/${id}`);
+        const response = await api.get(`/api/MyHome2U/user/getSingleUser/${id}`);
         if (response.status === 200) {
           const userData = response.data.user;
           setName(userData.name);
@@ -54,7 +54,6 @@ const EditAgentProfile = () => {
           enqueueSnackbar(response.data.message, { variant: "error" });
         }
       } catch (error) {
-        console.error(error);
         if (error.response && error.response.data && error.response.data.message) {
           enqueueSnackbar(error.response.data.message, { variant: "error" });
         } else {
@@ -76,7 +75,7 @@ const EditAgentProfile = () => {
 
     try {
       dispatch(userUpdateStarted());
-      const response = await axios.put(`/api/MyHome2U/user/updateSingleUser/${id}`, {
+      const response = await api.put(`/api/MyHome2U/user/updateSingleUser/${id}`, {
         name,
         email,
         password,
@@ -93,7 +92,6 @@ const EditAgentProfile = () => {
         enqueueSnackbar(response.data.message, { variant: "error" });
       }
     } catch (error) {
-      console.error(error);
       dispatch(userUpdateFailure("User update failed"));
       if (error.response && error.response.data && error.response.data.message) {
         enqueueSnackbar(error.response.data.message, { variant: "error" });
@@ -108,7 +106,7 @@ const EditAgentProfile = () => {
       <AgentSidebar />
       <div className="flex-1 bg-gray-100 p-6">
         <div className="bg-white shadow-md rounded-lg p-6 max-w-3xl mx-auto">
-          <h1 className="text-2xl font-semibold mb-4">Edit Admin Profile</h1>
+          <h1 className="text-2xl font-semibold mb-4">Edit Agent Profile</h1>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="name" className="block text-gray-700">Name</label>
