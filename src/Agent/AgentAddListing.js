@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AgentSidebar from "./AgentSidebar";
-import axios from "axios";
 import { enqueueSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,13 +8,15 @@ import {
   AddPropertySuccess,
   AddPropertyFailure,
 } from "../Redux/PropertyList/PropertySlice.js";
+import api from "../api";
+import Swal from "sweetalert2";
+
 
 const AgentAddListing = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  // State variables for each field
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [address, setAddress] = useState("");
@@ -52,7 +53,16 @@ const AgentAddListing = () => {
     setIsLoading(true);
     dispatch(AddPropertyStart());
     try {
-      const response = await axios.post(
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait.........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      const response = await api.post(
         "/api/MyHome2U/property/addproperty",
         {
           title,
@@ -70,7 +80,7 @@ const AgentAddListing = () => {
           status,
         }
       );
-
+      Swal.close();
       if (response.status === 201) {
         dispatch(AddPropertySuccess(response.data.property));
         enqueueSnackbar("Property added successfully", { variant: "success" });

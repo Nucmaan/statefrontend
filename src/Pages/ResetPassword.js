@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSnackbar } from 'notistack';
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../api"; 
+import Swal from "sweetalert2";
 
 function ResetPassword() {
   const [password, setPassword] = useState('');

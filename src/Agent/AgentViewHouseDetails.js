@@ -1,19 +1,37 @@
-import axios from "axios";
 import React, { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import AgentSidebar from './AgentSidebar';
 import { FaMapMarkerAlt, FaBed, FaBath, FaCar, FaDollarSign } from 'react-icons/fa';
+import api from "../api";
+import Swal from "sweetalert2";
+
 
 function AgentViewHouseDetails() {
   const { id } = useParams();
   const [property, setProperty] = useState(null);
 
   const getProperty = useCallback(async () => {
+    
     try {
-      const response = await axios.get(`/api/MyHome2U/property/getsingleproperty/${id}`);
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait.........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      const response = await api.get(`/api/MyHome2U/property/getsingleproperty/${id}`);
+      Swal.close();
       setProperty(response.data.property);
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'server error',
+        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
+        showConfirmButton: true,
+      });
     }
   }, [id]);
 

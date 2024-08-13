@@ -9,6 +9,7 @@ import AgentSidebar from "./AgentSidebar";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from 'sweetalert2'; // Import SweetAlert2
+import api from "../api";
 
 function AddBills() {
   const [userId, setUserId] = useState("");
@@ -24,7 +25,7 @@ function AddBills() {
 
   const fetchContract = useCallback(async () => {
     try {
-      const response = await axios.get(
+      const response = await api.get(
         `/api/MyHome2U/contract/getSingleContract/${id}`
       );
       const contract = response.data.contract;
@@ -60,7 +61,16 @@ function AddBills() {
     }
 
     try {
-      const response = await axios.post(
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait.........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      const response = await api.post(
         "/api/MyHome2U/bills/AddBill",
         {
           property: propertyId,
@@ -72,6 +82,7 @@ function AddBills() {
           Description: description
         }
       );
+      Swal.close();
 
       if (response.status === 200) {
         Swal.fire({

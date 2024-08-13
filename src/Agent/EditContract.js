@@ -13,8 +13,9 @@ import {
 } from "react-icons/fa";
 import AgentSidebar from "./AgentSidebar";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import Swal from "sweetalert2";
+import api from "../api";
+
 
 function EditContract() {
   const [name, setName] = useState("");
@@ -39,7 +40,17 @@ function EditContract() {
 
   const fetchContract = useCallback(async () => {
     try {
-      const response = await axios.get(`/api/MyHome2U/contract/getSingleContract/${id}`);
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait.........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      const response = await api.get(`/api/MyHome2U/contract/getSingleContract/${id}`);
+      Swal.close();
       const contract = response.data.contract;
 
       setName(contract.user.name);
@@ -62,7 +73,12 @@ function EditContract() {
       setDeposit(contract.deposit);
       setStatus(contract.status);
     } catch (error) {
-      console.error(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'server error',
+        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
+        showConfirmButton: true,
+      });
     }
   }, [id]);
 
@@ -73,13 +89,24 @@ function EditContract() {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`/api/MyHome2U/contract/updateContract/${id}`, {
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait.........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      const response = await api.put(`/api/MyHome2U/contract/updateContract/${id}`, {
         startDate,
         endDate,
         monthlyRent,
         deposit,
         status,
       });
+
+      Swal.close();
 
       if (response.status === 200) {
         Swal.fire({
@@ -90,11 +117,11 @@ function EditContract() {
         navigate("/agent/contract");
       }
     } catch (error) {
-      console.error(error);
       Swal.fire({
         icon: 'error',
-        title: 'Update Failed',
-        text: 'Failed to update the contract. Please try again.',
+        title: 'server error',
+        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
+        showConfirmButton: true,
       });
     }
   };

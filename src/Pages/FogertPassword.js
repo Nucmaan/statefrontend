@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSnackbar } from 'notistack';
 import api from "../api"; 
+import Swal from "sweetalert2";
 
 function ForgetPassword() {
   const [email, setEmail] = useState('');

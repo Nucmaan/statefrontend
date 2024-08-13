@@ -2,8 +2,11 @@ import React, { useState, useEffect, useCallback } from "react";
 import AgentSidebar from "./AgentSidebar";
 import { MdOutlineAdd } from "react-icons/md";
 import { useSelector } from "react-redux";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import api from "../api";
+import Swal from "sweetalert2";
+
+
 
 const BillsAgent = () => {
   const [ownerContracts, setOwnerContracts] = useState([]);
@@ -12,15 +15,30 @@ const BillsAgent = () => {
 
   const fetchOwnerContracts = useCallback(async () => {
     try {
-      const response = await axios.get(
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait.........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      const response = await api.get(
         `/api/MyHome2U/contract/getOwnerContracts/${user._id}`
       );
       const activeContracts = response.data.contracts.filter(
         (contract) => contract.status === "Active"
       );
+      Swal.close();
       setOwnerContracts(activeContracts);
     } catch (error) {
-      console.error("Error fetching owner contracts:", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'server error',
+        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
+        showConfirmButton: true,
+      });
     }
   }, [user._id]);
 
@@ -44,7 +62,7 @@ const BillsAgent = () => {
                   <th className="py-3 px-4 text-left text-gray-600 font-medium">ID</th>
                   <th className="py-3 px-4 text-left text-gray-600 font-medium">Name</th>
                   <th className="py-3 px-4 text-left text-gray-600 font-medium">Status</th>
-                  <th className="py-3 px-4 text-center text-gray-600 font-medium">Actions</th>
+                  <th className="py-3 px-4 text-center text-gray-600 font-medium">Add Bill</th>
                 </tr>
               </thead>
               <tbody>

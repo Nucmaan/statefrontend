@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import AgentSidebar from "./AgentSidebar";
+import api from "../api";
+import Swal from "sweetalert2";
+
 
 function AgentInvoice() {
   const [invoiceInfo, setInvoiceInfo] = useState(null);
@@ -13,11 +15,25 @@ function AgentInvoice() {
   useEffect(() => {
     const fetchBillInfo = async () => {
       try {
-        const response = await axios.get(`/api/MyHome2U/bills/GetSingleBill/${id}`);
-        console.log(response.data.bill);
+        Swal.fire({
+          title: 'Loading...',
+          text: 'Please wait.........',
+          icon: 'info',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+        const response = await api.get(`/api/MyHome2U/bills/GetSingleBill/${id}`);
+        Swal.close();
         setInvoiceInfo(response.data.bill);
       } catch (error) {
-        console.error(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'server error',
+          text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
+          showConfirmButton: true,
+        });
       }
     };
 

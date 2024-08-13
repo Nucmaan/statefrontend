@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import AgentSidebar from "./AgentSidebar";
 import { useSelector } from "react-redux";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { FaDownload } from "react-icons/fa"; // Import the download icon
+import api from "../api";
+import Swal from "sweetalert2";
+
 
 
 function AgentBills() {
@@ -12,13 +14,28 @@ function AgentBills() {
 
   const fetchBills = useCallback(async () => {
     try {
-      const response = await axios.get(`/api/MyHome2U/bills/GetAllBills`);
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait.........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      const response = await api.get(`/api/MyHome2U/bills/GetAllBills`);
+      Swal.close();
       const filteredBills = response.data.bill.filter(
         (bill) => bill.owner._id === user._id && bill.status === 'Paid'
       );
       setBills(filteredBills);
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'server error',
+        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
+        showConfirmButton: true,
+      });
     }
   }, [user._id]);
 

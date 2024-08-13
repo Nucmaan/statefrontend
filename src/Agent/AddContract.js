@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { FaUser, FaEnvelope, FaPhone, FaHome, FaCity, FaBath, FaBed, FaDollarSign, FaCalendarAlt } from 'react-icons/fa';
 import AgentSidebar from './AgentSidebar';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 import Swal from 'sweetalert2';
+import api from "../api";
 
 function AddContract() {
   const [userId, setUserId] = useState("");
@@ -35,7 +35,19 @@ function AddContract() {
 
   const FetchBooking = useCallback(async () => {
     try {
-      const response = await axios.get(`/api/MyHome2U/Booking/singleBookingInfo/${id}`);
+
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait.........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
+      const response = await api.get(`/api/MyHome2U/Booking/singleBookingInfo/${id}`);
+      Swal.close();
       console.log(response.data.booking);
       setName(response.data.booking.user.name);
       setUserId(response.data.booking.user._id);
@@ -56,7 +68,12 @@ function AddContract() {
       setBedrooms(response.data.booking.property.bedrooms);
 
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'server error',
+        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
+        showConfirmButton: true,
+      });
     }
   }, [id]);
 
@@ -84,7 +101,18 @@ function AddContract() {
     }
 
     try {
-      const response = await axios.post("/api/MyHome2U/contract/createContract", {
+
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait.........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
+      const response = await api.post("/api/MyHome2U/contract/createContract", {
         property: propertyId,
         user: userId,
         owner: ownerId,
@@ -95,8 +123,9 @@ function AddContract() {
         status: status
       });
 
+      Swal.close();
+
       if (response.status === 200) {
-        console.log(response.data.contract);
         Navigate("/agent/bookings");
       } else {
         Swal.fire({
@@ -109,10 +138,10 @@ function AddContract() {
     } catch (error) {
       Swal.fire({
         icon: 'error',
-        title: 'Error',
-        text: 'An error occurred while creating the contract.',
+        title: 'server error',
+        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
+        showConfirmButton: true,
       });
-      console.log(error);
     }
   };
 

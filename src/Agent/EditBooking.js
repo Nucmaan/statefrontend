@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import AgentSidebar from "./AgentSidebar";
 import { FaEdit, FaCheckCircle} from "react-icons/fa";
 import Swal from "sweetalert2";
+import api from "../api";
 
 function EditBooking() {
   const { id } = useParams();
@@ -14,11 +14,28 @@ function EditBooking() {
 
   const getBooking = useCallback(async () => {
     try {
-      const response = await axios.get(`/api/MyHome2U/Booking/getBooking/${id}`);
+
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait.........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
+      const response = await api.get(`/api/MyHome2U/Booking/getBooking/${id}`);
+      Swal.close();
       setBooking(response.data.booking);
       setStatus(response.data.booking.status); // Set initial status
     } catch (error) {
-      console.error(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'server error',
+        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
+        showConfirmButton: true,
+      });
     }
   }, [id]);
 
@@ -32,7 +49,7 @@ function EditBooking() {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`/api/MyHome2U/Booking/updateBooking/${id}`, { status });
+      await api.put(`/api/MyHome2U/Booking/updateBooking/${id}`, { status });
       Swal.fire({
         icon: 'success',
         title: 'Updated!',
@@ -40,11 +57,11 @@ function EditBooking() {
       });
       navigate("/agent/Bookings");
     } catch (error) {
-      console.error(error);
       Swal.fire({
         icon: 'error',
-        title: 'Error',
-        text: 'Error updating booking status',
+        title: 'server error',
+        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
+        showConfirmButton: true,
       });
     }
   };

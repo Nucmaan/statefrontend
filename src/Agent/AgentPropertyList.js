@@ -4,7 +4,6 @@ import AgentSidebar from "./AgentSidebar";
 import { FaPlus, FaEdit, FaTrash, FaEye } from "react-icons/fa";
 import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import Swal from "sweetalert2";
 import {
   PropertyListStart,
@@ -14,6 +13,8 @@ import {
   DeletePropertySuccess,
   DeletePropertyFailure,
 } from "../Redux/PropertyList/PropertySlice.js";
+import api from "../api";
+
 
 const AgentPropertyList = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,18 @@ const AgentPropertyList = () => {
   const fetchProperties = useCallback(async () => {
     dispatch(PropertyListStart());
     try {
-      const response = await axios.get("/api/MyHome2U/property/getallproperty");
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait.........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
+      const response = await api.get("/api/MyHome2U/property/getallproperty");
+      Swal.close();
       dispatch(PropertyListSuccess(response.data.properties));
     } catch (error) {
       dispatch(PropertyListFailure("Failed to fetch properties"));
@@ -41,7 +53,17 @@ const AgentPropertyList = () => {
   const deleteProperty = async (id) => {
     dispatch(DeletePropertyStart());
     try {
-      const response = await axios.delete(`/api/MyHome2U/property/deleteproperty/${id}`);
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait.........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      const response = await api.delete(`/api/MyHome2U/property/deleteproperty/${id}`);
+      Swal.close();
       if (response.status === 200) {
         dispatch(DeletePropertySuccess(id));
         enqueueSnackbar("Property deleted successfully", { variant: "success" });

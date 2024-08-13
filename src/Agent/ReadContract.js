@@ -5,7 +5,9 @@ import {
 
 import AgentSidebar from './AgentSidebar';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import api from "../api";
+import Swal from 'sweetalert2';
+
 
 function ReadContract() {
   const [name, setName] = useState('');
@@ -29,7 +31,17 @@ function ReadContract() {
 
   const fetchContract = useCallback(async () => {
     try {
-      const response = await axios.get(`/api/MyHome2U/contract/getSingleContract/${id}`);
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait.........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      const response = await api.get(`/api/MyHome2U/contract/getSingleContract/${id}`);
+      Swal.close();
       const contract = response.data.contract;
 
       setName(contract.user.name);
@@ -51,7 +63,12 @@ function ReadContract() {
       setDeposit(contract.deposit);
       setStatus(contract.status);
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'server error',
+        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
+        showConfirmButton: true,
+      });
     }
   }, [id]);
 

@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import AgentSidebar from './AgentSidebar';
 import { FaEdit, FaTrash, FaFileContract } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
 import Swal from 'sweetalert2';
+import api from "../api";
+
 
 const AgentBookings = () => {
   const [userBooking, setUserBooking] = useState([]);
@@ -13,13 +14,23 @@ const AgentBookings = () => {
 
   const fetchUserBookings = useCallback(async () => {
     try {
-      const response = await axios.get(`/api/MyHome2U/Booking/GetAgentBookings/${user._id}`);
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait.........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      const response = await api.get(`/api/MyHome2U/Booking/GetAgentBookings/${user._id}`);
+      Swal.close()
       const data = response.data.agentBookings;
       setUserBooking(data);
     } catch (error) {
       Swal.fire({
         title: 'Error',
-        text: 'There was an error fetching user bookings. Please try again later.',
+        text: 'You have no Booking try agin.',
         icon: 'error',
         confirmButtonText: 'OK'
       });
@@ -43,7 +54,7 @@ const AgentBookings = () => {
       });
 
       if (result.isConfirmed) {
-        const response = await axios.delete(`/api/MyHome2U/Booking/DeleteSingleBooking/${id}`);
+        const response = await api.delete(`/api/MyHome2U/Booking/DeleteSingleBooking/${id}`);
         if (response.status === 200) {
           setUserBooking(prevBookings => prevBookings.filter(booking => booking._id !== id));
 

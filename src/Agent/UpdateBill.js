@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useState } from "react";
 import { FaDollarSign, FaPhoneAlt, FaUser, FaMoneyBillWave } from "react-icons/fa";
 import AgentSidebar from "./AgentSidebar";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import Swal from 'sweetalert2';
+import api from "../api";
+
 
 function UpdateBill() {
   const [amount, setAmount] = useState("");
@@ -16,6 +17,7 @@ function UpdateBill() {
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -23,7 +25,17 @@ function UpdateBill() {
   const fetchPayment = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`/api/MyHome2U/bills/GetSingleBill/${id}`);
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait.........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      const response = await api.get(`/api/MyHome2U/bills/GetSingleBill/${id}`);
+      Swal.close();
       const payment = response.data.bill;
       setAmount(payment.amount);
       setUtilities(payment.utilities);
@@ -34,7 +46,12 @@ function UpdateBill() {
       setPhone(payment.user.phone || "");
       setPaymentDate(payment.paymentDate ? new Date(payment.paymentDate).toISOString().substr(0, 10) : new Date().toISOString().substr(0, 10));
     } catch (error) {
-      setError("Failed to fetch bill details.");
+      Swal.fire({
+        icon: 'error',
+        title: 'server error',
+        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
+        showConfirmButton: true,
+      });
     } finally {
       setLoading(false);
     }
@@ -62,7 +79,7 @@ function UpdateBill() {
     }
 
     try {
-      const response = await axios.put(`/api/MyHome2U/bills/updateBill/${id}`, {
+      const response = await api.put(`/api/MyHome2U/bills/updateBill/${id}`, {
         status,
         paymentDate: new Date(paymentDate).toISOString(),
         paymentMethod,

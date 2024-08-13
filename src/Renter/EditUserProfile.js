@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import SideBar from './SideBar'; // Adjust the path as needed
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { userUpdateStarted, userUpdateSuccess, userUpdateFailure } from "../Redux/User/UserSlice";
 import { useDispatch, useSelector } from 'react-redux'; // Added useSelector
+import api from "../api"; 
+import Swal from 'sweetalert2';
 
 const EditUserProfile = () => {
   const [name, setName] = useState("");
@@ -41,7 +42,17 @@ const EditUserProfile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`/api/MyHome2U/user/getSingleUser/${id}`);
+        Swal.fire({
+          title: 'Loading...',
+          text: 'Please wait...............',
+          icon: 'info',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });  
+        const response = await api.get(`/api/MyHome2U/user/getSingleUser/${id}`);
+        Swal.close();
         if (response.status === 200) {
           const userData = response.data.user;
           setName(userData.name);
@@ -54,7 +65,6 @@ const EditUserProfile = () => {
           enqueueSnackbar(response.data.message, { variant: "error" });
         }
       } catch (error) {
-        console.error(error);
         if (error.response && error.response.data && error.response.data.message) {
           enqueueSnackbar(error.response.data.message, { variant: "error" });
         } else {
@@ -73,10 +83,18 @@ const EditUserProfile = () => {
       enqueueSnackbar("Passwords do not match", { variant: "error" });
       return;
     }
-
     try {
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait...............',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
       dispatch(userUpdateStarted());
-      const response = await axios.put(`/api/MyHome2U/user/updateSingleUser/${id}`, {
+      const response = await api.put(`/api/MyHome2U/user/updateSingleUser/${id}`, {
         name,
         email,
         password,
@@ -85,6 +103,7 @@ const EditUserProfile = () => {
         role,
         isActive
       });
+      Swal.close();
       if (response.status === 200) {
         dispatch(userUpdateSuccess(response.data.user));
         enqueueSnackbar("Update Successful", { variant: "success" });
@@ -93,7 +112,6 @@ const EditUserProfile = () => {
         enqueueSnackbar(response.data.message, { variant: "error" });
       }
     } catch (error) {
-      console.error(error);
       dispatch(userUpdateFailure("User update failed"));
       if (error.response && error.response.data && error.response.data.message) {
         enqueueSnackbar(error.response.data.message, { variant: "error" });

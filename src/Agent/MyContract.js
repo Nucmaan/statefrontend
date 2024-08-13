@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import AgentSidebar from './AgentSidebar';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
 import Swal from 'sweetalert2';
+import api from "../api";
 
 const MyContract = () => {
   const [ownerContract, setOwnerContract] = useState([]);
@@ -14,7 +14,19 @@ const MyContract = () => {
   const fetchOwnerContracts = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`/api/MyHome2U/contract/getOwnerContracts/${user._id}`);
+
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait.........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
+      const response = await api.get(`/api/MyHome2U/contract/getOwnerContracts/${user._id}`);
+      Swal.close();
       const data = response.data.contracts;
       setOwnerContract(data);
     } catch (error) {
@@ -41,7 +53,7 @@ const MyContract = () => {
 
     if (result.isConfirmed) {
       try {
-        const response = await axios.delete(`/api/MyHome2U/contract/DeleteContract/${id}`);
+        const response = await api.delete(`/api/MyHome2U/contract/DeleteContract/${id}`);
 
         if (response.status === 200 && response.data.success) {
           Swal.fire('Deleted!', 'Your contract has been deleted.', 'success');

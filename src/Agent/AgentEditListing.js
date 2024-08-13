@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import AgentSidebar from './AgentSidebar';
-import axios from 'axios';
 import { enqueueSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
 import { 
@@ -10,6 +9,9 @@ import {
   UpdatePropertySuccess,
   UpdatePropertyFailure
 } from '../Redux/PropertyList/PropertySlice.js';
+import api from "../api";
+import Swal from 'sweetalert2';
+
 
 const AgentEditListing = () => {
   const navigate = useNavigate();
@@ -36,7 +38,19 @@ const AgentEditListing = () => {
   useEffect(() => {
     const fetchProperty = async () => {
       try {
-        const response = await axios.get(`/api/MyHome2U/property/getsingleproperty/${id}`);
+
+        Swal.fire({
+          title: 'Loading...',
+          text: 'Please wait.........',
+          icon: 'info',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+
+        const response = await api.get(`/api/MyHome2U/property/getsingleproperty/${id}`);
+        Swal.close();
         const property = response.data.property;
         setFormData({
           title: property.title,
@@ -53,7 +67,12 @@ const AgentEditListing = () => {
           image: property.image.url
         });
       } catch (error) {
-        console.error('Failed to fetch property', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Server Error',
+          text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
+          showConfirmButton: true,
+        });
       }
     };
     fetchProperty();
@@ -89,13 +108,23 @@ const AgentEditListing = () => {
     setIsLoading(true);
     dispatch(UpdatePropertyStart());
     try {
-      const response = await axios.put(
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait.........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      const response = await api.put(
         `/api/MyHome2U/property/updatesingleproperty/${id}`,
         {
           ...formData,
           owner: user._id
         }
       );
+      Swal.close();
 
       if (response.status === 200) {
         dispatch(UpdatePropertySuccess(response.data.property));
@@ -106,7 +135,6 @@ const AgentEditListing = () => {
         enqueueSnackbar("Failed to update property", { variant: "error" });
       }
     } catch (error) {
-      console.error(error);
       dispatch(UpdatePropertyFailure("Failed to update property"));
       if (error.response && error.response.data && error.response.data.message) {
         enqueueSnackbar(error.response.data.message, { variant: "error" });

@@ -3,10 +3,12 @@ import { FaEdit, FaSearch } from "react-icons/fa";
 import { BsCalendarDate } from "react-icons/bs";
 import AgentSidebar from "./AgentSidebar"; // Make sure this path and export are correct
 import { useSelector } from "react-redux";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import api from "../api";
+import Swal from "sweetalert2";
+
 
 function AgentPayments() {
   const [bills, setBills] = useState([]);
@@ -17,13 +19,28 @@ function AgentPayments() {
 
   const fetchBills = useCallback(async () => {
     try {
-      const response = await axios.get(`/api/MyHome2U/bills/GetAllBills`);
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait.........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      const response = await api.get(`/api/MyHome2U/bills/GetAllBills`);
+      Swal.close();
       const filteredBills = response.data.bill.filter(
         (bill) => bill.owner._id === user._id
       );
       setBills(filteredBills);
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'server error',
+        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
+        showConfirmButton: true,
+      });
     }
   }, [user._id]);
 

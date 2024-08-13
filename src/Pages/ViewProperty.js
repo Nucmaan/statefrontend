@@ -34,7 +34,6 @@ function ViewProperty() {
           Swal.showLoading();
         }
       });
-
       const response = await api.get(`/api/MyHome2U/property/getsingleproperty/${id}`);
       setProperty(response.data.property);
       // Close loading alert after fetching data
@@ -80,7 +79,6 @@ function ViewProperty() {
         visitingDate: visitingDate,
       });
       console.log(response.data);
-
       // Show SweetAlert success
       Swal.fire({
         icon: 'success',
