@@ -113,10 +113,10 @@ function App() {
 
             {/*Protected agent Route*/}
             <Route element={<ProtectedAgentRoute />}>
-              <Route path="agent/Dashboard" element={<AgentDashboard />} />
-              <Route path="agent/profile" element={<AgentProfile />} />
+              <Route path="/agent/Dashboard" element={<AgentDashboard />} />
+              <Route path="/agent/profile" element={<AgentProfile />} />
               <Route
-                path="agent/profile/edit-profile/:id"
+                path="/agent/profile/edit-profile/:id"
                 element={<EditAgentProfile />}
               />
               <Route path="/agent/property-list" element={<AgentPropertyList />} />
@@ -129,13 +129,13 @@ function App() {
             <Route path="/agent/Booking/Add-Contract/:id" element={<AddContract />} />
             <Route path="/agent/contract" element={<MyContract />} />
             <Route path="/agent/contract/Read-contract/:id" element={<ReadContract />} />
-            <Route path="agent/contract/Edit-contract/:id" element={<EditContract />} />
-            <Route path="agent/Bills-List" element={<BillsAgent />} />
-            <Route path="agent/Payments" element={<AgentPayments />} />
-            <Route path="agent/Bills/create-Bill/:id" element={<AddBills />} />
-            <Route path="agent/Bills/update-Bill/:id" element={<UpdateBill />} />
-            <Route path="agent/Bills/" element={<AgentBills />} />
-            <Route path="agent/Bills/Invoice/:id" element={<AgentInvoice />} />
+            <Route path="/agent/contract/Edit-contract/:id" element={<EditContract />} />
+            <Route path="/agent/Bills-List" element={<BillsAgent />} />
+            <Route path="/agent/Payments" element={<AgentPayments />} />
+            <Route path="/agent/Bills/create-Bill/:id" element={<AddBills />} />
+            <Route path="/agent/Bills/update-Bill/:id" element={<UpdateBill />} />
+            <Route path="/agent/Bills/" element={<AgentBills />} />
+            <Route path="/agent/Bills/Invoice/:id" element={<AgentInvoice />} />
           </Route>
 
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
@@ -155,7 +155,7 @@ function App() {
           <Route path="/admin/listing" element={<Listings />} />
           <Route path="admin/listing/add-listing" element={<AddListing />} />
           <Route
-            path="admin/listing/edit-listing/:id"
+            path="/admin/listing/edit-listing/:id"
             element={<EditListing />}
           />
         </Routes>
