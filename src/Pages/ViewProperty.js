@@ -1,7 +1,7 @@
-import axios from "axios";
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import api from "../api"; 
 
 import Swal from 'sweetalert2';
 import { FaMapMarkerAlt, FaBed, FaBath, FaParking, FaDollarSign, FaHome } from "react-icons/fa";
@@ -15,7 +15,6 @@ function ViewProperty() {
 
   const { user } = useSelector((state) => state.user);
   
-
   const BookNow = () => {
     setBook(true);
   };
@@ -28,7 +27,17 @@ function ViewProperty() {
 
   const getProperty = useCallback(async () => {
     try {
-      const response = await axios.get(`/api/MyHome2U/property/getsingleproperty/${id}`);
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait ........',
+        icon: 'info',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
+      const response = await api.get(`/api/MyHome2U/property/getsingleproperty/${id}`);
       setProperty(response.data.property);
     } catch (error) {
       console.log(error);
@@ -56,11 +65,12 @@ function ViewProperty() {
     });
 
     try {
-      const response = await axios.post("/api/MyHome2U/Booking/AddNewBooking/", {
+      const response = await api.post("/api/MyHome2U/Booking/AddNewBooking/", {
         property: property._id,
         user: user._id,
         visitingDate: visitingDate,
       });
+      console.log(response.data);
 
       // Show SweetAlert success
       Swal.fire({
@@ -70,7 +80,6 @@ function ViewProperty() {
         timer: 2000
       });
 
-      console.log(response.data);
     } catch (error) {
       // Show SweetAlert error
       Swal.fire({
@@ -80,7 +89,6 @@ function ViewProperty() {
         showConfirmButton: true,
       });
 
-      console.error(error);
     } finally {
       setProcessing(false);
     }
