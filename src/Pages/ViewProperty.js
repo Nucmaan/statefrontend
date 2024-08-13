@@ -102,7 +102,7 @@ function ViewProperty() {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 min-h-screen">
       {/* Property Details */}
       <div className="w-full max-w-4xl mx-auto mb-8">
         <img
