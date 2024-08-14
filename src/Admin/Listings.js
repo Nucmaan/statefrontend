@@ -1,19 +1,16 @@
 import React, { useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import AdminSidebar from "./AdminSidebar";
-import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../api";
 import Swal from 'sweetalert2';
 
 import {
-  PropertyListStart,
+
   PropertyListSuccess,
-  PropertyListFailure,
-  DeletePropertyStart,
-  DeletePropertySuccess,
-  DeletePropertyFailure,
+  
 } from "../Redux/PropertyList/PropertySlice.js";
 
 const Listings = () => {
@@ -25,12 +22,12 @@ const Listings = () => {
   );
 
   const fetchProperties = useCallback(async () => {
-    dispatch(PropertyListStart());
+  
     try {
       const response = await api.get("/api/MyHome2U/property/getallproperty");
       dispatch(PropertyListSuccess(response.data.properties));
     } catch (error) {
-      dispatch(PropertyListFailure("Failed to fetch properties"));
+
       enqueueSnackbar("Failed to fetch properties", { variant: "error" });
     }
   }, [dispatch, enqueueSnackbar]);
@@ -40,15 +37,15 @@ const Listings = () => {
   }, [fetchProperties]);
 
   const deleteProperty = async (id) => {
-    dispatch(DeletePropertyStart());
+
     try {
       const response = await api.delete(`/api/MyHome2U/property/deleteproperty/${id}`);
       if (response.status === 200) {
-        dispatch(DeletePropertySuccess(id));
+      
         enqueueSnackbar("Property deleted successfully", { variant: "success" });
       }
     } catch (error) {
-      dispatch(DeletePropertyFailure("Failed to delete property"));
+
       enqueueSnackbar("Failed to delete property", { variant: "error" });
     }
   };
@@ -77,12 +74,6 @@ const Listings = () => {
         <div className="flex-1 p-6">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-3xl font-semibold text-gray-800">Listings</h1>
-            <Link to="/admin/listing/add-listing">
-              <button className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-700 transition-colors">
-                <FaPlus className="mr-2" />
-                Add New Listing
-              </button>
-            </Link>
           </div>
           {loading ? (
             <div className="flex justify-center items-center h-64">

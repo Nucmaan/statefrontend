@@ -28,7 +28,6 @@ import Report from "./Admin/Report";
 import AddUser from "./Admin/AddUser";
 import EditUser from "./Admin/EditUser";
 import Listings from "./Admin/Listings";
-import AddListing from "./Admin/AddListing";
 import EditListing from "./Admin/EditListing";
 import EditUserProfile from "./Renter/EditUserProfile";
 import ProtectedUserRoute from "./Renter/ProtectedUserRoute";
@@ -155,7 +154,6 @@ function App() {
           <Route path="/admin/social-Media-Links" element={<SocialLinks />} />
           
           <Route path="/admin/listing" element={<Listings />} />
-          <Route path="/admin/listing/add-listing" element={<AddListing />} />
           <Route
             path="/admin/listing/edit-listing/:id"
             element={<EditListing />}
