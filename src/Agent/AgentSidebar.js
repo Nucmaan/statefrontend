@@ -93,7 +93,7 @@ function AgentSidebar() {
           <span className={`${!isOpen && "hidden"}`}>Property List</span>
         </Link>
         <Link
-          to="/agent/bookings"
+          to="/agent/Bookings"
           className="flex items-center p-2 text-base hover:bg-gray-700"
         >
           <FaCalendarAlt size={30} className="mr-3" />
