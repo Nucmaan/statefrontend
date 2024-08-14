@@ -106,7 +106,7 @@ function AddBills() {
       Swal.fire({
         icon: 'error',
         title: 'Request Error!',
-        text: 'An error occurred while adding the bill',
+        text: 'Something went wrong. Please try again later',
         confirmButtonText: 'OK'
       });
     } finally {

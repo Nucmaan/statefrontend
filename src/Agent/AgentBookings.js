@@ -68,7 +68,7 @@ const AgentBookings = () => {
     } catch (error) {
       Swal.fire({
         title: 'Error',
-        text: 'There was an error deleting the booking. Please try again later.',
+        text: 'Something went wrong. Please try again later.',
         icon: 'error',
         confirmButtonText: 'OK'
       });

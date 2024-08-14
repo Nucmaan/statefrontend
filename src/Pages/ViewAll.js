@@ -6,6 +6,7 @@ import api from "../api"; // Adjust the path if necessary
 import Swal from "sweetalert2";
 
 function ViewAll() {
+  
   const [allPosts, setAllPosts] = useState([]);
 
   const getPosts = async () => {

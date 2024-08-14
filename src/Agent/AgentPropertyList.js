@@ -6,12 +6,9 @@ import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import {
-  PropertyListStart,
   PropertyListSuccess,
-  PropertyListFailure,
   DeletePropertyStart,
   DeletePropertySuccess,
-  DeletePropertyFailure,
 } from "../Redux/PropertyList/PropertySlice.js";
 import api from "../api";
 
@@ -25,7 +22,6 @@ const AgentPropertyList = () => {
   );
 
   const fetchProperties = useCallback(async () => {
-    dispatch(PropertyListStart());
     try {
       Swal.fire({
         title: 'Loading...',
@@ -36,12 +32,10 @@ const AgentPropertyList = () => {
           Swal.showLoading();
         }
       });
-
       const response = await api.get("/api/MyHome2U/property/getallproperty");
       Swal.close();
       dispatch(PropertyListSuccess(response.data.properties));
     } catch (error) {
-      dispatch(PropertyListFailure("Failed to fetch properties"));
       enqueueSnackbar("Failed to fetch properties", { variant: "error" });
     }
   }, [dispatch, enqueueSnackbar]);
@@ -69,7 +63,6 @@ const AgentPropertyList = () => {
         enqueueSnackbar("Property deleted successfully", { variant: "success" });
       }
     } catch (error) {
-      dispatch(DeletePropertyFailure("Failed to delete property"));
       enqueueSnackbar("Failed to delete property", { variant: "error" });
     }
   };
