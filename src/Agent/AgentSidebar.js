@@ -72,7 +72,7 @@ function AgentSidebar() {
       </div>
       <nav className="flex flex-col mt-4 space-y-2">
         <Link
-          to="/agent/dashboard"
+          to="/agent/Dashboard"
           className="flex items-center p-2 text-base hover:bg-gray-700"
         >
           <FaTachometerAlt size={30} className="mr-3" />
@@ -115,7 +115,7 @@ function AgentSidebar() {
         </Link>
 
         <Link
-          to="/agent/payments"
+          to="/agent/Payments"
           className="flex items-center p-2 text-base hover:bg-gray-700"
         >
           <MdManageHistory size={30} className="mr-3" /> {/* Icon for Payments */}
