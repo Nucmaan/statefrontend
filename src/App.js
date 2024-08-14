@@ -87,7 +87,7 @@ function App() {
           <Route path="/Rent" element={<Rent />} />
           <Route path="/Buy" element={<Buy />} />
           <Route path="/ViewAll" element={<ViewAll />} />
-          <Route path="/ViewBlog" element={<ViewBlog />} />
+          <Route path="/ViewBlog/:id" element={<ViewBlog />} />
           <Route path="/ViewSingleProperty/:id" element={<ViewProperty />} />
           <Route path="/ForgetPassword" element={<ForgetPassword />} />
           <Route path="/ResetPassword/:token" element={<ResetPassword />} />
@@ -95,7 +95,7 @@ function App() {
           <Route path="/terms" element={<TermsConditions />} />
 
           <Route element={<PrivateRoute />}>
-            {/*Protected agent Route*/}
+          
             <Route element={<ProtectedUserRoute />}>
               <Route path="/user/Dashboard" element={<UserDashboard />} />
               <Route path="/user/Profile" element={<Profile />} />
