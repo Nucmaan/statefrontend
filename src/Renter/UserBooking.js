@@ -1,48 +1,52 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
-import SideBar from './SideBar';
-import { useSelector } from 'react-redux';
-import api from "../api"; 
+import React, { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
+import SideBar from "./SideBar";
+import { useSelector } from "react-redux";
+import api from "../api";
+import { useSnackbar } from "notistack";
 
 const UserBooking = () => {
   const [userBooking, setUserBooking] = useState([]);
   const { user } = useSelector((state) => state.user);
+  const { enqueueSnackbar } = useSnackbar();
 
   const fetchUserBookings = useCallback(async () => {
     try {
-      const response = await api.get(`/api/MyHome2U/Booking/GetUserBookings/${user._id}`);
+      const response = await api.get(
+        `/api/MyHome2U/Booking/GetUserBookings/${user._id}`
+      );
       const data = response.data.bookings;
 
-      const filteredBookings = data.filter(booking =>
-        booking.property &&
-        booking.property.owner &&
-        booking.property.owner.name &&
-        booking.property.owner.phone &&
-        booking.property.houseType &&
-        booking.property.city &&
-        booking.property.price
+      const filteredBookings = data.filter(
+        (booking) =>
+          booking.property &&
+          booking.property.owner &&
+          booking.property.owner.name &&
+          booking.property.owner.phone &&
+          booking.property.houseType &&
+          booking.property.city &&
+          booking.property.price
       );
-
       setUserBooking(filteredBookings);
     } catch (error) {
-    console.log(error);
+      const errorMessage =
+        error.response?.data?.message || " You haven't made any bookings yet. ";
+      enqueueSnackbar(errorMessage, { variant: "error" });
     }
-  }, [user._id]);
+  }, [user._id,enqueueSnackbar]);
 
   useEffect(() => {
     fetchUserBookings();
   }, [fetchUserBookings]);
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to cancel this booking?')) {
+    if (window.confirm("Are you sure you want to cancel this booking?")) {
       try {
         await api.delete(`/api/MyHome2U/Booking/DeleteBooking/${id}`);
         setUserBooking((prevBookings) =>
           prevBookings.filter((booking) => booking._id !== id)
         );
-      } catch (error) {
-       console.log(error);
-      }
+      } catch (error) {}
     }
   };
 
@@ -59,39 +63,81 @@ const UserBooking = () => {
               <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-sm">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="py-3 px-5 text-left text-gray-600 font-semibold">ID</th>
-                    <th className="py-3 px-5 text-left text-gray-600 font-semibold">Owner Name</th>
-                    <th className="py-3 px-5 text-left text-gray-600 font-semibold">Phone</th>
-                    <th className="py-3 px-5 text-left text-gray-600 font-semibold">House Type</th>
-                    <th className="py-3 px-5 text-left text-gray-600 font-semibold">City</th>
-                    <th className="py-3 px-5 text-left text-gray-600 font-semibold">Price</th>
-                    <th className="py-3 px-5 text-left text-gray-600 font-semibold">Visit Date</th>
-                    <th className="py-3 px-5 text-left text-gray-600 font-semibold">House Info</th>
-                    <th className="py-3 px-5 text-left text-gray-600 font-semibold">Status</th>
-                    <th className="py-3 px-5 text-center text-gray-600 font-semibold">Actions</th>
+                    <th className="py-3 px-5 text-left text-gray-600 font-semibold">
+                      ID
+                    </th>
+                    <th className="py-3 px-5 text-left text-gray-600 font-semibold">
+                      Owner Name
+                    </th>
+                    <th className="py-3 px-5 text-left text-gray-600 font-semibold">
+                      Phone
+                    </th>
+                    <th className="py-3 px-5 text-left text-gray-600 font-semibold">
+                      House Type
+                    </th>
+                    <th className="py-3 px-5 text-left text-gray-600 font-semibold">
+                      City
+                    </th>
+                    <th className="py-3 px-5 text-left text-gray-600 font-semibold">
+                      Price
+                    </th>
+                    <th className="py-3 px-5 text-left text-gray-600 font-semibold">
+                      Visit Date
+                    </th>
+                    <th className="py-3 px-5 text-left text-gray-600 font-semibold">
+                      House Info
+                    </th>
+                    <th className="py-3 px-5 text-left text-gray-600 font-semibold">
+                      Status
+                    </th>
+                    <th className="py-3 px-5 text-center text-gray-600 font-semibold">
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {userBooking.map((booking, index) => (
-                    <tr key={booking._id} className="border-b hover:bg-gray-100">
+                    <tr
+                      key={booking._id}
+                      className="border-b hover:bg-gray-100"
+                    >
                       <td className="py-3 px-5 text-gray-700">{index + 1}</td>
-                      <td className="py-3 px-5 text-gray-700">{booking.property.owner.name}</td>
-                      <td className="py-3 px-5 text-gray-700">{booking.property.owner.phone}</td>
-                      <td className="py-3 px-5 text-gray-700">{booking.property.houseType}</td>
-                      <td className="py-3 px-5 text-gray-700">{booking.property.city}</td>
-                      <td className="py-3 px-5 text-gray-700">${booking.property.price}</td>
-                      <td className="py-3 px-5 text-gray-700">{new Date(booking.visitingDate).toLocaleDateString()}</td>
                       <td className="py-3 px-5 text-gray-700">
-                        <Link to={`/user/Bookings/view-House-Information/${booking.property._id}`} className="text-indigo-600 hover:text-indigo-800 font-medium">
+                        {booking.property.owner.name}
+                      </td>
+                      <td className="py-3 px-5 text-gray-700">
+                        {booking.property.owner.phone}
+                      </td>
+                      <td className="py-3 px-5 text-gray-700">
+                        {booking.property.houseType}
+                      </td>
+                      <td className="py-3 px-5 text-gray-700">
+                        {booking.property.city}
+                      </td>
+                      <td className="py-3 px-5 text-gray-700">
+                        ${booking.property.price}
+                      </td>
+                      <td className="py-3 px-5 text-gray-700">
+                        {new Date(booking.visitingDate).toLocaleDateString()}
+                      </td>
+                      <td className="py-3 px-5 text-gray-700">
+                        <Link
+                          to={`/user/Bookings/view-House-Information/${booking.property._id}`}
+                          className="text-indigo-600 hover:text-indigo-800 font-medium"
+                        >
                           View Details
                         </Link>
                       </td>
                       <td className="py-3 px-5">
-                        <span className={`px-2 py-1 text-sm rounded-full ${
-                          booking.status === 'Confirmed' ? 'bg-green-200 text-green-800' : 
-                          booking.status === 'Pending' ? 'bg-yellow-200 text-yellow-800' : 
-                          'bg-red-200 text-red-800'
-                        }`}>
+                        <span
+                          className={`px-2 py-1 text-sm rounded-full ${
+                            booking.status === "Confirmed"
+                              ? "bg-green-200 text-green-800"
+                              : booking.status === "Pending"
+                              ? "bg-yellow-200 text-yellow-800"
+                              : "bg-red-200 text-red-800"
+                          }`}
+                        >
                           {booking.status}
                         </span>
                       </td>

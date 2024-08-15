@@ -48,7 +48,7 @@ const EditUserProfile = () => {
           setName(userData.name);
           setEmail(userData.email);
           setPhone(userData.phone);
-          setAvatar(userData.avatar ? userData.avatar.url : null); // Adjusted to handle avatar correctly
+          setAvatar(userData.avatar ? userData.avatar.url : null);
           setRole(userData.role);
           setIsActive(userData.isActive);
         } else {

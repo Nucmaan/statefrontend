@@ -4,26 +4,30 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useParams } from "react-router-dom";
 import api from "../api";
-
+import { useSnackbar } from "notistack";
 
 function RenterInvoice() {
   const [invoiceInfo, setInvoiceInfo] = useState(null);
   const { id } = useParams();
   const pdfRef = useRef();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     const fetchBillInfo = async () => {
       try {
-        const response = await api.get(`/api/MyHome2U/bills/GetSingleBill/${id}`);
+        const response = await api.get(
+          `/api/MyHome2U/bills/GetSingleBill/${id}`
+        );
         console.log(response.data.bill);
         setInvoiceInfo(response.data.bill);
       } catch (error) {
-      console.log(error);
+        const errorMessage = error.response?.data?.message || "server  error";
+        enqueueSnackbar(errorMessage, { variant: "error" });
       }
     };
 
     fetchBillInfo();
-  }, [id]);
+  }, [id,enqueueSnackbar]);
 
   const downloadInvoice = () => {
     const input = pdfRef.current;
@@ -71,7 +75,9 @@ function RenterInvoice() {
                 </p>
               </div>
               <div className="text-right">
-                <h1 className="text-3xl font-semibold text-gray-800">MyHome2U</h1>
+                <h1 className="text-3xl font-semibold text-gray-800">
+                  MyHome2U
+                </h1>
                 <p className="text-sm text-gray-600 mt-1">+601113323658</p>
                 <p className="text-sm text-gray-600">123 KL CITY</p>
               </div>

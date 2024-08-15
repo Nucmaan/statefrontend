@@ -17,7 +17,7 @@ function Footer() {
       setSocial(response.data.data);
     } catch (error) {
       const errorMessage =
-        error.response?.data?.message || "Failed to get social media links";
+        error.response?.data?.message || "server  error";
       enqueueSnackbar(errorMessage, { variant: "error" });
     }
   }, [enqueueSnackbar]);

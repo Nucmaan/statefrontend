@@ -10,7 +10,7 @@ function ContactUs() {
     <div className="bg-gray-100 py-10 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Contact Information */}
+        
           <div className="bg-white shadow-lg rounded-lg p-8 flex flex-col gap-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-4">Get in Touch</h1>
             <div className="space-y-6">
@@ -56,7 +56,6 @@ function ContactUs() {
             </div>
           </div>
 
-          {/* Contact Form */}
           <div className="bg-white shadow-lg rounded-lg p-8">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Send Us a Message</h2>
             <form className="space-y-6">

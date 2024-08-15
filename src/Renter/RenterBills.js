@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useTable, useSortBy, useFilters, useGlobalFilter, usePagination } from 'react-table';
 import SideBar from "./SideBar";
 import api from "../api";
+import { useSnackbar } from "notistack";
 
 
 function GlobalFilter({ globalFilter, setGlobalFilter }) {
@@ -22,15 +23,17 @@ function GlobalFilter({ globalFilter, setGlobalFilter }) {
 function RenterBills() {
   const [bills, setBills] = useState([]);
   const { user } = useSelector((state) => state.user);
+  const { enqueueSnackbar } = useSnackbar();
 
   const fetchBills = useCallback(async () => {
     try {
       const response = await api.get(`/api/MyHome2U/bills/getUserBills/${user._id}`);
       setBills(response.data.bills);
     } catch (error) {
-      console.log(error);
+      const errorMessage = error.response?.data?.message || "You don't have any bills";
+      enqueueSnackbar(errorMessage, { variant: "error" });
     }
-  }, [user._id]);
+  }, [user._id, enqueueSnackbar]);
 
   useEffect(() => {
     fetchBills();
@@ -96,48 +99,54 @@ function RenterBills() {
             <GlobalFilter globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
           </div>
 
-          <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-            <table {...getTableProps()} className="min-w-full">
-              <thead className="bg-gray-100 border-b-2">
-                {headerGroups.map(headerGroup => (
-                  <tr {...headerGroup.getHeaderGroupProps()}>
-                    {headerGroup.headers.map(column => (
-                      <th {...column.getHeaderProps(column.getSortByToggleProps())} className="py-3 px-4 text-left text-gray-700 font-medium">
-                        {column.render('Header')}
-                        <span>{column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}</span>
-                      </th>
-                    ))}
-                  </tr>
-                ))}
-              </thead>
-              <tbody {...getTableBodyProps()} className="divide-y divide-gray-200">
-                {page.map(row => {
-                  prepareRow(row);
-                  return (
-                    <tr {...row.getRowProps()} className="hover:bg-gray-50">
-                      {row.cells.map(cell => (
-                        <td {...cell.getCellProps()} className="py-4 px-4 text-gray-800">
-                          {cell.render('Cell')}
-                        </td>
+          {bills.length === 0 ? (
+            <div className="text-center text-gray-500 mt-6">
+              You don't have any bills at the moment.
+            </div>
+          ) : (
+            <div className="overflow-x-auto bg-white shadow-md rounded-lg">
+              <table {...getTableProps()} className="min-w-full">
+                <thead className="bg-gray-100 border-b-2">
+                  {headerGroups.map(headerGroup => (
+                    <tr {...headerGroup.getHeaderGroupProps()}>
+                      {headerGroup.headers.map(column => (
+                        <th {...column.getHeaderProps(column.getSortByToggleProps())} className="py-3 px-4 text-left text-gray-700 font-medium">
+                          {column.render('Header')}
+                          <span>{column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}</span>
+                        </th>
                       ))}
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                  ))}
+                </thead>
+                <tbody {...getTableBodyProps()} className="divide-y divide-gray-200">
+                  {page.map(row => {
+                    prepareRow(row);
+                    return (
+                      <tr {...row.getRowProps()} className="hover:bg-gray-50">
+                        {row.cells.map(cell => (
+                          <td {...cell.getCellProps()} className="py-4 px-4 text-gray-800">
+                            {cell.render('Cell')}
+                          </td>
+                        ))}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
 
-            <div className="flex justify-between items-center mt-6">
-              <button onClick={() => previousPage()} disabled={!canPreviousPage} className={`bg-blue-500 text-white py-2 px-4 rounded-lg ${!canPreviousPage ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'}`}>
-                Previous
-              </button>
-              <span className="text-gray-700">
-                Page <strong>{pageIndex + 1} of {pageOptions.length}</strong>
-              </span>
-              <button onClick={() => nextPage()} disabled={!canNextPage} className={`bg-blue-500 text-white py-2 px-4 rounded-lg ${!canNextPage ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'}`}>
-                Next
-              </button>
+              <div className="flex justify-between items-center mt-6">
+                <button onClick={() => previousPage()} disabled={!canPreviousPage} className={`bg-blue-500 text-white py-2 px-4 rounded-lg ${!canPreviousPage ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'}`}>
+                  Previous
+                </button>
+                <span className="text-gray-700">
+                  Page <strong>{pageIndex + 1} of {pageOptions.length}</strong>
+                </span>
+                <button onClick={() => nextPage()} disabled={!canNextPage} className={`bg-blue-500 text-white py-2 px-4 rounded-lg ${!canNextPage ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'}`}>
+                  Next
+                </button>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

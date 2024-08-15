@@ -6,23 +6,25 @@ import { FaDownload } from "react-icons/fa"; // Import the download icon
 import api from "../api";
 
 
-
 function AgentBills() {
   const [bills, setBills] = useState([]);
   const { user } = useSelector((state) => state.user);
 
   const fetchBills = useCallback(async () => {
     try {
-     
       const response = await api.get(`/api/MyHome2U/bills/GetAllBills`);
+      
       const filteredBills = response.data.bill.filter(
-        (bill) => bill.owner._id === user._id && bill.status === 'Paid'
+        (bill) => bill.owner && bill.owner._id === user._id && bill.status === 'Paid'
       );
+  
       setBills(filteredBills);
+      
     } catch (error) {
       console.log(error);
     }
   }, [user._id]);
+  
 
   useEffect(() => {
     fetchBills();

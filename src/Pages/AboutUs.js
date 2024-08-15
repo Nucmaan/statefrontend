@@ -22,7 +22,6 @@ function AboutUs() {
         </div>
       </div>
       
-      {/* Section 2 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
         <div className="flex flex-col justify-center">
           <h2 className="text-3xl font-bold mb-4 text-gray-900">Our Mission</h2>

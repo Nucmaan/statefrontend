@@ -3,9 +3,11 @@ import SideBar from './SideBar'
 import React, { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import api from "../api";
+import { useSnackbar } from 'notistack';
 
 function HouseInformaton() {
- 
+  const { enqueueSnackbar } = useSnackbar();
+
     const { id } = useParams();  
     
     const [property, setProperty] = useState(null); 
@@ -16,9 +18,11 @@ function HouseInformaton() {
         const response = await api.get(`/api/MyHome2U/property/getsingleproperty/${id}`);
         setProperty(response.data.property);
       } catch (error) {
-       console.log(error);
+        const errorMessage =
+        error.response?.data?.message || "server  error";
+        enqueueSnackbar(errorMessage, { variant: "error" });
       }
-    }, [id]);
+    }, [id,enqueueSnackbar]);
   
     useEffect(() => {
       getProperty();

@@ -3,9 +3,12 @@ import { FaUser, FaEnvelope, FaPhone, FaHome, FaCity, FaAddressCard, FaBath, FaB
 import SideBar from './SideBar';
 import { useParams } from 'react-router-dom';
  import api from "../api";
+import { useSnackbar } from 'notistack';
 
 
 function RenterReadContract() {
+  const { enqueueSnackbar } = useSnackbar();
+
   const [contractData, setContractData] = useState({
     name: '',
     email: '',
@@ -55,9 +58,11 @@ function RenterReadContract() {
         status: contract.status,
       });
     } catch (error) {
-   console.log(error);
+      const errorMessage =
+      error.response?.data?.message || "server  error";
+      enqueueSnackbar(errorMessage, { variant: "error" });
     }
-  }, [id]);
+  }, [id,enqueueSnackbar]);
 
   useEffect(() => {
     fetchContract();

@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MdDirectionsCar } from "react-icons/md";
 import { FaBed } from "react-icons/fa6";
 import { PiToiletDuotone } from "react-icons/pi";
 import { CiSearch } from "react-icons/ci";
 import api from "../api"; 
+import { useSnackbar } from "notistack";
 
 function Buy() {
-  const [propertyList, setPropertyList] = useState(null);
+  const [propertyList, setPropertyList] = useState([]);
+  const { enqueueSnackbar } = useSnackbar();
 
-  const getProperty = async () => {
+  const getProperty = useCallback( async () => {
     try {
 
       const response = await api.get("/api/MyHome2U/property/getallproperty");
@@ -17,25 +19,23 @@ function Buy() {
       const buyAvailableProperties = response.data.properties.filter(
         property => property.houseType === "Buy" && property.status === "Available"
       );
-
       setPropertyList(buyAvailableProperties);
-
     } catch (error) {
-       console.log(error);
+       const errorMessage = error.response?.data?.message || "server  error";
+       enqueueSnackbar(errorMessage, { variant: "error" });
     }
-  };
+  },[enqueueSnackbar])
 
   useEffect(() => {
     getProperty();
-  }, []);
+  }, [getProperty]);
 
-  if (propertyList === null) {
-    return null; // Return nothing while loading
+  if (propertyList.length === 0) {
+    return <div>No Buy properties available.</div>; 
   }
 
   return (
     <div className="mx-auto px-4 pb-4 min-h-screen">
-      {/* Search Bar */}
       <div className="flex border-2 border-black rounded-md overflow-hidden sticky top-[89px] z-40 bg-white shadow-md">
         <input
           type="text"
@@ -51,7 +51,6 @@ function Buy() {
             key={index}
             className="shadow-md p-4 rounded-md hover:shadow-lg transition-shadow duration-300 bg-white relative"
           >
-            {/* Status and House Type Labels */}
             <div className="absolute top-2 left-2 bg-indigo-600 text-white px-3 py-1 rounded-md">
               {property.status}
             </div>

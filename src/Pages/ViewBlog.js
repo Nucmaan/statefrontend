@@ -1,26 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FaCalendarAlt } from "react-icons/fa";
 import api from "../api"; 
 import herro from "../Images/Herro.jpg";
+import { useSnackbar } from "notistack";
 
 function ViewBlog() {
-  const [post, setPost] = useState({});
+  const [post, setPost] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
   const { id } = useParams();
 
-  useEffect(() => {
-    const getPost = async () => {
-      try {
-        const response = await api.get(`/api/MyHome2U/Blog/GetSinglePost/${id}`);
-        console.log(response.data); // Log the response data for debugging
-        setPost(response.data.post);
-      } catch (error) {
-        console.error(error); // Log the error for debugging
-      }
-    };
+  const getPost = useCallback(async () => {
+    try {
+      const response = await api.get(`/api/MyHome2U/Blog/GetSinglePost/${id}`);
+      setPost(response.data.post || null); // Set post to null if not found
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message || "Server error";
+      enqueueSnackbar(errorMessage, { variant: "error" });
+      setPost(null); // Set post to null on error
+    }
+  }, [id, enqueueSnackbar]);
 
+  useEffect(() => {
     getPost();
-  }, [id]);
+  }, [getPost]);
+
+  if (!post) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <h1 className="text-2xl font-bold text-gray-800">
+          This post is not available now.
+        </h1>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto px-2 py-8 md:px-2 md:py-12 max-w-4xl bg-gray-100">
@@ -36,48 +50,20 @@ function ViewBlog() {
         />
         <div className="p-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">
-            {post.title || 'Title goes here'}
+            {post.title || ''}
           </h2>
           <div className="flex items-center text-gray-600 mb-6">
             <FaCalendarAlt className="text-xl mr-2" />
             <p className="text-lg">
-              {post.createdAt ? new Date(post.createdAt).toLocaleDateString() : 'Date goes here'}
+              {post.createdAt ? new Date(post.createdAt).toLocaleDateString() : ''}
             </p>
           </div>
           <p className="text-gray-700 text-lg leading-relaxed mb-8">
             {post.shortInfo || 'Short info goes here'}
           </p>
           <p className="text-gray-800 text-lg leading-relaxed text-justify">
-            {post.content || 'Content goes here'}
+            {post.content}
           </p>
-        </div>
-      </div>
-
-      <div className="bg-white p-8 rounded-lg shadow-md">
-        <h2 className="text-3xl font-bold text-gray-900 mb-8">
-          More Articles
-        </h2>
-        <div className="space-y-6">
-          {[1, 2, 3].map((item, index) => (
-            <Link to={`/ViewBlog/${item}`} key={index}>
-              <div className="flex items-center space-x-6 bg-gray-100 p-4 rounded-lg transition-transform transform hover:scale-105">
-                <img
-                  src={herro}
-                  alt="Blog Preview"
-                  className="w-28 h-28 object-cover rounded-lg"
-                />
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                    7 Cost-Effective Renovation Ideas to Boost Your Rental Income
-                  </h3>
-                  <div className="flex items-center text-gray-600">
-                    <FaCalendarAlt className="text-lg mr-2" />
-                    <p className="text-md">July 17, 2024</p>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          ))}
         </div>
       </div>
 

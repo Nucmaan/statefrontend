@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import { FaDownload } from "react-icons/fa"; // Import the download icon
 import SideBar from "./SideBar";
 import api from "../api";
+import { useSnackbar } from "notistack";
 
 function RenterPayments() {
   const [bills, setBills] = useState([]);
   const { user } = useSelector((state) => state.user);
+  const { enqueueSnackbar } = useSnackbar();
 
   const fetchBills = useCallback(async () => {
     try {
@@ -15,9 +17,11 @@ function RenterPayments() {
       const paidBills = response.data.bills.filter(bill => bill.status === 'Paid');
       setBills(paidBills);
     } catch (error) {
-    console.log(error);
+      const errorMessage =
+        error.response?.data?.message || "Server error";
+      enqueueSnackbar(errorMessage, { variant: "error" });
     }
-  }, [user._id]);
+  }, [user._id, enqueueSnackbar]);
 
   useEffect(() => {
     fetchBills();
@@ -37,68 +41,72 @@ function RenterPayments() {
               </div>
             </div>
           </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white border border-gray-200">
-              <thead className="border-b border-gray-100">
-                <tr>
-                  <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm font-semibold text-gray-600">
-                    ID
-                  </th>
-                  <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm font-semibold text-gray-600">
-                    Date Paid
-                  </th>
-                  <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm font-semibold text-gray-600">
-                    Total Paid
-                  </th>
-                  <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm font-semibold text-gray-600">
-                    Description
-                  </th>
-                  <th className="py-2 px-3 md:py-4 md:px-4 text-left text-sm font-semibold text-gray-600">
-                    Payment Method
-                  </th>
-                  <th className="py-2 px-3 md:py-4 md:px-4 text-left text-sm font-semibold text-gray-600">
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {bills.map((bill, index) => (
-                  <tr key={index} className="border-b hover:bg-gray-50">
-                    <td className="py-3 px-3 md:py-4 md:px-4 text-gray-700">
-                      {index + 1}
-                    </td>
-                    <td className="py-3 px-3 md:py-4 md:px-4 text-gray-700">
-                      {new Date(bill.paymentDate).toLocaleString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                        hour: 'numeric',
-                        minute: 'numeric',
-                        hour12: true,
-                      })}
-                    </td>
-                    <td className="py-3 px-3 md:py-4 md:px-4 text-gray-700">
-                      ${bill.total.toFixed(2)}
-                    </td>
-                    <td className="py-3 px-3 md:py-4 md:px-4 text-gray-700">
-                      {bill.Description}
-                    </td>
-                    <td className="py-3 px-3 md:py-4 md:px-4 text-gray-700">
-                      {bill.paymentMethod}
-                    </td>
-                    <td className="py-3 px-3 md:py-4 md:px-4 text-right">
-                      <Link to={`/user/Payments/invoice/${bill._id}`}>
-                        <button className="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-semibold py-2 px-3 md:px-4 rounded-lg text-sm flex items-center shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
-                          <FaDownload className="mr-2" />
-                          Receipt
-                        </button>
-                      </Link>
-                    </td>
+          {bills.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="min-w-full bg-white border border-gray-200">
+                <thead className="border-b border-gray-100">
+                  <tr>
+                    <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm font-semibold text-gray-600">
+                      ID
+                    </th>
+                    <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm font-semibold text-gray-600">
+                      Date Paid
+                    </th>
+                    <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm font-semibold text-gray-600">
+                      Total Paid
+                    </th>
+                    <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm font-semibold text-gray-600">
+                      Description
+                    </th>
+                    <th className="py-2 px-3 md:py-4 md:px-4 text-left text-sm font-semibold text-gray-600">
+                      Payment Method
+                    </th>
+                    <th className="py-2 px-3 md:py-4 md:px-4 text-left text-sm font-semibold text-gray-600">
+                      Action
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {bills.map((bill, index) => (
+                    <tr key={index} className="border-b hover:bg-gray-50">
+                      <td className="py-3 px-3 md:py-4 md:px-4 text-gray-700">
+                        {index + 1}
+                      </td>
+                      <td className="py-3 px-3 md:py-4 md:px-4 text-gray-700">
+                        {new Date(bill.paymentDate).toLocaleString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric',
+                          hour: 'numeric',
+                          minute: 'numeric',
+                          hour12: true,
+                        })}
+                      </td>
+                      <td className="py-3 px-3 md:py-4 md:px-4 text-gray-700">
+                        ${bill.total.toFixed(2)}
+                      </td>
+                      <td className="py-3 px-3 md:py-4 md:px-4 text-gray-700">
+                        {bill.Description}
+                      </td>
+                      <td className="py-3 px-3 md:py-4 md:px-4 text-gray-700">
+                        {bill.paymentMethod}
+                      </td>
+                      <td className="py-3 px-3 md:py-4 md:px-4 text-right">
+                        <Link to={`/user/Payments/invoice/${bill._id}`}>
+                          <button className="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-semibold py-2 px-3 md:px-4 rounded-lg text-sm flex items-center shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
+                            <FaDownload className="mr-2" />
+                            Receipt
+                          </button>
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="text-lg text-gray-600 mt-4">You don't have any payments yet.</p>
+          )}
         </div>
       </div>
     </div>

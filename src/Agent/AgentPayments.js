@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import api from "../api";
-
+import { useSnackbar } from "notistack";
 
 
 function AgentPayments() {
@@ -16,25 +16,26 @@ function AgentPayments() {
   const [filterStatus, setFilterStatus] = useState("");
   const [filterDate, setFilterDate] = useState([null, null]);
   const { user } = useSelector((state) => state.user);
+  const { enqueueSnackbar } = useSnackbar();
 
   const fetchBills = useCallback(async () => {
     try {
-    
       const response = await api.get(`/api/MyHome2U/bills/GetAllBills`);
       const filteredBills = response.data.bill.filter(
-        (bill) => bill.owner._id === user._id
+        (bill) => bill.owner && bill.owner._id === user._id 
       );
       setBills(filteredBills);
     } catch (error) {
-    console.log(error);
+      const errorMessage =
+        error.response?.data?.message || "No payment information available";
+      enqueueSnackbar(errorMessage, { variant: "error" });
     }
-  }, [user._id]);
+  }, [user._id, enqueueSnackbar]);
 
   useEffect(() => {
     fetchBills();
   }, [fetchBills]);
 
-  // Filter bills based on the input values
   const filteredBills = bills
     .filter((bill) =>
       bill.user.name.toLowerCase().includes(filterName.toLowerCase())

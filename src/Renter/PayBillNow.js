@@ -3,6 +3,7 @@ import { FaDollarSign, FaPhoneAlt, FaUser, FaMoneyBillWave } from "react-icons/f
 import { useNavigate, useParams } from "react-router-dom";
 import SideBar from "./SideBar";
 import api from "../api"; 
+import { useSnackbar } from "notistack";
 
 function PayBillNow() {
   const [amount, setAmount] = useState("");
@@ -15,6 +16,7 @@ function PayBillNow() {
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const { enqueueSnackbar } = useSnackbar();
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -32,11 +34,13 @@ function PayBillNow() {
       setUserMobile(payment.user.phone);
       setUserName(payment.user.name);
     } catch (error) {
-     console.log(error);
+      const errorMessage =
+      error.response?.data?.message || "server  error";
+      enqueueSnackbar(errorMessage, { variant: "error" });
     } finally {
       setLoading(false);
     }
-  }, [id]);
+  }, [id,enqueueSnackbar]);
 
   useEffect(() => {
     fetchPayment();
