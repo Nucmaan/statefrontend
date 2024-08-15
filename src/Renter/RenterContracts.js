@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import SideBar from './SideBar';
 import { useSelector } from 'react-redux';
-import Swal from 'sweetalert2';
 import api from "../api";
 
 
@@ -16,12 +15,7 @@ const RenterContracts = () => {
       const data = response.data.contracts;
       setUserContract(data);
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'server error',
-        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
-        showConfirmButton: true,
-      });
+    console.log(error);
     }
   }, [user._id]);
 

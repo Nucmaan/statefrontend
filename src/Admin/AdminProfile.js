@@ -32,7 +32,7 @@ const AdminProfile = () => {
                   <span className="font-medium">Phone:</span> {user.phone}
                 </div>
                 <div>
-                  <span className="font-medium">Status:</span> {user.createdAt}
+                <span className="font-medium">Joined at :</span> {new Date(user.createdAt).toLocaleDateString()}
                 </div>
               </div>
               <Link to={`/admin/profile/edit/${user._id}`}>

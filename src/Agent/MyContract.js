@@ -14,23 +14,11 @@ const MyContract = () => {
   const fetchOwnerContracts = useCallback(async () => {
     setLoading(true);
     try {
-
-      Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait.........',
-        icon: 'info',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
-
       const response = await api.get(`/api/MyHome2U/contract/getOwnerContracts/${user._id}`);
-      Swal.close();
       const data = response.data.contracts;
       setOwnerContract(data);
     } catch (error) {
-      Swal.fire('Error', 'Failed to load contracts. Please try again later.', 'error');
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -62,7 +50,7 @@ const MyContract = () => {
           Swal.fire('Error', response.data.message || 'Failed to delete the contract.', 'error');
         }
       } catch (error) {
-        Swal.fire('Error', 'An error occurred while deleting the contract.', 'error');
+        console.log(error);
       }
     }
   };

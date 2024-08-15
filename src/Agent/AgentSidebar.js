@@ -10,6 +10,8 @@ import {
   FaFileInvoiceDollar,
   FaReceipt, // New icon for Add Bills
 } from "react-icons/fa";
+import { MdPostAdd } from "react-icons/md";
+
 
 import { MdManageHistory } from "react-icons/md";
 
@@ -45,7 +47,6 @@ function AgentSidebar() {
       }
     } catch (error) {
       dispatch(logoutFailure("Cannot log out now, check your settings"));
-      console.log(error);
       enqueueSnackbar("Failed to log out. Please try again.", {
         variant: "error",
         anchorOrigin: { vertical: "top", horizontal: "center" },
@@ -129,6 +130,14 @@ function AgentSidebar() {
         <FaFileInvoiceDollar size={30} className="mr-3" /> {/* Icon for Payments */}
         <span className={`${!isOpen && "hidden"}`}>Bills</span>
       </Link>
+
+      <Link
+      to="/agent/Blog"
+      className="flex items-center p-2 text-base hover:bg-gray-700"
+    >
+      <MdPostAdd size={30} className="mr-3" /> {/* Icon for Payments */}
+      <span className={`${!isOpen && "hidden"}`}>Blogs</span>
+    </Link>
         
         <button
           className="flex items-center p-2 text-base hover:bg-gray-700"

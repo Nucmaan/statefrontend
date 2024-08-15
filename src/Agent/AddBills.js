@@ -103,12 +103,7 @@ function AddBills() {
         });
       }
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Request Error!',
-        text: 'Something went wrong. Please try again later',
-        confirmButtonText: 'OK'
-      });
+    console.log(error);
     } finally {
       setLoading(false); // Set loading to false after request completes
     }

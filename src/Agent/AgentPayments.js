@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import api from "../api";
-import Swal from "sweetalert2";
+
 
 
 function AgentPayments() {
@@ -19,28 +19,14 @@ function AgentPayments() {
 
   const fetchBills = useCallback(async () => {
     try {
-      Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait.........',
-        icon: 'info',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
+    
       const response = await api.get(`/api/MyHome2U/bills/GetAllBills`);
-      Swal.close();
       const filteredBills = response.data.bill.filter(
         (bill) => bill.owner._id === user._id
       );
       setBills(filteredBills);
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'server error',
-        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
-        showConfirmButton: true,
-      });
+    console.log(error);
     }
   }, [user._id]);
 

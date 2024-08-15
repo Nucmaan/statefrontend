@@ -3,9 +3,9 @@ import SideBar from './SideBar'; // Adjust the path as needed
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { userUpdateStarted, userUpdateSuccess, userUpdateFailure } from "../Redux/User/UserSlice";
-import { useDispatch, useSelector } from 'react-redux'; // Added useSelector
+import { useDispatch, useSelector } from 'react-redux';
 import api from "../api"; 
-import Swal from 'sweetalert2';
+
 
 const EditUserProfile = () => {
   const [name, setName] = useState("");
@@ -42,17 +42,7 @@ const EditUserProfile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        Swal.fire({
-          title: 'Loading...',
-          text: 'Please wait...............',
-          icon: 'info',
-          allowOutsideClick: false,
-          didOpen: () => {
-            Swal.showLoading();
-          }
-        });  
         const response = await api.get(`/api/MyHome2U/user/getSingleUser/${id}`);
-        Swal.close();
         if (response.status === 200) {
           const userData = response.data.user;
           setName(userData.name);
@@ -84,15 +74,7 @@ const EditUserProfile = () => {
       return;
     }
     try {
-      Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait...............',
-        icon: 'info',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
+    
       dispatch(userUpdateStarted());
       const response = await api.put(`/api/MyHome2U/user/updateSingleUser/${id}`, {
         name,
@@ -103,7 +85,6 @@ const EditUserProfile = () => {
         role,
         isActive
       });
-      Swal.close();
       if (response.status === 200) {
         dispatch(userUpdateSuccess(response.data.user));
         enqueueSnackbar("Update Successful", { variant: "success" });
@@ -116,7 +97,7 @@ const EditUserProfile = () => {
       if (error.response && error.response.data && error.response.data.message) {
         enqueueSnackbar(error.response.data.message, { variant: "error" });
       } else {
-        enqueueSnackbar(`${error}`, { variant: "error" }); // Fixed unterminated string constant
+        enqueueSnackbar(`${error}`, { variant: "error" }); 
       }
     } 
   };

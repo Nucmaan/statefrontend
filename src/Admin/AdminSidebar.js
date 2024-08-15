@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUser, FaSignOutAlt, FaUsers, FaCog, FaTachometerAlt, FaChartLine, FaBuilding } from 'react-icons/fa';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import axios from 'axios';
-import { useSnackbar } from 'notistack'; // Import useSnackbar
+import api from '../api';
+import { useSnackbar } from 'notistack'; 
 
 import { logoutStart, logoutSuccess, logoutFailure } from "../Redux/User/UserSlice";
 import { useDispatch } from 'react-redux';
@@ -12,22 +12,20 @@ function AdminSidebar() {
   const [isOpen, setIsOpen] = useState(true);
 
   const dispatch = useDispatch();
-  const { enqueueSnackbar } = useSnackbar(); // Get enqueueSnackbar
+  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate(); 
 
   const handleLogout = async () => {
     try {
       dispatch(logoutStart());
-      const response = await axios.get("/api/MyHome2U/user/logout");
+      const response = await api.get("/api/MyHome2U/user/logout");
       if (response.status === 200) {
-        console.log("Logged Out");
         enqueueSnackbar("Logged Out Successfully", { variant: 'success', anchorOrigin: { vertical: 'top', horizontal: 'center' } });
         dispatch(logoutSuccess());
-        navigate('/'); // Navigate to home page
+        navigate('/'); 
       }
     } catch (error) {
       dispatch(logoutFailure("Cannot log out now, check your settings"));
-      console.log(error);
       enqueueSnackbar("Failed to log out. Please try again.", { variant: 'error', anchorOrigin: { vertical: 'top', horizontal: 'center' } });
     }
   };

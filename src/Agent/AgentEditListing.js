@@ -10,7 +10,6 @@ import {
   UpdatePropertyFailure
 } from '../Redux/PropertyList/PropertySlice.js';
 import api from "../api";
-import Swal from 'sweetalert2';
 
 
 const AgentEditListing = () => {
@@ -39,18 +38,8 @@ const AgentEditListing = () => {
     const fetchProperty = async () => {
       try {
 
-        Swal.fire({
-          title: 'Loading...',
-          text: 'Please wait.........',
-          icon: 'info',
-          allowOutsideClick: false,
-          didOpen: () => {
-            Swal.showLoading();
-          }
-        });
-
         const response = await api.get(`/api/MyHome2U/property/getsingleproperty/${id}`);
-        Swal.close();
+    
         const property = response.data.property;
         setFormData({
           title: property.title,
@@ -67,12 +56,7 @@ const AgentEditListing = () => {
           image: property.image.url
         });
       } catch (error) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Server Error',
-          text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
-          showConfirmButton: true,
-        });
+        console.log(error);
       }
     };
     fetchProperty();
@@ -108,15 +92,7 @@ const AgentEditListing = () => {
     setIsLoading(true);
     dispatch(UpdatePropertyStart());
     try {
-      Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait.........',
-        icon: 'info',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
+    
       const response = await api.put(
         `/api/MyHome2U/property/updatesingleproperty/${id}`,
         {
@@ -124,7 +100,7 @@ const AgentEditListing = () => {
           owner: user._id
         }
       );
-      Swal.close();
+  
 
       if (response.status === 200) {
         dispatch(UpdatePropertySuccess(response.data.property));

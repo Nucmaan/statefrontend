@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack'; // Import Notistack hook
 import api from "../api"; 
-import Swal from 'sweetalert2';
 
 
 function Register() {
@@ -41,17 +40,6 @@ function Register() {
 
     setLoading(true);
     try {
-
-      Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait..',
-        icon: 'info',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
-
       const response = await api.post('/api/MyHome2U/user/register', {
         name,
         email,
@@ -59,7 +47,6 @@ function Register() {
         phone,
         avatar,
       });
-      Swal.close();
       if (response.status === 201) {
         enqueueSnackbar('Registration Successful. You have successfully registered.', { variant: 'success' }); // Notistack success message
         navigate('/login');

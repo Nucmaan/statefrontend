@@ -4,8 +4,7 @@ import { MdDirectionsCar } from "react-icons/md";
 import { FaBed } from "react-icons/fa";
 import { PiToiletDuotone } from "react-icons/pi";
 import { CiSearch } from "react-icons/ci";
-import api from "../api"; // Adjust the path if necessary
-import Swal from 'sweetalert2';
+import api from "../api"; 
 
 function Rent() {
   const [propertyList, setPropertyList] = useState([]);
@@ -17,31 +16,13 @@ function Rent() {
 
   const getProperty = async () => {
     try {
-      // Show a loading alert
-      Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait while we fetch the properties.',
-        icon: 'info',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
 
       const response = await api.get("/api/MyHome2U/property/getallproperty");
       setPropertyList(response.data.properties);
 
-      // Close the loading alert
-      Swal.close();
+      
     } catch (error) {
-      // Close the loading alert and show an error alert
-      Swal.close();
-      Swal.fire({
-        title: 'Error',
-        text: 'Failed to load properties. Please try again later.',
-        icon: 'error',
-        confirmButtonText: 'OK'
-      });
+      
       console.error("Error fetching properties:", error);
     }
   };

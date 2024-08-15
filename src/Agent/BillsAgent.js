@@ -4,8 +4,6 @@ import { MdOutlineAdd } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import api from "../api";
-import Swal from "sweetalert2";
-
 
 
 const BillsAgent = () => {
@@ -15,30 +13,17 @@ const BillsAgent = () => {
 
   const fetchOwnerContracts = useCallback(async () => {
     try {
-      Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait.........',
-        icon: 'info',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
+    
       const response = await api.get(
         `/api/MyHome2U/contract/getOwnerContracts/${user._id}`
       );
       const activeContracts = response.data.contracts.filter(
         (contract) => contract.status === "Active"
       );
-      Swal.close();
+  
       setOwnerContracts(activeContracts);
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'server error',
-        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
-        showConfirmButton: true,
-      });
+    console.log(error);
     }
   }, [user._id]);
 

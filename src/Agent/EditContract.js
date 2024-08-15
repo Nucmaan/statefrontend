@@ -40,17 +40,9 @@ function EditContract() {
 
   const fetchContract = useCallback(async () => {
     try {
-      Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait.........',
-        icon: 'info',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
+    
       const response = await api.get(`/api/MyHome2U/contract/getSingleContract/${id}`);
-      Swal.close();
+  
       const contract = response.data.contract;
 
       setName(contract.user.name);
@@ -73,12 +65,8 @@ function EditContract() {
       setDeposit(contract.deposit);
       setStatus(contract.status);
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'server error',
-        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
-        showConfirmButton: true,
-      });
+      console.log(error);
+
     }
   }, [id]);
 
@@ -117,12 +105,8 @@ function EditContract() {
         navigate("/agent/contract");
       }
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'server error',
-        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
-        showConfirmButton: true,
-      });
+      console.log(error);
+
     }
   };
 

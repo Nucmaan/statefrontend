@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { FaDownload } from "react-icons/fa"; // Import the download icon
 import SideBar from "./SideBar";
-import Swal from "sweetalert2";
 import api from "../api";
 
 function RenterPayments() {
@@ -16,12 +15,7 @@ function RenterPayments() {
       const paidBills = response.data.bills.filter(bill => bill.status === 'Paid');
       setBills(paidBills);
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'server error',
-        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
-        showConfirmButton: true,
-      });
+    console.log(error);
     }
   }, [user._id]);
 

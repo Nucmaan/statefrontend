@@ -14,26 +14,13 @@ const AgentBookings = () => {
 
   const fetchUserBookings = useCallback(async () => {
     try {
-      Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait.........',
-        icon: 'info',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
+     
       const response = await api.get(`/api/MyHome2U/Booking/GetAgentBookings/${user._id}`);
-      Swal.close()
+      
       const data = response.data.agentBookings;
       setUserBooking(data);
     } catch (error) {
-      Swal.fire({
-        title: 'Error',
-        text: 'You have no Booking try agin.',
-        icon: 'error',
-        confirmButtonText: 'OK'
-      });
+      console.log(error);
     }
   }, [user._id]);
 
@@ -66,12 +53,8 @@ const AgentBookings = () => {
         }
       }
     } catch (error) {
-      Swal.fire({
-        title: 'Error',
-        text: 'Something went wrong. Please try again later.',
-        icon: 'error',
-        confirmButtonText: 'OK'
-      });
+      console.log(error);
+      
     }
   };
 

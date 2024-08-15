@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import AgentSidebar from './AgentSidebar';
 import { FaMapMarkerAlt, FaBed, FaBath, FaCar, FaDollarSign } from 'react-icons/fa';
 import api from "../api";
-import Swal from "sweetalert2";
+
 
 
 function AgentViewHouseDetails() {
@@ -13,25 +13,12 @@ function AgentViewHouseDetails() {
   const getProperty = useCallback(async () => {
     
     try {
-      Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait.........',
-        icon: 'info',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
+     
       const response = await api.get(`/api/MyHome2U/property/getsingleproperty/${id}`);
-      Swal.close();
+      
       setProperty(response.data.property);
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'server error',
-        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
-        showConfirmButton: true,
-      });
+      console.log(error);
     }
   }, [id]);
 

@@ -4,7 +4,7 @@ import html2canvas from "html2canvas";
 import { useParams } from "react-router-dom";
 import AgentSidebar from "./AgentSidebar";
 import api from "../api";
-import Swal from "sweetalert2";
+
 
 
 function AgentInvoice() {
@@ -15,25 +15,12 @@ function AgentInvoice() {
   useEffect(() => {
     const fetchBillInfo = async () => {
       try {
-        Swal.fire({
-          title: 'Loading...',
-          text: 'Please wait.........',
-          icon: 'info',
-          allowOutsideClick: false,
-          didOpen: () => {
-            Swal.showLoading();
-          }
-        });
+     
         const response = await api.get(`/api/MyHome2U/bills/GetSingleBill/${id}`);
-        Swal.close();
+    
         setInvoiceInfo(response.data.bill);
       } catch (error) {
-        Swal.fire({
-          icon: 'error',
-          title: 'server error',
-          text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
-          showConfirmButton: true,
-        });
+        console.log(error);
       }
     };
 

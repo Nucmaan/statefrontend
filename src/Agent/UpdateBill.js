@@ -25,17 +25,8 @@ function UpdateBill() {
   const fetchPayment = useCallback(async () => {
     setLoading(true);
     try {
-      Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait.........',
-        icon: 'info',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
+     
       const response = await api.get(`/api/MyHome2U/bills/GetSingleBill/${id}`);
-      Swal.close();
       const payment = response.data.bill;
       setAmount(payment.amount);
       setUtilities(payment.utilities);
@@ -46,15 +37,11 @@ function UpdateBill() {
       setPhone(payment.user.phone || "");
       setPaymentDate(payment.paymentDate ? new Date(payment.paymentDate).toISOString().substr(0, 10) : new Date().toISOString().substr(0, 10));
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'server error',
-        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
-        showConfirmButton: true,
-      });
+     console.log(error);
     } finally {
       setLoading(false);
     }
+
   }, [id]);
 
   useEffect(() => {
@@ -97,12 +84,8 @@ function UpdateBill() {
         setError("Failed to update payment.");
       }
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'An error occurred while updating payment.',
-        confirmButtonColor: '#3085d6',
-      });
+      console.log(error);
+
     } finally {
       setLoading(false);
     }

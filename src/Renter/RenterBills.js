@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useTable, useSortBy, useFilters, useGlobalFilter, usePagination } from 'react-table';
 import SideBar from "./SideBar";
-import Swal from "sweetalert2";
 import api from "../api";
 
 
@@ -29,12 +28,7 @@ function RenterBills() {
       const response = await api.get(`/api/MyHome2U/bills/getUserBills/${user._id}`);
       setBills(response.data.bills);
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'server error',
-        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
-        showConfirmButton: true,
-      });
+      console.log(error);
     }
   }, [user._id]);
 

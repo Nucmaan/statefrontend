@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useSnackbar } from 'notistack';
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../api"; 
-import Swal from "sweetalert2";
 
 function ResetPassword() {
   const [password, setPassword] = useState('');
@@ -16,15 +15,6 @@ function ResetPassword() {
     setLoading(true);
 
     try {
-      Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait ..........',
-        icon: 'info',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
 
       const response = await api.post(`/api/MyHome2U/user/changePassword/${token}`, { newPassword: password });
       if (response.status === 200) {
@@ -33,7 +23,6 @@ function ResetPassword() {
       } else {
         enqueueSnackbar(response.data.message, { variant: 'error' });
       }
-      Swal.close();
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
         enqueueSnackbar(error.response.data.message, { variant: 'error' });

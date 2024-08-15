@@ -23,17 +23,9 @@ const AgentPropertyList = () => {
 
   const fetchProperties = useCallback(async () => {
     try {
-      Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait.........',
-        icon: 'info',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
+    
       const response = await api.get("/api/MyHome2U/property/getallproperty");
-      Swal.close();
+    
       dispatch(PropertyListSuccess(response.data.properties));
     } catch (error) {
       enqueueSnackbar("Failed to fetch properties", { variant: "error" });

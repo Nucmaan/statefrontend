@@ -2,9 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { FaDollarSign, FaPhoneAlt, FaUser, FaMoneyBillWave } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import SideBar from "./SideBar";
-import Swal from "sweetalert2";
 import api from "../api"; 
-
 
 function PayBillNow() {
   const [amount, setAmount] = useState("");
@@ -34,12 +32,7 @@ function PayBillNow() {
       setUserMobile(payment.user.phone);
       setUserName(payment.user.name);
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'server error',
-        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
-        showConfirmButton: true,
-      });
+     console.log(error);
     } finally {
       setLoading(false);
     }

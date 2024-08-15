@@ -3,7 +3,6 @@ import SideBar from "./SideBar";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useParams } from "react-router-dom";
-import Swal from "sweetalert2";
 import api from "../api";
 
 
@@ -19,12 +18,7 @@ function RenterInvoice() {
         console.log(response.data.bill);
         setInvoiceInfo(response.data.bill);
       } catch (error) {
-        Swal.fire({
-          icon: 'error',
-          title: 'server error',
-          text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
-          showConfirmButton: true,
-        });
+      console.log(error);
       }
     };
 

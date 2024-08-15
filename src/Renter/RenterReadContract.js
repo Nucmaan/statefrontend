@@ -2,8 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { FaUser, FaEnvelope, FaPhone, FaHome, FaCity, FaAddressCard, FaBath, FaBed, FaDollarSign, FaCalendarAlt } from 'react-icons/fa';
 import SideBar from './SideBar';
 import { useParams } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import api from "../api";
+ import api from "../api";
 
 
 function RenterReadContract() {
@@ -56,12 +55,7 @@ function RenterReadContract() {
         status: contract.status,
       });
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'server error',
-        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
-        showConfirmButton: true,
-      });
+   console.log(error);
     }
   }, [id]);
 

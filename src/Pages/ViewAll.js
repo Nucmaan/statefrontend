@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaCalendarAlt, FaUser } from "react-icons/fa";
 import { AiOutlineRead } from "react-icons/ai";
-import api from "../api"; // Adjust the path if necessary
-import Swal from "sweetalert2";
+import api from "../api"; 
 
 function ViewAll() {
   
@@ -11,27 +10,11 @@ function ViewAll() {
 
   const getPosts = async () => {
     try {
-      // Show a loading alert
-      Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait while we fetch the properties.',
-        icon: 'info',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
 
       const response = await api.get("/api/MyHome2U/Blog/AllPosts");
       setAllPosts(response.data.posts || []); // Ensure allPosts is always an array
-      Swal.close();
     } catch (error) {
-      Swal.fire({
-        title: 'Error',
-        text: 'Failed to load properties. Please try again later.',
-        icon: 'error',
-        confirmButtonText: 'OK'
-      });
+    console.log(error);
     }
   };
 

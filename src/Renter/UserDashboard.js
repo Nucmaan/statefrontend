@@ -1,13 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { FaRegNewspaper, FaCalendarAlt, FaUserCheck, FaClock, FaHome, FaFileInvoiceDollar, FaBookmark } from "react-icons/fa";
 import SideBar from "./SideBar";
-
+import api from '../api';
+import { Link } from "react-router-dom";
 const UserDashboard = () => {
-  const announcements = [
-    { id: 1, title: "New Policy Update", date: "2024-08-01" },
-    { id: 2, title: "Maintenance Notice", date: "2024-08-05" },
-    { id: 3, title: "Community Event", date: "2024-08-10" },
-  ];
+
+   
+  const [allPosts, setAllPosts] = useState([]);
+
+  const getPosts = async () => {
+    try {
+
+      const response = await api.get("/api/MyHome2U/Blog/AllPosts");
+      setAllPosts(response.data.posts || []); 
+    } catch (error) {
+     console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
 
   const [currentTime, setCurrentTime] = useState(new Date());
 
@@ -19,15 +33,19 @@ const UserDashboard = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const formatDate = (date) => {
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    return date.toLocaleDateString(undefined, options);
-  };
-
   const formatTime = (date) => {
-    const options = { hour: "2-digit", minute: "2-digit", second: "2-digit" };
-    return date.toLocaleTimeString(undefined, options);
-  };
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
+};
+
+const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+};
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
@@ -46,7 +64,6 @@ const UserDashboard = () => {
               </div>
             </div>
             
-            {/* Current Time Card */}
             <div className="bg-blue-100 shadow-md rounded-lg p-4 flex items-center">
               <FaClock className="text-blue-500 text-3xl mr-4" />
               <div>
@@ -55,7 +72,6 @@ const UserDashboard = () => {
               </div>
             </div>
 
-            {/* Bookings Card */}
             <div className="bg-yellow-100 shadow-md rounded-lg p-4 flex items-center">
               <FaBookmark className="text-yellow-500 text-3xl mr-4" />
               <div>
@@ -64,7 +80,7 @@ const UserDashboard = () => {
               </div>
             </div>
 
-            {/* Property Details Card */}
+        
             <div className="bg-purple-100 shadow-md rounded-lg p-4 flex items-center">
               <FaHome className="text-purple-500 text-3xl mr-4" />
               <div>
@@ -73,7 +89,6 @@ const UserDashboard = () => {
               </div>
             </div>
 
-            {/* Payment Due Card */}
             <div className="bg-red-100 shadow-md rounded-lg p-4 flex items-center">
               <FaFileInvoiceDollar className="text-red-500 text-3xl mr-4" />
               <div>
@@ -87,23 +102,26 @@ const UserDashboard = () => {
           <div className="bg-white shadow-md rounded-lg p-6 mt-8">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">News & Announcements</h2>
             <div className="space-y-4">
-              {announcements.map((announcement) => (
+              {allPosts.map((post) => (
+                <Link to={`/ViewBlog/${post._id}`}>
                 <div
-                  key={announcement.id}
+                  key={post._id}
                   className="flex justify-between items-center p-3 border-b border-gray-300"
                 >
                   <div className="flex items-center">
                     <FaRegNewspaper className="text-gray-500 mr-3" />
-                    <h3 className="text-lg font-semibold text-gray-800">{announcement.title}</h3>
+                    <h3 className="text-lg font-semibold text-gray-800">{post.title}</h3>
                   </div>
                   <div className="flex items-center text-sm text-gray-500">
                     <FaCalendarAlt className="mr-1" />
-                    <span>{announcement.date}</span>
+                    <span>{new Date(post.createdAt).toLocaleDateString()}</span>
                   </div>
                 </div>
+                </Link>
               ))}
             </div>
           </div>
+
         </div>
       </div>
     </div>

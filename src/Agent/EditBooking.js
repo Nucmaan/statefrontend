@@ -30,12 +30,7 @@ function EditBooking() {
       setBooking(response.data.booking);
       setStatus(response.data.booking.status); // Set initial status
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'server error',
-        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
-        showConfirmButton: true,
-      });
+      console.log(error);
     }
   }, [id]);
 
@@ -57,12 +52,7 @@ function EditBooking() {
       });
       navigate("/agent/Bookings");
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'server error',
-        text: error.response?.data?.message || 'An unexpected error occurred. Please try again later.',
-        showConfirmButton: true,
-      });
+      console.log(error);
     }
   };
 

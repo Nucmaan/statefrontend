@@ -7,7 +7,6 @@ import Footer from "./Components/Footer";
 import Register from "./Auth/Register";
 import AboutUs from "./Pages/AboutUs";
 import ContactUs from "./Pages/ContactUs";
-import PropertyList from "./Pages/PropertyList";
 import ViewAll from "./Pages/ViewAll";
 import ViewBlog from "./Pages/ViewBlog";
 import ViewProperty from "./Pages/ViewProperty";
@@ -62,6 +61,9 @@ import AgentInvoice from "./Agent/AgentInvoice";
 import SocialLinks from "./Admin/SocialLinks";
 import PrivacyPolicy from "./Components/PrivacyPolicy";
 import TermsConditions from "./Components/TermsConditions";
+import EditSocial from "./Admin/EditSocial";
+import AgentBlog from "./Agent/AgentBlog";
+import EditBlogPost from "./Agent/EditBlogPost";
 
 function App() {
   return (
@@ -82,7 +84,6 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/About" element={<AboutUs />} />
           <Route path="/Contact" element={<ContactUs />} />
-          <Route path="/Property" element={<PropertyList />} />
           <Route path="/Rent" element={<Rent />} />
           <Route path="/Buy" element={<Buy />} />
           <Route path="/ViewAll" element={<ViewAll />} />
@@ -137,6 +138,9 @@ function App() {
             <Route path="/agent/Bills/update-Bill/:id" element={<UpdateBill />} />
             <Route path="/agent/Bills/" element={<AgentBills />} />
             <Route path="/agent/Bills/Invoice/:id" element={<AgentInvoice />} />
+            <Route path="/agent/Blog" element={<AgentBlog />} />
+            <Route path="/agent/Blog/Edit-Blog/:id" element={<EditBlogPost />} />
+            
           </Route>
 
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
@@ -152,6 +156,8 @@ function App() {
           
           <Route path="/admin/report" element={<Report />} />
           <Route path="/admin/social-Media-Links" element={<SocialLinks />} />
+
+          <Route path="/admin/Social-Media-Links/:id" element={<EditSocial />} />
           
           <Route path="/admin/listing" element={<Listings />} />
           <Route

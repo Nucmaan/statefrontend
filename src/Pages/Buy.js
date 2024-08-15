@@ -4,7 +4,6 @@ import { MdDirectionsCar } from "react-icons/md";
 import { FaBed } from "react-icons/fa6";
 import { PiToiletDuotone } from "react-icons/pi";
 import { CiSearch } from "react-icons/ci";
-import Swal from 'sweetalert2';
 import api from "../api"; 
 
 function Buy() {
@@ -12,15 +11,6 @@ function Buy() {
 
   const getProperty = async () => {
     try {
-      Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait while we fetch the properties.',
-        icon: 'info',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
 
       const response = await api.get("/api/MyHome2U/property/getallproperty");
 
@@ -30,15 +20,8 @@ function Buy() {
 
       setPropertyList(buyAvailableProperties);
 
-      Swal.close();
     } catch (error) {
-      Swal.close();
-      Swal.fire({
-        title: 'Error',
-        text: 'Failed to load properties. Please try again later.',
-        icon: 'error',
-        confirmButtonText: 'OK'
-      });
+       console.log(error);
     }
   };
 

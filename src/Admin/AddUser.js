@@ -59,7 +59,6 @@ function AddUser() {
         enqueueSnackbar("Registration Successful", { variant: "success" });
         navigate("/admin/users"); // Redirect to users page
       } else {
-        console.log(response.data.message);
         enqueueSnackbar(response.data.message, { variant: "error" });
       }
     } catch (error) {

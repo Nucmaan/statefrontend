@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSnackbar } from 'notistack';
 import api from "../api"; 
-import Swal from "sweetalert2";
+
 
 function ForgetPassword() {
   const [email, setEmail] = useState('');
@@ -14,34 +14,20 @@ function ForgetPassword() {
 
     try {
 
-      Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait..........',
-        icon: 'info',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
 
       const response = await api.post('/api/MyHome2U/user/ForgetPassword', { email });
       if (response.status === 200) {
-        Swal.close();
         enqueueSnackbar('We sent a link to your email. Please check your inbox.', { variant: 'success' });
       } else {
-        Swal.close();
         enqueueSnackbar(response.data.message, { variant: 'error' });
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
-        Swal.close();
         enqueueSnackbar(error.response.data.message, { variant: 'error' });
       } else {
-        Swal.close();
         enqueueSnackbar('Unable to reset your password now. Please try again later.', { variant: 'error' });
       }
     } finally {
-      Swal.close();
       setLoading(false);
     }
   }

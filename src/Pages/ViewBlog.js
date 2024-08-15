@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FaCalendarAlt } from "react-icons/fa";
-import api from "../api"; // Adjust the path if necessary
-import Swal from "sweetalert2";
+import api from "../api"; 
 import herro from "../Images/Herro.jpg";
 
 function ViewBlog() {
@@ -12,28 +11,11 @@ function ViewBlog() {
   useEffect(() => {
     const getPost = async () => {
       try {
-        Swal.fire({
-          title: 'Loading...',
-          text: 'Please wait while we fetch the post.',
-          icon: 'info',
-          allowOutsideClick: false,
-          didOpen: () => {
-            Swal.showLoading();
-          }
-        });
-
         const response = await api.get(`/api/MyHome2U/Blog/GetSinglePost/${id}`);
         console.log(response.data); // Log the response data for debugging
         setPost(response.data.post);
-        Swal.close();
       } catch (error) {
         console.error(error); // Log the error for debugging
-        Swal.fire({
-          title: 'Error',
-          text: 'Failed to load the post. Please try again later.',
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
       }
     };
 

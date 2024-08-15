@@ -9,7 +9,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const { enqueueSnackbar } = useSnackbar(); // Use Notistack hook
+  const { enqueueSnackbar } = useSnackbar();
   const { loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 

@@ -66,7 +66,6 @@ const UserList = () => {
         fetchUsers();
       }
     } catch (error) {
-      console.error('Error deleting user:', error);
       enqueueSnackbar('Error deleting user', { variant: 'error' });
     }
   };

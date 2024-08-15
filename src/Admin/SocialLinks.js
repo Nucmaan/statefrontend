@@ -3,9 +3,11 @@ import AdminSidebar from "./AdminSidebar";
 import { useSnackbar } from "notistack";
 import api from "../api";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SocialLinks() {
+  const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
   const [allPosts, setAllPosts] = useState([]);
   const [editDetails, setEditDetails] = useState({
     youtube: "",
@@ -13,10 +15,12 @@ function SocialLinks() {
     instagram: "",
     facebook: "",
   });
+
   const [loading, setLoading] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [getSocial, setSocial] = useState(null);
-  const [showModal, setShowModal] = useState(false); // State to control modal visibility
+  const [showModal, setShowModal] = useState(false);
+  
   const [newPost, setNewPost] = useState({
     title: "",
     shortInfo: "",
@@ -26,16 +30,13 @@ function SocialLinks() {
     image: null,
   });
 
-  const navigate = useNavigate();
-  const { enqueueSnackbar } = useSnackbar();
-
   const getSocialLinks = useCallback(async () => {
     try {
       const response = await api.get("/api/MyHome2U/socialMedia/AllLinks");
       setSocial(response.data.data);
       setEditDetails(response.data.data);
     } catch (error) {
-      const errorMessage =
+      const errorMessage = 
         error.response?.data?.message || "Failed to get social media links";
       enqueueSnackbar(errorMessage, { variant: "error" });
     }
@@ -87,12 +88,7 @@ function SocialLinks() {
       setAllPosts(response.data.posts || []);
       Swal.close();
     } catch (error) {
-      Swal.fire({
-        title: "Error",
-        text: "Failed to load properties. Please try again later.",
-        icon: "error",
-        confirmButtonText: "OK",
-      });
+      console.log(error);
     }
   };
 
@@ -118,12 +114,7 @@ function SocialLinks() {
         navigate("/admin/social-Media-Links");
       }
     } catch (error) {
-      Swal.fire({
-        title: "Error",
-        text: "Something went wrong. Please try again later.",
-        icon: "error",
-        confirmButtonText: "OK",
-      });
+    console.log(error);
     }
   };
 
@@ -176,6 +167,7 @@ function SocialLinks() {
     }));
     
   };
+  
 
   return (
     <div className="flex min-h-screen bg-black">
@@ -230,9 +222,12 @@ function SocialLinks() {
                       {new Date(post.createdAt).toLocaleDateString()}
                     </td>
                     <td className="py-4 px-6 text-sm text-gray-900">
-                      <button className="bg-yellow-500 text-white px-4 py-2 rounded-md shadow hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50 mr-2">
+                    <Link to={`/admin/Social-Media-Links/${post._id}`}>
+                      <button
+                      className="bg-yellow-500 text-white px-4 py-2 rounded-md shadow hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50 mr-2">
                         Edit
                       </button>
+                      </Link>
                       <button
                         onClick={() => handleDeleteClick(post._id)}
                         className="bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
