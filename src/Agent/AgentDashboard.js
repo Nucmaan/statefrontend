@@ -1,26 +1,92 @@
-import React from 'react';
-import { FaHome, FaClipboardList, FaDollarSign, FaCalendarAlt, FaCheckCircle, FaClipboardCheck } from 'react-icons/fa';
-import AgentSidebar from './AgentSidebar';
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  FaHome,
+  FaClipboardList,
+  FaDollarSign,
+  FaCheckCircle,
+  FaClipboardCheck,
+} from "react-icons/fa";
+
+import AgentSidebar from "./AgentSidebar";
+import api from "../api";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const AgentDashboard = () => {
+  const [ownerContract, setOwnerContract] = useState([]);
+
+  const { user } = useSelector((state) => state.user);
+
+  const [propertyList, setPropertyList] = useState([]);
+  const [propertySold, setPropertySold] = useState([]);
+  const [propertyToRent, setPropertyToRent] = useState([]);
+
+  const fetchProperties = useCallback(async () => {
+    try {
+      const response = await api.get("/api/MyHome2U/property/getallproperty");
+      const filteredProperties = response.data.properties.filter(
+        (property) => property.owner === user._id
+      );
+      setPropertyList(filteredProperties);
+      
+      setPropertySold(
+        response.data.properties.filter(
+          (property) =>
+            property.owner === user._id && property.status === "Rented"
+        ));
+
+        setPropertyToRent(
+          response.data.properties.filter(
+            (property) =>
+              property.owner === user._id && property.status === "Available"
+          ));
+
+
+    } catch (error) {
+      console.log(error);
+    }
+  }, [user._id]);
+
+  useEffect(() => {
+    fetchProperties();
+  }, [fetchProperties]);
+
+  const fetchOwnerContracts = useCallback(async () => {
+    try {
+      const response = await api.get(
+        `/api/MyHome2U/contract/getOwnerContracts/${user._id}`
+      );
+      const data = response.data.contracts;
+      setOwnerContract(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [user._id]);
+
+  useEffect(() => {
+    fetchOwnerContracts();
+  }, [fetchOwnerContracts]);
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <div className="flex flex-1 bg-black">
         <AgentSidebar />
         <div className="flex-1 bg-white p-6">
-          <h1 className="text-3xl font-bold text-gray-800 mb-6">Agent Dashboard</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-6">
+            Agent Dashboard
+          </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Total Listings */}
             <div className="bg-blue-500 shadow-lg rounded-lg p-6 text-white">
               <FaHome className="text-4xl mb-4" />
               <h2 className="text-2xl font-semibold mb-2">Total Listings</h2>
-              <p className="text-xl">24</p>
+              <p className="text-xl">{propertyList.length}</p>
             </div>
             {/* Active Contracts */}
             <div className="bg-green-500 shadow-lg rounded-lg p-6 text-white">
               <FaClipboardList className="text-4xl mb-4" />
               <h2 className="text-2xl font-semibold mb-2">Active Contracts</h2>
-              <p className="text-xl">12</p>
+              <p className="text-xl">{ownerContract.length}</p>
             </div>
             {/* Monthly Revenue */}
             <div className="bg-purple-500 shadow-lg rounded-lg p-6 text-white">
@@ -31,26 +97,25 @@ const AgentDashboard = () => {
             {/* Properties Under Review */}
             <div className="bg-yellow-500 shadow-lg rounded-lg p-6 text-white">
               <FaClipboardCheck className="text-4xl mb-4" />
-              <h2 className="text-2xl font-semibold mb-2">Properties Under Review</h2>
-              <p className="text-xl">5</p>
+              <h2 className="text-2xl font-semibold mb-2">
+               Available Properties
+              </h2>
+              <p className="text-xl">{propertyToRent.length}</p>
             </div>
             {/* Properties Sold */}
             <div className="bg-indigo-500 shadow-lg rounded-lg p-6 text-white">
               <FaCheckCircle className="text-4xl mb-4" />
-              <h2 className="text-2xl font-semibold mb-2">Properties Sold</h2>
-              <p className="text-xl">7</p>
+              <h2 className="text-2xl font-semibold mb-2">Properties Rented</h2>
+              <p className="text-xl">{propertySold.length}</p>
             </div>
-            {/* Upcoming Appointments */}
-            <div className="bg-orange-500 shadow-lg rounded-lg p-6 text-white">
-              <FaCalendarAlt className="text-4xl mb-4" />
-              <h2 className="text-2xl font-semibold mb-2">Upcoming Appointments</h2>
-              <p className="text-xl">3</p>
-            </div>
+          
           </div>
 
           {/* Recent Activities Section */}
           <div className="mt-10">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Recent Activities</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              Recent Activities
+            </h2>
             <div className="bg-gray-100 p-6 rounded-lg shadow-md">
               <ul className="space-y-4">
                 <li className="flex justify-between items-center">
@@ -73,18 +138,22 @@ const AgentDashboard = () => {
             </div>
           </div>
 
-          {/* Quick Actions Section */}
           <div className="mt-10">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Quick Actions</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              Quick Actions
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <button className="bg-blue-500 text-white py-3 px-4 rounded-lg shadow-md hover:bg-blue-600">
-                Add New Listing
+                <Link to="/agent/property-list/add-property">
+                  Add New Listing
+                </Link>
               </button>
+
               <button className="bg-green-500 text-white py-3 px-4 rounded-lg shadow-md hover:bg-green-600">
-                Create New Contract
+                <Link to="/agent/Bookings">Create New Contract</Link>
               </button>
               <button className="bg-orange-500 text-white py-3 px-4 rounded-lg shadow-md hover:bg-orange-600">
-                Schedule Appointment
+                <Link to="/agent/Bills-List">Add Bills</Link>
               </button>
             </div>
           </div>

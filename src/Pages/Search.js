@@ -1,5 +1,6 @@
 import React from "react";
 import { HiArrowRight } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 function Search() {
   return (
@@ -25,7 +26,11 @@ function Search() {
               Rent a Home with Zero Deposit
             </p>
             <div className="flex items-center justify-between bg-black text-white p-4 rounded-lg cursor-pointer hover:bg-gray-900 transition-colors duration-300">
-              <span className="text-lg font-semibold">Search Property Now</span>
+              <span className="text-lg font-semibold">
+              <Link to="/Rent">
+              Search Property Now
+              </Link>
+              </span>
               <HiArrowRight size={30} />
             </div>
           </div>
@@ -37,7 +42,11 @@ function Search() {
               Explore Upcoming Projects
             </p>
             <div className="flex items-center justify-between bg-black text-white p-4 rounded-lg cursor-pointer hover:bg-gray-900 transition-colors duration-300">
-              <span className="text-lg font-semibold">Buy New Property Now</span>
+              <span className="text-lg font-semibold">
+              <Link to="/Buy">
+              Buy New Property Now
+              </Link>
+              </span>
               <HiArrowRight size={30} />
             </div>
           </div>
