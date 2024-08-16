@@ -5,13 +5,13 @@ import { HiDocumentSearch } from "react-icons/hi";
 
 function WhyUs() {
   return (
-    <div className="px-10 py-10 bg-white">
+    <div className="px-10 py-10 bg-gray-50">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-center text-3xl md:text-4xl font-bold mb-10 text-black">
+        <h2 className="text-center text-3xl md:text-3xl font-bold mb-10 text-black">
           Why Choose Us?
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="flex flex-col justify-center items-center p-6 bg-gray-100 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+          <div className="flex flex-col justify-center items-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
             <div className="bg-indigo-600 p-4 rounded-full mb-4">
               <SiStreamrunners className="text-white" size={60} />
             </div>
@@ -21,7 +21,7 @@ function WhyUs() {
             </p>
           </div>
 
-          <div className="flex flex-col justify-center items-center p-6 bg-gray-100 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+          <div className="flex flex-col justify-center items-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
             <div className="bg-indigo-600 p-4 rounded-full mb-4">
               <HiDocumentSearch className="text-white" size={60} />
             </div>
@@ -31,7 +31,7 @@ function WhyUs() {
             </p>
           </div>
 
-          <div className="flex flex-col justify-center items-center p-6 bg-gray-100 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+          <div className="flex flex-col justify-center items-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
             <div className="bg-indigo-600 p-4 rounded-full mb-4">
               <AiFillSafetyCertificate className="text-white" size={60} />
             </div>

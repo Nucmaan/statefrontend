@@ -5,8 +5,8 @@ import Astan from "../Images/Astan.png";
 
 function FeatureIn() {
   return (
-    <div className="mx-auto px-5 pt-6 pb-10 bg-gray-50">
-      <h1 className="text-center font-bold text-3xl md:text-4xl mb-8 text-black">
+    <div className="mx-auto px-5 pt-6 pb-10 bg-white">
+      <h1 className="text-center font-bold text-3xl md:text-3xl mb-8 text-black">
         Featured In
       </h1>
 

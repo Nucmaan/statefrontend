@@ -2,12 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Herro() {
-  // Image URL
   const imageUrl = "https://d1y9xwfspocdum.cloudfront.net/story1/2246/4d2c3609329fa253d7a4e9e56b106dee8870_1280x720.jpg";
 
   return (
-    <div className="pb-5 pt-4 px-5 bg-gray-50 md:pt-2">
+    <div className="min-h-screen bg-gray-50 px-5 py-4 md:py-2 flex flex-col justify-between">
+
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+
         <div className="flex flex-col justify-center px-5">
           <h1 className="text-black font-bold text-3xl lg:text-6xl leading-tight">
             Find your next <span className="text-indigo-600">perfect</span>
@@ -26,12 +27,16 @@ function Herro() {
             </Link>
           </div>
         </div>
-        <div className="relative flex justify-center">
-          <div className="w-full h-auto object-cover rounded-md shadow-lg overflow-hidden">
+
+        <div className="flex justify-center">
+          <div className="w-full h-full rounded-md shadow-lg overflow-hidden">
             <img src={imageUrl} alt="Hero" className="w-full h-full object-cover" />
           </div>
         </div>
+
       </div>
+     
+      
     </div>
   );
 }

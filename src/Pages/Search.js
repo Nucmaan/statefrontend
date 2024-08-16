@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 
 function Search() {
   return (
-    <div className="py-10 bg-gray-50">
+    <div className="py-10 bg-white">
       <div className="max-w-7xl mx-auto px-5">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Landlord Section */}
-          <div className="flex flex-col p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+          <div className="flex flex-col p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
             <h2 className="text-2xl font-bold text-black mb-2">Landlord</h2>
             <p className="text-gray-700 mb-4 font-medium">
               Rent out with up to 20x Better Protection
@@ -20,7 +20,7 @@ function Search() {
           </div>
 
           {/* Tenant Section */}
-          <div className="flex flex-col p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+          <div className="flex flex-col p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
             <h2 className="text-2xl font-bold text-black mb-2">Tenant</h2>
             <p className="text-gray-700 mb-4 font-medium">
               Rent a Home with Zero Deposit
@@ -36,7 +36,7 @@ function Search() {
           </div>
 
           {/* New Launches Section */}
-          <div className="flex flex-col p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+          <div className="flex flex-col p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
             <h2 className="text-2xl font-bold text-black mb-2">New Launches</h2>
             <p className="text-gray-700 mb-4 font-medium">
               Explore Upcoming Projects
