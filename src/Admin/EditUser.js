@@ -4,9 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import api from "../api";
 
-
 function EditUser() {
-  
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,24 +13,19 @@ function EditUser() {
   const [avatar, setAvatar] = useState(null);
   const [role, setRole] = useState("user");
   const [isActive, setIsActive] = useState(true);
+  const [gender, setGender] = useState(""); // Gender state added
   const [loading, setLoading] = useState(false);
+  const [avatarPreview, setAvatarPreview] = useState(null);
 
-  const { id } = useParams(); 
+  const { id } = useParams();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      if (file.size > 10 * 1024 * 1024) { // 10MB limit
-        enqueueSnackbar("File is too large. Please select a file smaller than 10MB.", { variant: "error" });
-        return;
-      }
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatar(reader.result); // Store the image data URL
-      };
-      reader.readAsDataURL(file);
+      setAvatar(file);
+      setAvatarPreview(URL.createObjectURL(file)); // Set avatar preview
     }
   };
 
@@ -45,9 +38,10 @@ function EditUser() {
           setName(userData.name);
           setEmail(userData.email);
           setPhone(userData.phone);
-          setAvatar(userData.avatar ? userData.avatar.url : null); // Adjusted to handle avatar correctly
+          setAvatarPreview(userData.avatar ? userData.avatar.url : null); // Adjusted to handle avatar correctly
           setRole(userData.role);
           setIsActive(userData.isActive);
+          setGender(userData.gender); // Set gender from fetched data
         } else {
           enqueueSnackbar(response.data.message, { variant: "error" });
         }
@@ -74,15 +68,18 @@ function EditUser() {
     setLoading(true);
 
     try {
-      const response = await api.put(`/api/MyHome2U/user/updateSingleUser/${id}`, {
-        name,
-        email,
-        password,
-        phone,
-        avatar,
-        role,
-        isActive
-      });
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("phone", phone);
+      formData.append("avatar", avatar);
+      formData.append("role", role);
+      formData.append("isActive", isActive);
+      formData.append("gender", gender); // Append gender to form data
+
+      const response = await api.put(`/api/MyHome2U/user/updateSingleUser/${id}`, formData);
+
       if (response.status === 200) {
         enqueueSnackbar("Update Successful", { variant: "success" });
         navigate("/admin/users");
@@ -103,7 +100,7 @@ function EditUser() {
 
   return (
     <div className="flex min-h-screen bg-black">
-      <AdminSidebar /> 
+      <AdminSidebar />
       <div className="flex-1 p-6 bg-gray-100">
         <h1 className="text-2xl font-semibold mb-4">Update User</h1>
         <div className="bg-white border border-gray-200 rounded-lg shadow-md p-6">
@@ -176,7 +173,24 @@ function EditUser() {
                 onChange={handleAvatarChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
-              {avatar && <img src={avatar} alt="Avatar Preview" className="mt-2 h-20 w-20 rounded-full  object-cover" />}
+              {avatarPreview && (
+                <img src={avatarPreview} alt="Avatar Preview" className="mt-2 h-20 w-20 rounded-full object-cover" />
+              )}
+            </div>
+            <div className="mb-4">
+              <label htmlFor="gender" className="block text-gray-700">Gender</label>
+              <select
+                id="gender"
+                name="gender"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              >
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
             </div>
             <div className="mb-4">
               <label htmlFor="role" className="block text-gray-700">Role</label>
@@ -200,16 +214,20 @@ function EditUser() {
                 name="isActive"
                 checked={isActive}
                 onChange={(e) => setIsActive(e.target.checked)}
-                className="mt-1"
+                className="mt-1 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
             </div>
-            <button
-              type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600"
-              disabled={loading}
-            >
-              {loading ? "Updating..." : "Update User"}
-            </button>
+            <div>
+              <button
+                type="submit"
+                className={`w-full bg-blue-500 text-white py-2 px-4 rounded-md shadow-sm ${
+                  loading ? "cursor-not-allowed opacity-50" : ""
+                }`}
+                disabled={loading}
+              >
+                {loading ? "Updating..." : "Update User"}
+              </button>
+            </div>
           </form>
         </div>
       </div>
