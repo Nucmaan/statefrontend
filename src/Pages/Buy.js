@@ -39,8 +39,13 @@ function Buy() {
     property.address.toLowerCase().includes(searchQuery)
   );
 
+  if (propertyList.length === 0) {
+    return <div className="text-center mt-8 text-gray-600">No BuY properties available.</div>;
+  }
+
   return (
     <div className="mx-auto px-4 pb-4 min-h-screen">
+
       <div className="flex border-2 border-black rounded-md overflow-hidden sticky top-[89px] z-40 bg-white shadow-md">
         <input
           type="text"

@@ -252,10 +252,21 @@ function AgentBlog() {
                     />
                   </div>
 
-                  <div className="flex justify-end">
+                  <div className="flex justify-between">
+
+                  <div>
+                  <button className="px-8 py-2 rounded-sm bg-red-600 text-white font-bold"
+                  onClick={
+                    () => setShowModal(false)
+                  }
+                  >
+                  Close
+                  </button>
+
+                  </div>
                     <button
                       type="submit"
-                      className="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                      className="bg-blue-500 text-white px-8 py-2 rounded-sm shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                       disabled={loading}
                     >
                       {loading ? "Saving..." : "Save"}
@@ -266,6 +277,8 @@ function AgentBlog() {
             </div>
           </div>
         )}
+
+
       </div>
     </div>
   );
