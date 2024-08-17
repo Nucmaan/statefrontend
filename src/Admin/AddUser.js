@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import api from "../api";
 
-
 function AddUser() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -15,6 +14,7 @@ function AddUser() {
   const [role, setRole] = useState("user");
   const [isActive, setIsActive] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [gender, setGender] = useState("");
 
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
@@ -22,15 +22,7 @@ function AddUser() {
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      if (file.size > 10 * 1024 * 1024) { // 10MB limit
-        alert("File is too large. Please select a file smaller than 10MB.");
-        return;
-      }
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatar(reader.result); // Store the image data URL
-      };
-      reader.readAsDataURL(file);
+      setAvatar(file);
     }
   };
 
@@ -42,25 +34,37 @@ function AddUser() {
       return;
     }
 
-    setLoading(true); // Set loading to true
+    setLoading(true);
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("phone", phone);
+    formData.append("avatar", avatar);
+    formData.append("role", role);
+    formData.append("isActive", isActive);
+    formData.append("gender", gender); // Append gender to form data
 
     try {
-      const response = await api.post("/api/MyHome2U/user/register", {
-        name,
-        email,
-        password,
-        phone,
-        avatar,
-        role,
-        isActive
-      });
+      const response = await api.post("/api/MyHome2U/user/register", formData);
       if (response.status === 201) {
-        console.log(response.data.user);
         enqueueSnackbar("Registration Successful", { variant: "success" });
         navigate("/admin/users"); // Redirect to users page
       } else {
         enqueueSnackbar(response.data.message, { variant: "error" });
       }
+      // Reset form inputs after successful registration
+      setName("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      setPhone("");
+      setAvatar(null);
+      setRole("user");
+      setIsActive(true);
+      setGender("");
+      
     } catch (error) {
       if (
         error.response &&
@@ -78,7 +82,7 @@ function AddUser() {
 
   return (
     <div className="flex min-h-screen bg-black">
-      <AdminSidebar /> {/* Sidebar on the left */}
+      <AdminSidebar /> 
 
       <div className="flex-1 p-6 bg-gray-100">
         <h1 className="text-2xl font-semibold mb-4">Add New User</h1>
@@ -167,6 +171,21 @@ function AddUser() {
                 <option value="user">User</option>
                 <option value="admin">Admin</option>
                 <option value="agent">Agent</option>
+              </select>
+            </div>
+            <div className="mb-4">
+              <label htmlFor="gender" className="block text-gray-700">Gender</label>
+              <select
+                id="gender"
+                name="gender"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                required
+              >
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
               </select>
             </div>
             <div className="mb-4">

@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from "react";
 import AdminSidebar from "./AdminSidebar";
 import { useSnackbar } from "notistack";
 import api from "../api";
-import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 
 function SocialLinks() {
@@ -74,19 +73,11 @@ function SocialLinks() {
 
   const getPosts = async () => {
     try {
-      Swal.fire({
-        title: "Loading...",
-        text: "Please wait while we fetch the properties.",
-        icon: "info",
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        },
-      });
+     
 
       const response = await api.get("/api/MyHome2U/Blog/AllPosts");
       setAllPosts(response.data.posts || []);
-      Swal.close();
+      
     } catch (error) {
       console.log(error);
     }
@@ -98,17 +89,9 @@ function SocialLinks() {
 
   const handleDeleteClick = async (post_id) => {
     try {
-      Swal.fire({
-        title: "Loading...",
-        text: "Please wait while we fetch the properties.",
-        icon: "info",
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        },
-      });
+    
       const response = await api.delete(`/api/MyHome2U/Blog/DeletePost/${post_id}`);
-      Swal.close();
+    
       if (response.status === 200) {
         enqueueSnackbar("Post deleted successfully", { variant: "success" });
         navigate("/admin/social-Media-Links");

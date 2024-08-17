@@ -11,7 +11,6 @@ import {
 import api from "../api";
 import Swal from "sweetalert2";
 
-
 const AgentAddListing = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
@@ -28,23 +27,16 @@ const AgentAddListing = () => {
   const [parking, setParking] = useState("");
   const [deposit, setDeposit] = useState("");
   const [status, setStatus] = useState("Available");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleFileChange = (e) => {
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
-    TransformFile(file);
-  };
-
-  const TransformFile = (file) => {
-    const reader = new FileReader();
     if (file) {
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-    } else {
-      setImage("");
+      setImage(file);
+      const previewUrl = URL.createObjectURL(file);
+      setImagePreview(previewUrl);
     }
   };
 
@@ -52,34 +44,38 @@ const AgentAddListing = () => {
     e.preventDefault();
     setIsLoading(true);
     dispatch(AddPropertyStart());
+
     try {
       Swal.fire({
         title: 'Loading...',
-        text: 'Please wait.........',
+        text: 'Please wait...',
         icon: 'info',
         allowOutsideClick: false,
         didOpen: () => {
           Swal.showLoading();
         }
       });
+
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("address", address);
+      formData.append("city", city);
+      formData.append("price", price);
+      formData.append("houseType", houseType);
+      formData.append("bedrooms", bedrooms);
+      formData.append("bathrooms", bathrooms);
+      formData.append("parking", parking);
+      formData.append("deposit", deposit);
+      formData.append("status", status);
+      formData.append("image", image);
+      formData.append("owner", user._id);
+
       const response = await api.post(
         "/api/MyHome2U/property/addproperty",
-        {
-          title,
-          description,
-          address,
-          city,
-          bedrooms,
-          bathrooms,
-          price,
-          deposit,
-          houseType,
-          parking,
-          image,
-          owner: user._id,
-          status,
-        }
+        formData
       );
+
       Swal.close();
       if (response.status === 201) {
         dispatch(AddPropertySuccess(response.data.property));
@@ -115,18 +111,23 @@ const AgentAddListing = () => {
     setParking("");
     setDeposit("");
     setStatus("Available");
-    setImage("");
+    setImage(null);
+    setImagePreview(null);
   };
 
   return (
-    <div className="flex min-h-screen bg-black ">
+    <div className="flex min-h-screen bg-black">
       <AgentSidebar />
       <div className="flex-1 p-3 bg-gray-100">
-        <h1 className="text-3xl font-bold text-gray-800 my-2 text-center">Add New Listing</h1>
+        <h1 className="text-3xl font-bold text-gray-800 my-2 text-center">
+          Add New Listing
+        </h1>
         <form
           onSubmit={handleSubmit}
           className="bg-white p-8 rounded-lg shadow-lg max-w-3xl mx-auto"
         >
+          {/* Form Fields */}
+          {/* Title */}
           <div className="mb-6">
             <label className="block text-gray-700 font-semibold mb-2" htmlFor="title">
               Title
@@ -143,10 +144,7 @@ const AgentAddListing = () => {
 
           {/* Description */}
           <div className="mb-6">
-            <label
-              className="block text-gray-700 font-semibold mb-2"
-              htmlFor="description"
-            >
+            <label className="block text-gray-700 font-semibold mb-2" htmlFor="description">
               Description
             </label>
             <textarea
@@ -158,7 +156,7 @@ const AgentAddListing = () => {
             />
           </div>
 
-          {/* Address */}
+          {/* Address and City */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
               <label className="block text-gray-700 font-semibold mb-2" htmlFor="address">
@@ -174,7 +172,6 @@ const AgentAddListing = () => {
               />
             </div>
 
-            {/* City */}
             <div>
               <label className="block text-gray-700 font-semibold mb-2" htmlFor="city">
                 City
@@ -190,7 +187,7 @@ const AgentAddListing = () => {
             </div>
           </div>
 
-          {/* Price */}
+          {/* Price and Deposit */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
               <label className="block text-gray-700 font-semibold mb-2" htmlFor="price">
@@ -206,7 +203,6 @@ const AgentAddListing = () => {
               />
             </div>
 
-            {/* Deposit */}
             <div>
               <label className="block text-gray-700 font-semibold mb-2" htmlFor="deposit">
                 Deposit
@@ -222,13 +218,10 @@ const AgentAddListing = () => {
             </div>
           </div>
 
-          {/* House Type */}
+          {/* House Type and Status */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
-              <label
-                className="block text-gray-700 font-semibold mb-2"
-                htmlFor="houseType"
-              >
+              <label className="block text-gray-700 font-semibold mb-2" htmlFor="houseType">
                 House Type
               </label>
               <select
@@ -244,7 +237,6 @@ const AgentAddListing = () => {
               </select>
             </div>
 
-            {/* Status */}
             <div>
               <label className="block text-gray-700 font-semibold mb-2" htmlFor="status">
                 Status
@@ -305,10 +297,11 @@ const AgentAddListing = () => {
               value={parking}
               onChange={(e) => setParking(e.target.value)}
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
           </div>
 
-          {/* Image Upload */}
+          {/* Image */}
           <div className="mb-6">
             <label className="block text-gray-700 font-semibold mb-2" htmlFor="image">
               Upload Image
@@ -316,21 +309,29 @@ const AgentAddListing = () => {
             <input
               type="file"
               id="image"
-              onChange={handleFileChange}
+              accept="image/*"
+              onChange={handleImageChange}
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
+          {/* Image Preview */}
+          {imagePreview && (
+            <div className="mb-6">
+              <img src={imagePreview} alt="Preview" className="rounded-lg w-32 h-32 object-cover" />
+            </div>
+          )}
+
           {/* Submit Button */}
-          <button
-            type="submit"
-            className={`w-full py-3 mt-6 bg-blue-600 text-white rounded-lg font-semibold ${
-              isLoading ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-            disabled={isLoading}
-          >
-            {isLoading ? "Adding..." : "Add Listing"}
-          </button>
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200"
+              disabled={isLoading}
+            >
+              {isLoading ? "Loading..." : "Add Property"}
+            </button>
+          </div>
         </form>
       </div>
     </div>

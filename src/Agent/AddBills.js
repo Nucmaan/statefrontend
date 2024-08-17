@@ -48,7 +48,7 @@ function AddBills() {
     e.preventDefault();
     setLoading(true);
 
-    // Check for missing fields
+  
     if (!utilities || !dueDate || !description) {
       Swal.fire({
         icon: 'warning',
@@ -57,7 +57,7 @@ function AddBills() {
         confirmButtonText: 'OK'
       });
       setLoading(false);
-      return; // Stop further execution if fields are missing
+      return; 
     }
 
     try {

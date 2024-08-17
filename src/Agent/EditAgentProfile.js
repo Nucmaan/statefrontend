@@ -7,7 +7,7 @@ import {
   userUpdateSuccess,
   userUpdateFailure,
 } from "../Redux/User/UserSlice";
-import { useDispatch, useSelector } from "react-redux"; // Added useSelector
+import { useDispatch, useSelector } from "react-redux";
 import api from "../api";
 
 const EditAgentProfile = () => {
@@ -18,6 +18,7 @@ const EditAgentProfile = () => {
   const [phone, setPhone] = useState("");
   const [avatar, setAvatar] = useState(null);
   const [avatarPreview, setAvatarPreview] = useState(null);
+  const [gender, setGender] = useState(""); // New gender state
 
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.user);
@@ -30,35 +31,28 @@ const EditAgentProfile = () => {
     const file = e.target.files[0];
     if (file) {
       setAvatar(file);
-      setAvatarPreview(URL.createObjectURL(file)); // Set avatar preview
+      setAvatarPreview(URL.createObjectURL(file));
     }
   };
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await api.get(
-          `/api/MyHome2U/user/getSingleUser/${id}`
-        );
+        const response = await api.get(`/api/MyHome2U/user/getSingleUser/${id}`);
         if (response.status === 200) {
           const userData = response.data.user;
           setName(userData.name);
           setEmail(userData.email);
           setPhone(userData.phone);
-          setAvatarPreview(userData.avatar.url);
+          setGender(userData.gender || ""); // Set gender if available
+          setAvatarPreview(userData.avatar?.url);
         } else {
           enqueueSnackbar(response.data.message, { variant: "error" });
         }
       } catch (error) {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          enqueueSnackbar(error.response.data.message, { variant: "error" });
-        } else {
-          enqueueSnackbar("Failed to fetch user data", { variant: "error" });
-        }
+        const errorMessage =
+          error.response?.data?.message || "Failed to fetch user data";
+        enqueueSnackbar(errorMessage, { variant: "error" });
       }
     };
 
@@ -81,12 +75,12 @@ const EditAgentProfile = () => {
       formData.append("email", email);
       formData.append("phone", phone);
       formData.append("password", password);
-      formData.append("avatar", avatar);
+      formData.append("gender", gender); // Add gender to form data
+      if (avatar) {
+        formData.append("avatar", avatar);
+      }
 
-      const response = await api.put(
-        `/api/MyHome2U/user/updateSingleUser/${id}`,
-        formData
-      );
+      const response = await api.put(`/api/MyHome2U/user/updateSingleUser/${id}`, formData);
       if (response.status === 200) {
         dispatch(userUpdateSuccess(response.data.user));
         enqueueSnackbar("Update Successful", { variant: "success" });
@@ -96,15 +90,9 @@ const EditAgentProfile = () => {
       }
     } catch (error) {
       dispatch(userUpdateFailure("User update failed"));
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        enqueueSnackbar(error.response.data.message, { variant: "error" });
-      } else {
-        enqueueSnackbar(`${error}`, { variant: "error" }); // Fixed unterminated string constant
-      }
+      const errorMessage =
+        error.response?.data?.message || `${error}`;
+      enqueueSnackbar(errorMessage, { variant: "error" });
     }
   };
 
@@ -116,9 +104,7 @@ const EditAgentProfile = () => {
           <h1 className="text-2xl font-semibold mb-4">Edit Agent Profile</h1>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="name" className="block text-gray-700">
-                Name
-              </label>
+              <label htmlFor="name" className="block text-gray-700">Name</label>
               <input
                 type="text"
                 id="name"
@@ -130,9 +116,7 @@ const EditAgentProfile = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="email" className="block text-gray-700">
-                Email
-              </label>
+              <label htmlFor="email" className="block text-gray-700">Email</label>
               <input
                 type="email"
                 id="email"
@@ -144,9 +128,7 @@ const EditAgentProfile = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="phone" className="block text-gray-700">
-                Phone
-              </label>
+              <label htmlFor="phone" className="block text-gray-700">Phone</label>
               <input
                 type="tel"
                 id="phone"
@@ -158,9 +140,23 @@ const EditAgentProfile = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="password" className="block text-gray-700">
-                Password
-              </label>
+              <label htmlFor="gender" className="block text-gray-700">Gender</label>
+              <select
+                id="gender"
+                name="gender"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                required
+              >
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div className="mb-4">
+              <label htmlFor="password" className="block text-gray-700">Password</label>
               <input
                 type="password"
                 id="password"
@@ -171,9 +167,7 @@ const EditAgentProfile = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="confirmPassword" className="block text-gray-700">
-                Confirm Password
-              </label>
+              <label htmlFor="confirmPassword" className="block text-gray-700">Confirm Password</label>
               <input
                 type="password"
                 id="confirmPassword"
@@ -184,9 +178,7 @@ const EditAgentProfile = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="avatar" className="block text-gray-700">
-                Profile Image
-              </label>
+              <label htmlFor="avatar" className="block text-gray-700">Profile Image</label>
               <input
                 type="file"
                 id="avatar"
@@ -203,10 +195,9 @@ const EditAgentProfile = () => {
                 />
               )}
             </div>
-
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600"
+              className={`w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
               disabled={loading}
             >
               {loading ? "Updating..." : "Update Profile"}
