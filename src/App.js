@@ -64,6 +64,9 @@ import TermsConditions from "./Components/TermsConditions";
 import EditSocial from "./Admin/EditSocial";
 import AgentBlog from "./Agent/AgentBlog";
 import EditBlogPost from "./Agent/EditBlogPost";
+import AboutUsPage from "./Admin/AboutUsPage";
+import AddAboutUsPage from "./Admin/AddAboutUsPage";
+import EditAboutUsPage from "./Admin/EditAboutUsPage";
 
 function App() {
   return (
@@ -160,6 +163,9 @@ function App() {
           <Route path="/admin/Social-Media-Links/:id" element={<EditSocial />} />
           
           <Route path="/admin/listing" element={<Listings />} />
+          <Route path="/admin/aboutuspage" element={<AboutUsPage />} />
+          <Route path="/admin/aboutuspage/addsection" element={<AddAboutUsPage />} />
+          <Route path="/admin/aboutuspage/editsection/:id" element={<EditAboutUsPage />} />
           <Route
             path="/admin/listing/edit-listing/:id"
             element={<EditListing />}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUser, FaSignOutAlt, FaUsers, FaCog, FaTachometerAlt, FaChartLine, FaBuilding } from 'react-icons/fa';
+import { MdLastPage } from "react-icons/md";
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import api from '../api';
 import { useSnackbar } from 'notistack'; 
@@ -51,14 +52,21 @@ function AdminSidebar() {
         <FaBuilding size={30} className="mr-3" />
         <span className={`${!isOpen && 'hidden'}`}>Property List</span>
       </Link>
+
         <Link to="/admin/users" className="flex items-center p-2 text-base hover:bg-gray-700">
           <FaUsers size={30} className="mr-3" />
           <span className={`${!isOpen && 'hidden'}`}>User List</span>
         </Link>
+
+        <Link to="/admin/aboutuspage" className="flex items-center p-2 text-base hover:bg-gray-700">
+        <MdLastPage size={30} className="mr-3" />
+        <span className={`${!isOpen && 'hidden'}`}>AboutUs Page</span>
+      </Link>
+
         <Link to="/admin/social-Media-Links" className="flex items-center p-2 text-base hover:bg-gray-700">
         <FaCog size={30} className="mr-3" />
         <span className={`${!isOpen && 'hidden'}`}>Settings</span>
-      </Link>
+        </Link>
         <Link to="/admin/report" className="flex items-center p-2 text-base hover:bg-gray-700">
           <FaChartLine size={30} className="mr-3" />
           <span className={`${!isOpen && 'hidden'}`}>Reports</span>
