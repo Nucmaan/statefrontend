@@ -1,5 +1,5 @@
 import React from "react";
-import herro from "../Images/hormuud.png";
+import Hormuud from "../Images/hormuud.png";
 import Bille from "../Images/BileMedia.png";
 import Astan from "../Images/Astan.png";
 
@@ -13,8 +13,8 @@ function FeatureIn() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="flex justify-center items-center bg-white p-4 rounded-lg shadow-md">
           <img
-            src={herro}
-            alt="Herro"
+            src={Hormuud}
+            alt="Hormuud"
             className="object-contain h-24 w-auto md:h-32"
           />
         </div>

@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FaCalendarAlt } from "react-icons/fa";
 import api from "../api"; 
-import herro from "../Images/Herro.jpg";
 import { useSnackbar } from "notistack";
 
 function ViewBlog() {
@@ -44,7 +43,7 @@ function ViewBlog() {
 
       <div className="shadow-lg rounded-lg bg-white overflow-hidden mb-12">
         <img 
-          src={post.image?.url || herro} 
+          src={post.image?.url} 
           alt="Blog" 
           className="w-full h-80 object-cover" 
         />
