@@ -26,7 +26,6 @@ const AboutUsPage = () => {
         try {
             const response = await api.delete(`/api/MyHome2U/AboutUs/DeleteSection/${id}`);
             if (response.status === 200) {
-                alert("Section deleted successfully");
                 navigate("/admin/aboutuspage"); 
             } else {
                 alert(response.message);

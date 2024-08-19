@@ -19,7 +19,6 @@ function AboutUs() {
 
   return (
     <div className="mx-auto p-8 min-h-screen">
-      <h1 className="text-center font-bold text-4xl text-black mb-8">About Us</h1>
 
       {section.length === 0 ? (
         <p className="text-center text-xl text-gray-600">

@@ -67,6 +67,8 @@ import AboutUsPage from "./Admin/AboutUsPage";
 import AddAboutUsPage from "./Admin/AddAboutUsPage";
 import EditAboutUsPage from "./Admin/EditAboutUsPage";
 import HeroImage from "./Admin/HeroImage";
+import AddHeroImage from "./Admin/AddHeroImage";
+import EditHeroImage from "./Admin/EditHeroImage";
 
 function App() {
   return (
@@ -158,14 +160,17 @@ function App() {
           <Route path="/admin/users/edit-user/:id" element={<EditUser />} />
           
           <Route path="/admin/heroImage" element={<HeroImage />} />
-          <Route path="/admin/social-Media-Links" element={<SocialLinks />} />
+          <Route path="/admin/heroImage/addHeroImage" element={<AddHeroImage />} />
+          <Route path="/admin/heroImage/EditHeroImage/:id" element={<EditHeroImage />} />
 
+          <Route path="/admin/social-Media-Links" element={<SocialLinks />} />
           <Route path="/admin/Social-Media-Links/:id" element={<EditSocial />} />
-          
           <Route path="/admin/listing" element={<Listings />} />
           <Route path="/admin/aboutuspage" element={<AboutUsPage />} />
           <Route path="/admin/aboutuspage/addsection" element={<AddAboutUsPage />} />
           <Route path="/admin/aboutuspage/editsection/:id" element={<EditAboutUsPage />} />
+
+          
           <Route
             path="/admin/listing/edit-listing/:id"
             element={<EditListing />}

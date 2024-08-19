@@ -3,8 +3,11 @@ import AdminSidebar from "./AdminSidebar";
 import { useSnackbar } from "notistack";
 import api from "../api";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function SocialLinks() {
+  const { user } = useSelector((state) => state.user);
+
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const [allPosts, setAllPosts] = useState([]);
@@ -24,8 +27,6 @@ function SocialLinks() {
     title: "",
     shortInfo: "",
     content: "",
-    author: "",
-    roll: "",
     image: null,
   });
 
@@ -109,8 +110,8 @@ function SocialLinks() {
   formData.append('title', newPost.title);
   formData.append('shortInfo', newPost.shortInfo);
   formData.append('content', newPost.content);
-  formData.append('author', newPost.author);
-  formData.append('roll', newPost.roll);
+  formData.append('author', user._id);
+  formData.append('roll', user.role);
   if (newPost.image) {
     formData.append('image', newPost.image);
   }
@@ -126,8 +127,6 @@ function SocialLinks() {
           title: "",
           shortInfo: "",
           content: "",
-          author: "",
-          roll: "",
           image: null,
         });
       } else {
@@ -411,40 +410,6 @@ function SocialLinks() {
                     value={newPost.content}
                     onChange={handleInputChange}
                     rows={4}
-                    className="col-span-3 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                    required
-                  />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                  <label
-                    htmlFor="author"
-                    className="text-sm font-medium text-gray-700 text-right"
-                  >
-                    Author
-                  </label>
-                  <input
-                    type="text"
-                    id="author"
-                    name="author"
-                    value={newPost.author}
-                    onChange={handleInputChange}
-                    className="col-span-3 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                    required
-                  />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                  <label
-                    htmlFor="roll"
-                    className="text-sm font-medium text-gray-700 text-right"
-                  >
-                    Roll
-                  </label>
-                  <input
-                    type="text"
-                    id="roll"
-                    name="roll"
-                    value={newPost.roll}
-                    onChange={handleInputChange}
                     className="col-span-3 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                     required
                   />
