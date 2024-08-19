@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaUser, FaSignOutAlt, FaUsers, FaCog, FaTachometerAlt, FaChartLine, FaBuilding } from 'react-icons/fa';
+import { FaUser, FaSignOutAlt, FaUsers, FaCog, FaTachometerAlt, FaBuilding } from 'react-icons/fa';
 import { MdLastPage } from "react-icons/md";
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import api from '../api';
 import { useSnackbar } from 'notistack'; 
+import { SiGoogletagmanager } from "react-icons/si";
 
 import { logoutStart, logoutSuccess, logoutFailure } from "../Redux/User/UserSlice";
 import { useDispatch } from 'react-redux';
@@ -67,9 +68,10 @@ function AdminSidebar() {
         <FaCog size={30} className="mr-3" />
         <span className={`${!isOpen && 'hidden'}`}>Settings</span>
         </Link>
-        <Link to="/admin/report" className="flex items-center p-2 text-base hover:bg-gray-700">
-          <FaChartLine size={30} className="mr-3" />
-          <span className={`${!isOpen && 'hidden'}`}>Reports</span>
+
+        <Link to="/admin/heroImage" className="flex items-center p-2 text-base hover:bg-gray-700">
+          <SiGoogletagmanager size={30} className="mr-3" />
+          <span className={`${!isOpen && 'hidden'}`}>HeroImage</span>
         </Link>
       
         <button className="flex items-center p-2 text-base hover:bg-gray-700" onClick={handleLogout}>

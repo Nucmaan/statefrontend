@@ -23,7 +23,6 @@ import AdminProfile from "./Admin/AdminProfile";
 import AdminSidebar from "./Admin/AdminSidebar";
 import EditAdminProfile from "./Admin/EditAdminProfile";
 import UserList from "./Admin/UserList";
-import Report from "./Admin/Report";
 import AddUser from "./Admin/AddUser";
 import EditUser from "./Admin/EditUser";
 import Listings from "./Admin/Listings";
@@ -67,6 +66,7 @@ import EditBlogPost from "./Agent/EditBlogPost";
 import AboutUsPage from "./Admin/AboutUsPage";
 import AddAboutUsPage from "./Admin/AddAboutUsPage";
 import EditAboutUsPage from "./Admin/EditAboutUsPage";
+import HeroImage from "./Admin/HeroImage";
 
 function App() {
   return (
@@ -157,7 +157,7 @@ function App() {
           <Route path="/admin/users/add-new-user" element={<AddUser />} />
           <Route path="/admin/users/edit-user/:id" element={<EditUser />} />
           
-          <Route path="/admin/report" element={<Report />} />
+          <Route path="/admin/heroImage" element={<HeroImage />} />
           <Route path="/admin/social-Media-Links" element={<SocialLinks />} />
 
           <Route path="/admin/Social-Media-Links/:id" element={<EditSocial />} />
