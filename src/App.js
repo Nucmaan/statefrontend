@@ -69,6 +69,7 @@ import EditAboutUsPage from "./Admin/EditAboutUsPage";
 import HeroImage from "./Admin/HeroImage";
 import AddHeroImage from "./Admin/AddHeroImage";
 import EditHeroImage from "./Admin/EditHeroImage";
+import TestPreview from "./Admin/TestPreview";
 
 function App() {
   return (
@@ -145,7 +146,7 @@ function App() {
             <Route path="/agent/Bills/Invoice/:id" element={<AgentInvoice />} />
             <Route path="/agent/Blog" element={<AgentBlog />} />
             <Route path="/agent/Blog/Edit-Blog/:id" element={<EditBlogPost />} />
-            
+    
           </Route>
 
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
@@ -169,7 +170,7 @@ function App() {
           <Route path="/admin/aboutuspage" element={<AboutUsPage />} />
           <Route path="/admin/aboutuspage/addsection" element={<AddAboutUsPage />} />
           <Route path="/admin/aboutuspage/editsection/:id" element={<EditAboutUsPage />} />
-
+          <Route path="/admin/test" element={<TestPreview />} />
           
           <Route
             path="/admin/listing/edit-listing/:id"

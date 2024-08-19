@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import api from "../api";
 
-
 const AgentBookings = () => {
   const [userBooking, setUserBooking] = useState([]);
   
@@ -14,9 +13,7 @@ const AgentBookings = () => {
 
   const fetchUserBookings = useCallback(async () => {
     try {
-     
       const response = await api.get(`/api/MyHome2U/Booking/GetAgentBookings/${user._id}`);
-      
       const data = response.data.agentBookings;
       setUserBooking(data);
     } catch (error) {
@@ -44,7 +41,6 @@ const AgentBookings = () => {
         const response = await api.delete(`/api/MyHome2U/Booking/DeleteSingleBooking/${id}`);
         if (response.status === 200) {
           setUserBooking(prevBookings => prevBookings.filter(booking => booking._id !== id));
-
           Swal.fire(
             'Deleted!',
             'The booking has been deleted.',
@@ -54,7 +50,6 @@ const AgentBookings = () => {
       }
     } catch (error) {
       console.log(error);
-      
     }
   };
 
@@ -85,21 +80,37 @@ const AgentBookings = () => {
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {userBooking.map((booking, index) => (
-                  <tr key={index} >
+                  <tr key={index}>
                     <td className="py-3 px-4 text-gray-800">{index + 1}</td>
-                    <td className="py-3 px-4 text-gray-800">{booking.user.name}</td>
-                    <td className="py-3 px-4 text-gray-800">{booking.user.phone}</td>
-                    <td className="py-3 px-4 text-gray-800">{booking.property.houseType}</td>
-                    <td className="py-3 px-4 text-gray-800">{booking.property.address}</td>
-                    <td className="py-3 px-4 text-gray-800">{booking.property.city}</td>
-                    <td className="py-3 px-4 text-gray-800">${booking.property.price}</td>
+                    <td className="py-3 px-4 text-gray-800">
+                      {booking.user?.name || 'N/A'}
+                    </td>
+                    <td className="py-3 px-4 text-gray-800">
+                      {booking.user?.phone || 'N/A'}
+                    </td>
+                    <td className="py-3 px-4 text-gray-800">
+                      {booking.property?.houseType || 'N/A'}
+                    </td>
+                    <td className="py-3 px-4 text-gray-800">
+                      {booking.property?.address || 'N/A'}
+                    </td>
+                    <td className="py-3 px-4 text-gray-800">
+                      {booking.property?.city || 'N/A'}
+                    </td>
+                    <td className="py-3 px-4 text-gray-800">
+                      ${booking.property?.price || 'N/A'}
+                    </td>
                     <td className="py-3 px-4">
-                      <Link to={`/agent/Bookings/House-Details/${booking.property._id}`} className="text-blue-600 hover:underline">
+                      <Link to={`/agent/Bookings/House-Details/${booking.property?._id}`} className="text-blue-600 hover:underline">
                         View Details
                       </Link>
                     </td>
-                    <td className="py-3 px-4 text-gray-800">{new Date(booking.visitingDate).toLocaleDateString()}</td>
-                    <td className="py-3 px-4 text-gray-800">{booking.status}</td>
+                    <td className="py-3 px-4 text-gray-800">
+                      {booking.visitingDate ? new Date(booking.visitingDate).toLocaleDateString() : 'N/A'}
+                    </td>
+                    <td className="py-3 px-4 text-gray-800">
+                      {booking.status || 'N/A'}
+                    </td>
                     <td className="py-3 px-4 text-center flex space-x-3">
                       <Link
                         to={`/agent/Booking/update-Booking/${booking._id}`}
