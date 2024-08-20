@@ -18,7 +18,6 @@ function RenterInvoice() {
         const response = await api.get(
           `/api/MyHome2U/bills/GetSingleBill/${id}`
         );
-        console.log(response.data.bill);
         setInvoiceInfo(response.data.bill);
       } catch (error) {
         const errorMessage = error.response?.data?.message || "server  error";
@@ -27,7 +26,7 @@ function RenterInvoice() {
     };
 
     fetchBillInfo();
-  }, [id,enqueueSnackbar]);
+  }, [id, enqueueSnackbar]);
 
   const downloadInvoice = () => {
     const input = pdfRef.current;
@@ -40,7 +39,7 @@ function RenterInvoice() {
       scale: 2,
     }).then((canvas) => {
       const imageData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("landscape", "mm", "a4");
+      const pdf = new jsPDF("portrait", "mm", "a4"); // Changed to portrait
 
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const imgWidth = pdfWidth;
@@ -58,7 +57,7 @@ function RenterInvoice() {
   }
 
   return (
-    <div className=" min-h-screen">
+    <div className="min-h-screen">
       <div className="flex flex-1 bg-black">
         <SideBar />
         <div className="flex-1 bg-white p-6 lg:p-10">
@@ -67,14 +66,14 @@ function RenterInvoice() {
             style={{ backgroundColor: "white" }}
             ref={pdfRef}
           >
-            <div className="flex justify-between items-center mb-10 border-b pb-6">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-10 border-b pb-6">
               <div>
                 <h1 className="text-4xl font-bold text-gray-900">INVOICE</h1>
                 <p className="text-sm text-gray-500 mt-1">
                   Date: {new Date(invoiceInfo.createdAt).toLocaleDateString()}
                 </p>
               </div>
-              <div className="text-right">
+              <div className="mt-6 lg:mt-0 lg:text-right">
                 <h1 className="text-3xl font-semibold text-gray-800">
                   MyHome2U
                 </h1>
@@ -83,8 +82,8 @@ function RenterInvoice() {
               </div>
             </div>
 
-            <div className="flex justify-between mb-10">
-              <div className="w-1/3">
+            <div className="flex flex-col lg:flex-row justify-between mb-10">
+              <div className="w-full lg:w-1/3 mb-6 lg:mb-0">
                 <h2 className="text-lg font-semibold text-gray-700 mb-2">
                   Billed To:
                 </h2>
@@ -92,7 +91,7 @@ function RenterInvoice() {
                 <p className="text-gray-800">{invoiceInfo.user.email}</p>
                 <p className="text-gray-800">{invoiceInfo.user.phone}</p>
               </div>
-              <div className="w-1/3">
+              <div className="w-full lg:w-1/3 mb-6 lg:mb-0">
                 <h2 className="text-lg font-semibold text-gray-700 mb-2">
                   Invoice Details:
                 </h2>
@@ -103,7 +102,7 @@ function RenterInvoice() {
                   Due Date: {new Date(invoiceInfo.dueDate).toLocaleDateString()}
                 </p>
               </div>
-              <div className="w-1/3 text-right">
+              <div className="w-full lg:w-1/3 text-left lg:text-right">
                 <h2 className="text-lg font-semibold text-gray-700 mb-2">
                   Owner Information:
                 </h2>
