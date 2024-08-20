@@ -58,7 +58,7 @@ function RenterInvoice() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className=" min-h-screen">
       <div className="flex flex-1 bg-black">
         <SideBar />
         <div className="flex-1 bg-white p-6 lg:p-10">

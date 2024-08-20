@@ -53,7 +53,7 @@ const UserBooking = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-white">
       <SideBar />
       <div className="overflow-x-auto w-full p-4 md:p-8">
         <h1 className="text-2xl md:text-4xl font-bold text-gray-800 mb-6 text-center">

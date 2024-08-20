@@ -28,47 +28,40 @@ function RenterPayments() {
   }, [fetchBills]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
-      <div className="flex flex-1 bg-black">
+    <div className="flex  min-h-screen bg-white">
         <SideBar />
-        <div className="flex-1 bg-white p-4 md:p-6 shadow-lg">
-          <div className="flex justify-between items-center border-x border-t border-gray-200">
-            <div className="flex flex-col">
-              <div className="px-3 pb-5 pt-2">
-                <h1 className="text-sm md:text-2xl font-bold text-gray-800">
-                  Payments
-                </h1>
-              </div>
-            </div>
-          </div>
+        <div className="overflow-x-auto w-full p-4 md:p-5">
+        <h1 className="text-sm md:text-2xl font-bold text-gray-800 text-center pb-3">
+        Payments
+      </h1>
           {bills.length > 0 ? (
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto rounded-lg shadow-lg">
               <table className="min-w-full bg-white border border-gray-200">
-                <thead className="border-b border-gray-100">
+                <thead className="bg-indigo-500 text-white border-b border-gray-100">
                   <tr>
-                    <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm font-semibold text-gray-600">
+                    <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm font-semibold ">
                       ID
                     </th>
-                    <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm font-semibold text-gray-600">
+                    <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm font-semibold ">
                       Date Paid
                     </th>
-                    <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm font-semibold text-gray-600">
+                    <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm font-semibold">
                       Total Paid
                     </th>
-                    <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm font-semibold text-gray-600">
+                    <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm font-semibold ">
                       Description
                     </th>
-                    <th className="py-2 px-3 md:py-4 md:px-4 text-left text-sm font-semibold text-gray-600">
+                    <th className="py-2 px-3 md:py-4 md:px-4 text-left text-sm font-semibold">
                       Payment Method
                     </th>
-                    <th className="py-2 px-3 md:py-4 md:px-4 text-left text-sm font-semibold text-gray-600">
+                    <th className="py-2 px-3 md:py-4 md:px-4 text-left text-sm font-semibold">
                       Action
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {bills.map((bill, index) => (
-                    <tr key={index} className="border-b hover:bg-gray-50">
+                    <tr key={index} className="bg-gray-100 hover:bg-indigo-50 transition-colors">
                       <td className="py-3 px-3 md:py-4 md:px-4 text-gray-700">
                         {index + 1}
                       </td>
@@ -109,7 +102,6 @@ function RenterPayments() {
           )}
         </div>
       </div>
-    </div>
   );
 }
 
