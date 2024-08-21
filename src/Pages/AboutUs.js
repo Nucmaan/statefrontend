@@ -22,7 +22,7 @@ function AboutUs() {
 
       {section.length === 0 ? (
         <p className="text-center text-xl text-gray-600">
-          The website is under construction. It will be back soon.
+          There is no About Us content 
         </p>
       ) : (
         section.map((item, index) => {
