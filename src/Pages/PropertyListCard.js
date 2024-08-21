@@ -27,7 +27,7 @@ function PropertyListCard() {
 
     return (
         <div className="relative mx-auto p-10">
-            <h1 className="text-center text-3xl font-bold mb-4">Explore Our Properties</h1>
+            <h1 className="text-center text-3xl font-bold mb-2">Explore Our Properties</h1>
             <p className="text-center text-2xl mb-8">A collection of our top properties</p>
            
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
@@ -82,8 +82,8 @@ function PropertyListCard() {
                 ))}
             </div>
                 
-           <Link to="/AllListings" className='flex justify-end px-10'>
-           <button className="flex items-center  px-4 py-2 font-semibold text-white bg-black border-2 border-black rounded-md hover:bg-gray-800 transition-colors duration-300">
+           <Link to="/AllListings" className='flex justify-end px-10 '>
+           <button className="mt-5 flex items-center  px-4 py-2 font-semibold text-white bg-black border-2 border-black rounded-md hover:bg-gray-800 transition-colors duration-300">
                <span className="mr-2 ">View All</span>
                <FaArrowRight  />
            </button>
