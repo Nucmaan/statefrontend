@@ -1,6 +1,6 @@
 import React from "react";
-import Hormuud from "../Images/hormuud.png";
-import Bille from "../Images/BileMedia.png";
+import Hormuud from "../Images/iukl.png";
+import Bille from "../Images/hormuud.png";
 import Astan from "../Images/Astan.png";
 
 function FeatureIn() {
