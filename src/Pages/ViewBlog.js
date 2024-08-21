@@ -52,8 +52,8 @@ function ViewBlog() {
             {post.title || ''}
           </h2>
           <div className="flex items-center text-gray-600 mb-6">
-            <FaCalendarAlt className="text-xl mr-2" />
-            <p className="text-lg">
+            <FaCalendarAlt className="text-xl mr-2 text-indigo-600" />
+            <p className="text-lg text-indigo-600">
               {post.createdAt ? new Date(post.createdAt).toLocaleDateString() : ''}
             </p>
           </div>

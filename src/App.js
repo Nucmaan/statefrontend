@@ -70,6 +70,8 @@ import HeroImage from "./Admin/HeroImage";
 import AddHeroImage from "./Admin/AddHeroImage";
 import EditHeroImage from "./Admin/EditHeroImage";
 import TestPreview from "./Admin/TestPreview";
+import PropertyListCard from "./Pages/PropertyListCard";
+import PublicListProperty from "./Pages/PublicListProperty";
 
 function App() {
   return (
@@ -86,6 +88,8 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<SinglePage />} />
+          <Route path="/listings" element={<PropertyListCard />} />
+          <Route path="/AllListings" element={<PublicListProperty />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/About" element={<AboutUs />} />

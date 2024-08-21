@@ -90,7 +90,7 @@ function ViewProperty() {
               <h1 className="text-3xl font-bold text-gray-800">{property.title}</h1>
             </div>
             <button
-              className="bg-indigo-600 text-white px-5 py-2 rounded-md hover:bg-indigo-400 transition-colors duration-300"
+              className="bg-black text-white px-5 py-2 rounded-md hover:bg-indigo-400 transition-colors duration-300"
               onClick={BookNow}
             >
               Book Now
@@ -98,15 +98,15 @@ function ViewProperty() {
           </div>
 
           <h2 className="text-xl font-semibold text-gray-700 mb-4">
-            <FaDollarSign className="inline mr-2" /> ${property.price}/month
+            <FaDollarSign className="inline mr-2 text-indigo-600" /> ${property.price}/month
           </h2>
 
           <div className="flex flex-wrap items-center mb-6 space-x-4">
             <p className="text-gray-600 flex items-center">
-              <FaMapMarkerAlt className="mr-2" /> {property.city}
+              <FaMapMarkerAlt className="mr-2 text-indigo-600" /> {property.city}
             </p>
             <p className="text-gray-600 flex items-center">
-              <FaHome className="mr-2" /> {property.houseType}
+              <FaHome className="mr-2 text-indigo-600" /> {property.houseType}
             </p>
           </div>
 
@@ -116,16 +116,16 @@ function ViewProperty() {
           <h2 className="text-lg font-bold text-gray-700 mb-4">Details</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-600">
             <p className="flex items-center">
-              <FaMapMarkerAlt className="mr-2" /> Address: {property.address}, {property.city}
+              <FaMapMarkerAlt className="mr-2 text-indigo-600" /> Address: {property.address}, {property.city}
             </p>
             <p className="flex items-center">
-              <FaBed className="mr-2" /> Bedrooms: {property.bedrooms}
+              <FaBed className="mr-2 text-indigo-600" /> Bedrooms: {property.bedrooms}
             </p>
             <p className="flex items-center">
-              <FaBath className="mr-2" /> Bathrooms: {property.bathrooms}
+              <FaBath className="mr-2 text-indigo-600" /> Bathrooms: {property.bathrooms}
             </p>
             <p className="flex items-center">
-              <FaParking className="mr-2" /> Parking: {property.parking}
+              <FaParking className="mr-2 text-indigo-600" /> Parking: {property.parking}
             </p>
           </div>
         </div>
@@ -133,13 +133,13 @@ function ViewProperty() {
         <div className="p-6 border-2 border-gray-200 rounded-lg bg-white shadow-lg">
           <h3 className="font-bold text-xl mb-4">Booking Details</h3>
           <p className="mb-2 text-gray-600 flex items-center">
-            <FaDollarSign className="mr-2" /> First Month Rental: ${property.price}
+            <FaDollarSign className="mr-2 text-indigo-600" /> First Month Rental: ${property.price}
           </p>
           <p className="mb-2 text-gray-600 flex items-center">
-            <FaDollarSign className="mr-2" /> Deposit: ${property.deposit}
+            <FaDollarSign className="mr-2 text-indigo-600" /> Deposit: ${property.deposit}
           </p>
           <p className="font-bold mb-4 text-gray-800 flex items-center">
-            <FaDollarSign className="mr-2" /> Total: ${property.price + property.deposit}
+            <FaDollarSign className="mr-2 text-indigo-600" /> Total: ${property.price + property.deposit}
           </p>
           <p className="text-sm text-gray-500">Need help? Contact us at Info@MyHome2U.com</p>
         </div>

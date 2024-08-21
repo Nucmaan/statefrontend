@@ -68,7 +68,7 @@ function Buy() {
               key={index}
               className="shadow-lg p-4 rounded-md hover:shadow-xl transition-shadow duration-300 bg-white relative"
             >
-              <div className="absolute top-2 left-2 bg-indigo-600 text-white px-3 py-1 rounded-md text-xs">
+              <div className="absolute top-2 left-2 bg-black text-white px-3 py-1 rounded-md text-xs">
                 {property.status}
               </div>
               <img
@@ -78,7 +78,7 @@ function Buy() {
               />
               <div className="flex justify-between items-center mb-4 relative">
                 <h1 className="font-bold text-2xl text-gray-800">${property.price}</h1>
-                <div className="absolute bottom-2 right-2 bg-indigo-600 text-white px-3 py-1 rounded-md text-xs">
+                <div className="absolute bottom-2 right-2 bg-black text-white px-3 py-1 rounded-md text-xs">
                   {property.houseType}
                 </div>
               </div>
@@ -88,15 +88,15 @@ function Buy() {
               </p>
               <div className="flex justify-between mb-4 text-gray-600">
                 <div className="flex items-center">
-                  <FaBed className="text-gray-600" />
+                  <FaBed className="text-indigo-600" />
                   <span className="p-2">{property.bedrooms} bedroom{property.bedrooms > 1 ? 's' : ''}</span>
                 </div>
                 <div className="flex items-center">
-                  <PiToiletDuotone className="text-gray-600" />
+                  <PiToiletDuotone className="text-indigo-600" />
                   <span className="p-2">{property.bathrooms} bathroom{property.bathrooms > 1 ? 's' : ''}</span>
                 </div>
                 <div className="flex items-center">
-                  <MdDirectionsCar className="text-gray-600" />
+                  <MdDirectionsCar className="text-indigo-600" />
                   <span className="p-2">{property.parking} Parking{property.parking > 1 ? 's' : ''}</span>
                 </div>
               </div>

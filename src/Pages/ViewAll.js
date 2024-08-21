@@ -47,18 +47,18 @@ function ViewAll() {
                   {post.title}
                 </h1>
                 <div className="flex items-center mb-2 text-gray-600 flex-shrink-0">
-                  <FaCalendarAlt className="mr-1" />
-                  <p className="mr-4">
+                  <FaCalendarAlt className="mr-1 text-indigo-600" />
+                  <p className="mr-4 ">
                     {new Date(post.createdAt).toLocaleDateString()}
                   </p>
-                  <FaUser className="mr-1" />
+                  <FaUser className="mr-1 text-indigo-600" />
                   <p>{post.roll}</p>
                 </div>
                 <p className="text-gray-700 mb-4 flex-grow">{post.shortInfo}</p>
                 <div className="flex items-center justify-between mt-auto">
                   <Link to={`/ViewBlog/${post._id}`}>
                     <button className="flex items-center px-4 py-2 font-bold border-2 border-black rounded-md hover:bg-gray-100 transition-colors duration-300">
-                      <AiOutlineRead className="mr-2" />
+                      <AiOutlineRead className="mr-2 " />
                       Read More
                     </button>
                   </Link>

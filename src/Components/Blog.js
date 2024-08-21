@@ -40,18 +40,18 @@ function Blog() {
                   {post.title}
                 </h1>
                 <div className="flex items-center mb-4 text-gray-600">
-                  <FaCalendarAlt className="mr-2" />
+                  <FaCalendarAlt className="mr-2 text-indigo-600" />
                   <p className="mr-6">
                     {new Date(post.createdAt).toLocaleDateString()}
                   </p>
-                  <FaTag className="mr-2" />
+                  <FaTag className="mr-2 text-indigo-600" />
                   <p>{post.roll}</p>
                 </div>
                 <p className="text-gray-700 mb-4 flex-grow">{post.shortInfo}</p>
                 <div className="flex items-center justify-between mt-auto">
                   <Link to={`/ViewBlog/${post._id}`}>
                     <button className="flex items-center px-4 py-2 font-semibold text-white bg-black border-2 border-black rounded-md hover:bg-gray-800 transition-colors duration-300">
-                      <AiOutlineRead className="mr-2" />
+                      <AiOutlineRead className="mr-2 " />
                       Read More
                     </button>
                   </Link>
