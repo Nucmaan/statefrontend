@@ -28,10 +28,9 @@ function HouseInformaton() {
   }
 
   return (
-    <div className="min-h-screen bg-black">
-      <div className="flex flex-col sm:flex-row">
+    <div className="flex min-h-screen bg-black">
         <SideBar />
-        <div className="flex-1 bg-gray-100 p-4 sm:p-6">
+        <div className="bg-gray-100 p-4 sm:p-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
             <h1 className="text-lg sm:text-2xl font-semibold text-black">
               Full Information About The House
@@ -85,7 +84,6 @@ function HouseInformaton() {
           </div>
         </div>
       </div>
-    </div>
   );
 }
 
