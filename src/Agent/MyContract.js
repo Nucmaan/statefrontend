@@ -64,30 +64,29 @@ const MyContract = () => {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
-      <div className="flex flex-1">
+    <div className="flex min-h-screen bg-white">
         <AgentSidebar />
-        <div className="flex-1 p-8">
-          <div className="flex justify-between items-center py-4 mb-6 bg-white shadow rounded-lg px-6">
-            <h1 className="text-3xl font-bold text-gray-800">My Contracts</h1>
+        <div className="overflow-x-auto w-full p-2 md:p-8">
+          <div className="flex justify-between items-center py-2 md:py-4 mb-4 md:mb-6 bg-white shadow rounded-lg px-4 md:px-6">
+            <h1 className="text-xl md:text-3xl font-bold text-gray-800">My Contracts</h1>
           </div>
           <div className="overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-200">
             <table className="min-w-full bg-white">
               <thead>
                 <tr className="bg-gray-50 border-b">
-                  <th className="py-3 px-5 text-left text-gray-700 font-semibold">ID</th>
-                  <th className="py-3 px-5 text-left text-gray-700 font-semibold">Full Name</th>
-                  <th className="py-3 px-5 text-left text-gray-700 font-semibold">Status</th>
-                  <th className="py-3 px-5 text-left text-gray-700 font-semibold">Contract Details</th>
-                  <th className="py-3 px-5 text-center text-gray-700 font-semibold">Actions</th>
+                  <th className="py-2 px-2 md:py-3 md:px-5 text-left text-gray-700 font-semibold">ID</th>
+                  <th className="py-2 px-2 md:py-3 md:px-5 text-left text-gray-700 font-semibold">Full Name</th>
+                  <th className="py-2 px-2 md:py-3 md:px-5 text-left text-gray-700 font-semibold">Status</th>
+                  <th className="py-2 px-2 md:py-3 md:px-5 text-left text-gray-700 font-semibold">Contract Details</th>
+                  <th className="py-2 px-2 md:py-3 md:px-5 text-left text-gray-700 font-semibold">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {ownerContract.map((contract, index) => (
                   <tr key={index} className="border-b hover:bg-gray-50 transition duration-150 ease-in-out">
-                    <td className="py-3 px-5">{index + 1}</td>
-                    <td className="py-3 px-5">{contract.user.name}</td>
-                    <td className="py-3 px-5">
+                    <td className="py-2 px-2 md:py-3 md:px-5">{index + 1}</td>
+                    <td className="py-2 px-2 md:py-3 md:px-5">{contract.user.name}</td>
+                    <td className="py-2 px-2 md:py-3 md:px-5">
                       <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${contract.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                         {contract.status}
                       </span>
@@ -97,24 +96,24 @@ const MyContract = () => {
                         Read Contract
                       </Link>
                     </td>
-                    <td className="py-3 px-5 flex justify-center items-center space-x-4">
+                    <td className="py-2 px-2 md:py-3 md:px-5 flex justify-center items-center space-x-2 md:space-x-4">
                       <Link to={`/agent/contract/Edit-contract/${contract._id}`} className="text-blue-500 hover:text-blue-700">
-                        <button className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition">
+                        <button className="p-1 md:p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition">
                           <FaEdit />
                         </button>
                       </Link>
                       <button
-                        className="p-2 rounded-full bg-red-100 hover:bg-red-200 text-red-500 transition"
+                        className="p-1 md:p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition"
                         onClick={() => handleDelete(contract._id)}
                       >
-                        <FaTrash />
+                        <FaTrash color='red' />
                       </button>
                     </td>
                   </tr>
                 ))}
                 {ownerContract.length === 0 && (
                   <tr>
-                    <td colSpan="5" className="text-center py-6 text-gray-500">No contracts found.</td>
+                    <td colSpan="5" className="text-center py-4 md:py-6 text-gray-500">No contracts found.</td>
                   </tr>
                 )}
               </tbody>
@@ -122,7 +121,6 @@ const MyContract = () => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

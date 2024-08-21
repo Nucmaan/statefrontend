@@ -48,7 +48,6 @@ function AddBills() {
     e.preventDefault();
     setLoading(true);
 
-  
     if (!utilities || !dueDate || !description) {
       Swal.fire({
         icon: 'warning',
@@ -57,7 +56,7 @@ function AddBills() {
         confirmButtonText: 'OK'
       });
       setLoading(false);
-      return; 
+      return;
     }
 
     try {
@@ -103,7 +102,7 @@ function AddBills() {
         });
       }
     } catch (error) {
-    console.log(error);
+      console.log(error);
     } finally {
       setLoading(false); // Set loading to false after request completes
     }
@@ -113,19 +112,19 @@ function AddBills() {
     <div className="flex flex-col min-h-screen bg-gray-50">
       <div className="flex flex-1 bg-black">
         <AgentSidebar />
-        <div className="flex-1 px-8 py-5 bg-white">
+        <div className="flex-1 px-4 py-5 bg-white sm:px-6 md:px-8 md:py-6">
 
-          <form onSubmit={handleSubmit} className="space-y-8">
-            <div className="bg-gray-100 p-6 rounded-lg shadow-lg">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+          <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
+            <div className="bg-gray-100 p-4 sm:p-6 rounded-lg shadow-lg">
+              <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4 sm:mb-6">
                 Payment and Billing Details
               </h2>
 
-              <div className="flex items-center mb-4">
-                <FaMoneyBillAlt className="text-gray-500 text-2xl mr-3" />
+              <div className="flex items-center mb-3 sm:mb-4">
+                <FaMoneyBillAlt className="text-gray-500 text-xl sm:text-2xl mr-2 sm:mr-3" />
                 <label
                   htmlFor="amount"
-                  className="text-lg font-medium text-gray-700"
+                  className="text-base sm:text-lg font-medium text-gray-700"
                 >
                   Monthly Rent Price
                 </label>
@@ -134,14 +133,14 @@ function AddBills() {
                 type="number"
                 value={monthlyRent}
                 disabled
-                className="w-full p-3 border border-gray-300 rounded-md bg-gray-200 text-gray-600 cursor-not-allowed"
+                className="w-full p-2 sm:p-3 border border-gray-300 rounded-md bg-gray-200 text-gray-600 cursor-not-allowed text-base sm:text-lg"
               />
 
-              <div className="flex items-center mb-4">
-                <FaDollarSign className="text-gray-500 text-2xl mr-3" />
+              <div className="flex items-center mb-3 sm:mb-4">
+                <FaDollarSign className="text-gray-500 text-xl sm:text-2xl mr-2 sm:mr-3" />
                 <label
                   htmlFor="utilities"
-                  className="text-lg font-medium text-gray-700"
+                  className="text-base sm:text-lg font-medium text-gray-700"
                 >
                   Utilities
                 </label>
@@ -150,14 +149,14 @@ function AddBills() {
                 type="number"
                 value={utilities}
                 onChange={(e) => setUtilities(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-md"
+                className="w-full p-2 sm:p-3 border border-gray-300 rounded-md text-base sm:text-lg"
               />
 
-              <div className="flex items-center mb-4">
-                <FaCalendarAlt className="text-gray-500 text-2xl mr-3" />
+              <div className="flex items-center mb-3 sm:mb-4">
+                <FaCalendarAlt className="text-gray-500 text-xl sm:text-2xl mr-2 sm:mr-3" />
                 <label
                   htmlFor="dueDate"
-                  className="text-lg font-medium text-gray-700"
+                  className="text-base sm:text-lg font-medium text-gray-700"
                 >
                   Due Date
                 </label>
@@ -166,14 +165,14 @@ function AddBills() {
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-md"
+                className="w-full p-2 sm:p-3 border border-gray-300 rounded-md text-base sm:text-lg"
               />
 
-              <div className="flex items-center mb-4">
-                <FaCommentAlt className="text-gray-500 text-2xl mr-3" />
+              <div className="flex items-center mb-3 sm:mb-4">
+                <FaCommentAlt className="text-gray-500 text-xl sm:text-2xl mr-2 sm:mr-3" />
                 <label
                   htmlFor="description"
-                  className="text-lg font-medium text-gray-700"
+                  className="text-base sm:text-lg font-medium text-gray-700"
                 >
                   Add Comment or Information About The Payment
                 </label>
@@ -181,13 +180,13 @@ function AddBills() {
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-md h-36 resize-none"
+                className="w-full p-2 sm:p-3 border border-gray-300 rounded-md h-28 sm:h-36 resize-none text-base sm:text-lg"
               />
             </div>
             <div className="flex w-full">
               <button
                 type="submit"
-                className={`w-full ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'} text-white uppercase px-6 py-3 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300`}
+                className={`w-full ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'} text-white uppercase px-4 sm:px-6 py-2 sm:py-3 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 text-base sm:text-lg`}
                 disabled={loading}
               >
                 {loading ? 'Adding Payment...' : 'Add Payment'}

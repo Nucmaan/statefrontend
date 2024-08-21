@@ -9,7 +9,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import api from "../api";
 import { useSnackbar } from "notistack";
 
-
 function AgentPayments() {
   const [bills, setBills] = useState([]);
   const [filterName, setFilterName] = useState("");
@@ -58,103 +57,141 @@ function AgentPayments() {
     .reduce((acc, bill) => acc + bill.total, 0);
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
-      <div className="flex flex-1 bg-black">
-        <AgentSidebar />
-        <div className="flex-1 p-6 bg-white shadow-md rounded-lg">
-          <div className="mb-6 flex flex-col md:flex-row items-center justify-between">
-            <h1 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">
+    <div className="flex min-h-screen bg-black">
+      <AgentSidebar />
+      <div className="overflow-x-auto w-full p-4 md:p-8 bg-white">
+        <div className="mb-3 flex flex-col items-start md:items-center md:flex-row md:justify-between">
+          <div className="w-full md:w-auto mb-4 md:mb-0">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
               Payments Overview
             </h1>
-            <div className="flex items-center mb-4 md:mb-0">
-              <input
-                type="text"
-                placeholder="Filter by name"
-                value={filterName}
-                onChange={(e) => setFilterName(e.target.value)}
-                className="border border-gray-300 rounded-lg p-2 mr-4"
-              />
-              <input
-                type="text"
-                placeholder="Filter by status"
-                value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value)}
-                className="border border-gray-300 rounded-lg p-2 mr-4"
-              />
-              <div className="flex items-center border border-gray-300 rounded-lg p-2 mr-4">
-                <BsCalendarDate className="text-gray-600 mr-2" />
-                <DatePicker
-                  selected={filterDate[0]}
-                  onChange={(dates) => setFilterDate(dates)}
-                  startDate={filterDate[0]}
-                  endDate={filterDate[1]}
-                  selectsRange
-                  isClearable
-                  placeholderText="Select date range"
-                  className="border-0 outline-none"
-                />
-              </div>
-              <FaSearch className="text-gray-600" />
-            </div>
           </div>
 
-          <div className="mb-6">
-            <div className="flex justify-between mb-4">
-              <div>
-                <h2 className="text-lg font-semibold text-gray-800">
-                  Total Paid: ${totalPaid.toFixed(2)}
-                </h2>
-                <h2 className="text-lg font-semibold text-gray-800">
-                  Total Unpaid: ${totalUnpaid.toFixed(2)}
-                </h2>
-              </div>
+          <div className="flex flex-col md:flex-row w-full md:w-auto items-start md:items-center">
+            <input
+              type="text"
+              placeholder="Filter by name"
+              value={filterName}
+              onChange={(e) => setFilterName(e.target.value)}
+              className="border border-gray-300 rounded-lg p-2 mb-2 md:mb-0 md:mr-4 w-full md:w-auto text-sm md:text-base"
+            />
+            <input
+              type="text"
+              placeholder="Filter by status"
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+              className="border border-gray-300 rounded-lg p-2 mb-2 md:mb-0 md:mr-4 w-full md:w-auto text-sm md:text-base"
+            />
+            <div className="flex items-center border border-gray-300 rounded-lg p-2 mb-2 md:mb-0 md:mr-4 w-full md:w-auto text-sm md:text-base">
+              <BsCalendarDate className="text-gray-600 mr-2" />
+              <DatePicker
+                selected={filterDate[0]}
+                onChange={(dates) => setFilterDate(dates)}
+                startDate={filterDate[0]}
+                endDate={filterDate[1]}
+                selectsRange
+                isClearable
+                placeholderText="Select date range"
+                className="border-0 outline-none w-full md:w-auto text-sm md:text-base"
+              />
+            </div>
+            <FaSearch className="text-gray-600 ml-2 md:ml-0" />
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <div className="flex justify-between mb-4">
+            <div>
+              <h2 className="text-sm md:text-lg font-semibold text-gray-800">
+                Total Paid: ${totalPaid.toFixed(2)}
+              </h2>
+              <h2 className="text-sm md:text-lg font-semibold text-gray-800">
+                Total Unpaid: ${totalUnpaid.toFixed(2)}
+              </h2>
             </div>
           </div>
+        </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full bg-white border border-gray-300 rounded-lg shadow-sm">
-              <thead className="bg-gray-100 border-b border-gray-300">
-                <tr>
-                  <th className="py-3 px-4 text-left text-sm font-medium text-gray-600">House Name</th>
-                  <th className="py-3 px-4 text-left text-sm font-medium text-gray-600">Full Name</th>
-                  <th className="py-3 px-4 text-left text-sm font-medium text-gray-600">Amount</th>
-                  <th className="py-3 px-4 text-left text-sm font-medium text-gray-600">Utilities</th>
-                  <th className="py-3 px-4 text-left text-sm font-medium text-gray-600">Total</th>
-                  <th className="py-3 px-4 text-left text-sm font-medium text-gray-600">Due Date</th>
-                  <th className="py-3 px-4 text-left text-sm font-medium text-gray-600">Payment Date</th>
-                  <th className="py-3 px-4 text-left text-sm font-medium text-gray-600">Payment Method</th>
-                  <th className="py-3 px-4 text-left text-sm font-medium text-gray-600">Status</th>
-                  <th className="py-3 px-3 md:py-4 md:px-4 text-right text-sm font-medium text-gray-600">Actions</th>
+        <div className="overflow-x-auto rounded-lg shadow-lg">
+          <table className="w-full bg-white border border-gray-300 rounded-lg shadow-sm">
+            <thead className="bg-gray-100 border-b border-gray-300">
+              <tr>
+                <th className="py-2 md:py-3 px-2 md:px-4 text-left text-xs md:text-sm font-medium text-gray-600">
+                  House Name
+                </th>
+                <th className="py-2 md:py-3 px-2 md:px-4 text-left text-xs md:text-sm font-medium text-gray-600">
+                  Full Name
+                </th>
+                <th className="py-2 md:py-3 px-2 md:px-4 text-left text-xs md:text-sm font-medium text-gray-600">
+                  Amount
+                </th>
+                <th className="py-2 md:py-3 px-2 md:px-4 text-left text-xs md:text-sm font-medium text-gray-600">
+                  Utilities
+                </th>
+                <th className="py-2 md:py-3 px-2 md:px-4 text-left text-xs md:text-sm font-medium text-gray-600">
+                  Total
+                </th>
+                <th className="py-2 md:py-3 px-2 md:px-4 text-left text-xs md:text-sm font-medium text-gray-600">
+                  Due Date
+                </th>
+                <th className="py-2 md:py-3 px-2 md:px-4 text-left text-xs md:text-sm font-medium text-gray-600">
+                  Payment Date
+                </th>
+                <th className="py-2 md:py-3 px-2 md:px-4 text-left text-xs md:text-sm font-medium text-gray-600">
+                  Payment Method
+                </th>
+                <th className="py-2 md:py-3 px-2 md:px-4 text-left text-xs md:text-sm font-medium text-gray-600">
+                  Status
+                </th>
+                <th className="py-2 md:py-3 px-2 md:px-4 text-right text-xs md:text-sm font-medium text-gray-600">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredBills.map((bill) => (
+                <tr key={bill._id} className="border-b hover:bg-gray-50">
+                  <td className="py-2 md:py-3 px-2 md:px-4 text-gray-700 text-xs md:text-sm">
+                    {bill.property.title}
+                  </td>
+                  <td className="py-2 md:py-3 px-2 md:px-4 text-gray-700 text-xs md:text-sm">
+                    {bill.user.name}
+                  </td>
+                  <td className="py-2 md:py-3 px-2 md:px-4 text-gray-700 text-xs md:text-sm">
+                    ${bill.amount.toFixed(2)}
+                  </td>
+                  <td className="py-2 md:py-3 px-2 md:px-4 text-gray-700 text-xs md:text-sm">
+                    ${bill.utilities.toFixed(2)}
+                  </td>
+                  <td className="py-2 md:py-3 px-2 md:px-4 text-gray-700 text-xs md:text-sm">
+                    ${bill.total.toFixed(2)}
+                  </td>
+                  <td className="py-2 md:py-3 px-2 md:px-4 text-gray-700 text-xs md:text-sm">
+                    {new Date(bill.dueDate).toLocaleDateString()}
+                  </td>
+                  <td className="py-2 md:py-3 px-2 md:px-4 text-gray-700 text-xs md:text-sm">
+                    {bill.paymentDate
+                      ? new Date(bill.paymentDate).toLocaleDateString()
+                      : "N/A"}
+                  </td>
+                  <td className="py-2 md:py-3 px-2 md:px-4 text-gray-700 text-xs md:text-sm">
+                    {bill.paymentMethod || "N/A"}
+                  </td>
+                  <td className="py-2 md:py-3 px-2 md:px-4 text-gray-700 text-xs md:text-sm">
+                    {bill.status}
+                  </td>
+                  <td className="py-2 md:py-3 px-2 md:px-4 text-right text-gray-700 text-xs md:text-sm">
+                    <Link
+                      to={`/agent/Bills/update-Bill/${bill._id}`}
+                      className="text-blue-500 hover:text-blue-700 transition-colors duration-200"
+                    >
+                      <FaEdit />
+                    </Link>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {filteredBills.map((bill) => (
-                  <tr key={bill._id} className="border-b hover:bg-gray-50">
-                    <td className="py-3 px-4 text-gray-700">{bill.property.title}</td>
-                    <td className="py-3 px-4 text-gray-700">{bill.user.name}</td>
-                    <td className="py-3 px-4 text-gray-700">${bill.amount.toFixed(2)}</td>
-                    <td className="py-3 px-4 text-gray-700">${bill.utilities.toFixed(2)}</td>
-                    <td className="py-3 px-4 text-gray-700">${bill.total.toFixed(2)}</td>
-                    <td className="py-3 px-4 text-gray-700">{new Date(bill.dueDate).toLocaleDateString()}</td>
-                    <td className="py-3 px-4 text-gray-700">
-                      {bill.paymentDate ? new Date(bill.paymentDate).toLocaleDateString() : "N/A"}
-                    </td>
-                    <td className="py-3 px-4 text-gray-700">{bill.paymentMethod || "N/A"}</td>
-                    <td className={`py-3 px-4 text-gray-700 ${bill.status === 'Paid' ? 'text-green-600' : 'text-yellow-600'}`}>
-                      {bill.status}
-                    </td>
-                    <td className="py-3 px-3 md:py-4 md:px-4 text-right">
-                      <Link to={`/agent/Bills/update-Bill/${bill._id}`}>
-                        <button className="bg-gradient-to-r from-blue-500 to-teal-500 text-white rounded-lg py-2 px-4">
-                          <FaEdit />
-                        </button>
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

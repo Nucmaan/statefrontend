@@ -29,11 +29,11 @@ function HouseInformaton() {
 
   return (
     <div className="min-h-screen bg-black">
-      <div className="flex  ">
+      <div className="flex flex-col sm:flex-row">
         <SideBar />
         <div className="flex-1 bg-gray-100 p-4 sm:p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-xl sm:text-2xl font-semibold text-black">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+            <h1 className="text-lg sm:text-2xl font-semibold text-black">
               Full Information About The House
             </h1>
           </div>
@@ -42,41 +42,41 @@ function HouseInformaton() {
               <img
                 src={property.image.url}
                 alt="Property"
-                className="w-full h-64 sm:h-96 object-cover rounded-md shadow-lg"
+                className="w-full h-48 sm:h-96 object-cover rounded-md shadow-lg"
               />
             </div>
             <div className="mt-6 grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6">
               <div>
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
-                  <div className="flex flex-wrap font-bold py-3 space-x-2 items-center">
-                    <p className="text-gray-600 mb-1">
+                  <div className="flex flex-wrap font-bold py-3 space-y-1 sm:space-x-2 sm:space-y-0 items-start sm:items-center">
+                    <p className="text-gray-600 mb-1 text-sm sm:text-base">
                       <span className="text-black"></span> {property.city}
                     </p>
-                    <p className="text-gray-600 mb-1">
+                    <p className="text-gray-600 mb-1 text-sm sm:text-base">
                       <span className="text-black">|</span> {property.title}
                     </p>
-                    <p className="text-gray-600 mb-1">
+                    <p className="text-gray-600 mb-1 text-sm sm:text-base">
                       <span className="text-black">|</span> {property.houseType}
                     </p>
                   </div>
                 </div>
-                <h1 className="text-xl sm:text-2xl font-bold text-gray-700 mb-4">
+                <h1 className="text-lg sm:text-2xl font-bold text-gray-700 mb-4">
                   ${property.price}/month
                 </h1>
-                <h2 className="text-lg font-bold text-gray-700 mb-2">
+                <h2 className="text-base sm:text-lg font-bold text-gray-700 mb-2">
                   Description
                 </h2>
-                <p className="text-gray-600 mb-4">{property.description}</p>
-                <h2 className="text-lg font-bold text-gray-700 mb-2">Details</h2>
-                <p className="text-gray-600 mb-4">
+                <p className="text-sm sm:text-base text-gray-600 mb-4">{property.description}</p>
+                <h2 className="text-base sm:text-lg font-bold text-gray-700 mb-2">Details</h2>
+                <p className="text-sm sm:text-base text-gray-600 mb-4">
                   Address: {property.address}, {property.city}
                 </p>
-                <p className="text-gray-600 mb-4">
+                <p className="text-sm sm:text-base text-gray-600 mb-4">
                   Bedrooms: {property.bedrooms} | Bathrooms: {property.bathrooms} | Parking: {property.parking}
                 </p>
               </div>
-              <div className="p-4 border-2 border-black rounded-md bg-white shadow-lg">
-                <h3 className="font-bold text-xl mb-2">Booking Details</h3>
+              <div className="p-4 border-2 border-black rounded-md bg-white shadow-lg text-sm sm:text-base">
+                <h3 className="font-bold text-lg mb-2">Booking Details</h3>
                 <p className="mb-2">First Month Rental: ${property.price}</p>
                 <p className="mb-2">Deposit: ${property.deposit}</p>
                 <p className="font-bold mb-2">Total: ${property.price + property.deposit}</p>

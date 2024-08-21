@@ -46,7 +46,7 @@ function EditBlogPost() {
     formData.append("title", newPost.title);
     formData.append("shortInfo", newPost.shortInfo);
     formData.append("content", newPost.content);
-    formData.append("author", user._id); // Directly use user._id
+    formData.append("author", user._id); 
     formData.append("roll", user.role);
     if (newPost.image && typeof newPost.image !== "string") {
       formData.append("image", newPost.image);
@@ -77,15 +77,15 @@ function EditBlogPost() {
   };
 
   return (
-    <div className="flex min-h-screen bg-black">
+    <div className="flex  min-h-screen bg-black">
       <AgentSideBar className="bg-black" />
-      <div className="flex-1 p-8 bg-white">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">Update Post</h1>
-        <form onSubmit={handleUpdatePost} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+      <div className="flex-1 p-4 sm:p-8 bg-white">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6">Update Post</h1>
+        <form onSubmit={handleUpdatePost} className="space-y-4 sm:space-y-6">
+          <div className="grid grid-cols-1 gap-2 sm:gap-4 items-center">
             <label
               htmlFor="title"
-              className="text-sm font-medium text-gray-700 text-right"
+              className="text-sm sm:text-md font-medium text-gray-700"
             >
               Title
             </label>
@@ -95,14 +95,14 @@ function EditBlogPost() {
               name="title"
               value={newPost.title}
               onChange={handleInputChange}
-              className="col-span-3 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+              className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               required
             />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+          <div className="grid grid-cols-1 gap-2 sm:gap-4 items-center">
             <label
               htmlFor="shortInfo"
-              className="text-sm font-medium text-gray-700 text-right"
+              className="text-sm sm:text-md font-medium text-gray-700"
             >
               Short Info
             </label>
@@ -112,14 +112,14 @@ function EditBlogPost() {
               name="shortInfo"
               value={newPost.shortInfo}
               onChange={handleInputChange}
-              className="col-span-3 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+              className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               required
             />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-start">
+          <div className="grid grid-cols-1 gap-2 sm:gap-4 items-start">
             <label
               htmlFor="content"
-              className="text-sm font-medium text-gray-700 text-right"
+              className="text-sm sm:text-md font-medium text-gray-700"
             >
               Content
             </label>
@@ -129,14 +129,14 @@ function EditBlogPost() {
               value={newPost.content}
               onChange={handleInputChange}
               rows={4}
-              className="col-span-3 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+              className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               required
             />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+          <div className="grid grid-cols-1 gap-2 sm:gap-4 items-center">
             <label
               htmlFor="image"
-              className="text-sm font-medium text-gray-700 text-right"
+              className="text-sm sm:text-md font-medium text-gray-700"
             >
               Image
             </label>
@@ -145,25 +145,23 @@ function EditBlogPost() {
               id="image"
               name="image"
               onChange={handleInputChange}
-              className="col-span-3 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+              className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               accept="image/*"
             />
           </div>
           {post.image && (
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-              <div className="md:col-span-4 text-center">
-                <img
-                  src={post.image.url}
-                  alt="Current"
-                  className="h-48 w-48 object-cover rounded-md mx-auto"
-                />
-              </div>
+            <div className="text-center">
+              <img
+                src={post.image.url}
+                alt="Current"
+                className="h-32 w-32 sm:h-48 sm:w-48 object-cover rounded-md mx-auto"
+              />
             </div>
           )}
-          <div className="flex justify-end gap-4">
+          <div className="flex justify-end gap-2 sm:gap-4">
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              className="bg-blue-500 text-white px-3 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
             >
               Update Post
             </button>
