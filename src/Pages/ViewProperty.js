@@ -40,6 +40,37 @@ function ViewProperty() {
   }
 
   const handleBooking = async () => {
+
+    if(!user){
+      Swal.fire({
+        icon: 'error',
+        title: 'Please login to book property',
+        text: 'You must be logged in to book a property.',
+        showConfirmButton: true,
+      });
+      return;
+    }
+
+    if(user._id === property.owner){
+      Swal.fire({
+        icon: 'error',
+        title: 'Cannot book your own property',
+        text: 'You cannot book your own property.',
+        showConfirmButton: true,
+      });
+      return;
+    }
+
+    if(user.role === 'admin' || user.role === 'agent'){
+      Swal.fire({
+        icon: 'error',
+        title: 'Cannot book property as an admin or agent',
+        text: 'You are not authorized to book a property use user account.',
+        showConfirmButton: true,
+      });
+      return;
+    }
+
     setProcessing(true);
 
     try {
