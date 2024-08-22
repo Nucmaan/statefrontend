@@ -82,41 +82,44 @@ const MyContract = () => {
                 </tr>
               </thead>
               <tbody>
-                {ownerContract.map((contract, index) => (
-                  <tr key={index} className="border-b hover:bg-gray-50 transition duration-150 ease-in-out">
-                    <td className="py-2 px-2 md:py-3 md:px-5">{index + 1}</td>
-                    <td className="py-2 px-2 md:py-3 md:px-5">{contract.user.name}</td>
-                    <td className="py-2 px-2 md:py-3 md:px-5">
-                      <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${contract.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                        {contract.status}
-                      </span>
-                    </td>
-                    <td className="py-3 px-5">
-                      <Link to={`/agent/contract/Read-contract/${contract._id}`} className="text-blue-500 hover:underline">
-                        Read Contract
-                      </Link>
-                    </td>
-                    <td className="py-2 px-2 md:py-3 md:px-5 flex justify-center items-center space-x-2 md:space-x-4">
-                      <Link to={`/agent/contract/Edit-contract/${contract._id}`} className="text-blue-500 hover:text-blue-700">
-                        <button className="p-1 md:p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition">
-                          <FaEdit />
-                        </button>
-                      </Link>
-                      <button
-                        className="p-1 md:p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition"
-                        onClick={() => handleDelete(contract._id)}
-                      >
-                        <FaTrash color='red' />
+              {ownerContract.map((contract, index) => (
+                <tr key={index} className="border-b hover:bg-gray-50 transition duration-150 ease-in-out">
+                  <td className="py-2 px-2 md:py-3 md:px-5">{index + 1}</td>
+                  <td className="py-2 px-2 md:py-3 md:px-5">
+                    {contract.user ? contract.user.name : "No user information"}
+                  </td>
+                  <td className="py-2 px-2 md:py-3 md:px-5">
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${contract.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                      {contract.status}
+                    </span>
+                  </td>
+                  <td className="py-3 px-5">
+                    <Link to={`/agent/contract/Read-contract/${contract._id}`} className="text-blue-500 hover:underline">
+                      Read Contract
+                    </Link>
+                  </td>
+                  <td className="py-2 px-2 md:py-3 md:px-5 flex justify-center items-center space-x-2 md:space-x-4">
+                    <Link to={`/agent/contract/Edit-contract/${contract._id}`} className="text-blue-500 hover:text-blue-700">
+                      <button className="p-1 md:p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition">
+                        <FaEdit />
                       </button>
-                    </td>
-                  </tr>
-                ))}
-                {ownerContract.length === 0 && (
-                  <tr>
-                    <td colSpan="5" className="text-center py-4 md:py-6 text-gray-500">No contracts found.</td>
-                  </tr>
-                )}
-              </tbody>
+                    </Link>
+                    <button
+                      className="p-1 md:p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition"
+                      onClick={() => handleDelete(contract._id)}
+                    >
+                      <FaTrash color='red' />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              {ownerContract.length === 0 && (
+                <tr>
+                  <td colSpan="5" className="text-center py-4 md:py-6 text-gray-500">No contracts found.</td>
+                </tr>
+              )}
+            </tbody>
+            
             </table>
           </div>
         </div>

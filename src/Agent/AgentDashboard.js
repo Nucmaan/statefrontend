@@ -67,6 +67,33 @@ const AgentDashboard = () => {
     fetchOwnerContracts();
   }, [fetchOwnerContracts]);
 
+
+  const [bills, setBills] = useState([]);
+
+  const fetchBills = useCallback(async () => {
+    try {
+      const response = await api.get(`/api/MyHome2U/bills/GetAllBills`);
+      const filteredBills = response.data.bill.filter(
+        (bill) => bill.owner && bill.owner._id === user._id 
+      );
+      setBills(filteredBills);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [user._id]);
+
+  useEffect(() => {
+    fetchBills();
+  }, [fetchBills]);
+
+
+
+
+
+
+
+
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <div className="flex flex-1 bg-black">
@@ -92,7 +119,7 @@ const AgentDashboard = () => {
             <div className="bg-purple-500 shadow-lg rounded-lg p-6 text-white">
               <FaDollarSign className="text-4xl mb-4" />
               <h2 className="text-2xl font-semibold mb-2">Monthly Revenue</h2>
-              <p className="text-xl">$12,345</p>
+              <p className="text-xl">{bills.length}</p>
             </div>
             {/* Properties Under Review */}
             <div className="bg-yellow-500 shadow-lg rounded-lg p-6 text-white">

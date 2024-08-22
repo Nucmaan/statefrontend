@@ -48,21 +48,24 @@ const BillsAgent = () => {
                 </tr>
               </thead>
               <tbody>
-                {ownerContracts.map((contract, index) => (
-                  <tr key={contract._id} className="hover:bg-gray-50 transition duration-300">
-                    <td className="py-2 px-3 text-gray-700 text-sm md:text-base">{index + 1}</td>
-                    <td className="py-2 px-3 text-gray-700 text-sm md:text-base">{contract.user.name}</td>
-                    <td className="py-2 px-3 text-gray-700 text-sm md:text-base">{contract.status}</td>
-                    <td className="py-2 px-3 text-center">
-                      <Link to={`/agent/Bills/create-Bill/${contract._id}`}>
-                        <button className="text-blue-500 hover:text-blue-700 transition duration-300">
-                          <MdOutlineAdd size={20} className="md:size-10" />
-                        </button>
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+              {ownerContracts.map((contract, index) => (
+                <tr key={contract._id} className="hover:bg-gray-50 transition duration-300">
+                  <td className="py-2 px-3 text-gray-700 text-sm md:text-base">{index + 1}</td>
+                  <td className="py-2 px-3 text-gray-700 text-sm md:text-base">
+                    {contract.user ? contract.user.name : "Unknown User"}
+                  </td>
+                  <td className="py-2 px-3 text-gray-700 text-sm md:text-base">{contract.status}</td>
+                  <td className="py-2 px-3 text-center">
+                    <Link to={`/agent/Bills/create-Bill/${contract._id}`}>
+                      <button className="text-blue-500 hover:text-blue-700 transition duration-300">
+                        <MdOutlineAdd size={20} className="md:size-10" />
+                      </button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+            
             </table>
           </div>
         </div>
