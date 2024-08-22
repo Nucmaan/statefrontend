@@ -33,7 +33,7 @@ const UserBooking = () => {
     } catch (error) {
       const errorMessage =
         error.response?.data?.message || "You haven't made any bookings yet.";
-      enqueueSnackbar(errorMessage, { variant: "error" });
+      enqueueSnackbar(errorMessage, { variant: "success" });
     }
   }, [user._id, enqueueSnackbar]);
 

@@ -19,7 +19,7 @@ function RenterPayments() {
     } catch (error) {
       const errorMessage =
         error.response?.data?.message || "Server error";
-      enqueueSnackbar(errorMessage, { variant: "error" });
+      enqueueSnackbar(errorMessage, { variant: "success" });
     }
   }, [user._id, enqueueSnackbar]);
 
