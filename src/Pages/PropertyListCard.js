@@ -22,8 +22,11 @@ function PropertyListCard() {
         getProperty();
     }, [getProperty]);
 
-    // Slice the propertyList to include only the first three properties
-    const displayedProperties = propertyList.slice(0, 3);
+    // Filter the propertyList to include only properties with status 'Available'
+    const availableProperties = propertyList.filter(property => property.status === 'Available');
+
+    // Slice the filtered properties to include only the first three
+    const displayedProperties = availableProperties.slice(0, 3);
 
     return (
         <div className="relative mx-auto p-10">

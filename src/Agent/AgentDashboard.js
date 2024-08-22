@@ -6,7 +6,6 @@ import {
   FaCheckCircle,
   FaClipboardCheck,
 } from "react-icons/fa";
-
 import AgentSidebar from "./AgentSidebar";
 import api from "../api";
 import { useSelector } from "react-redux";
@@ -14,9 +13,7 @@ import { Link } from "react-router-dom";
 
 const AgentDashboard = () => {
   const [ownerContract, setOwnerContract] = useState([]);
-
   const { user } = useSelector((state) => state.user);
-
   const [propertyList, setPropertyList] = useState([]);
   const [propertySold, setPropertySold] = useState([]);
   const [propertyToRent, setPropertyToRent] = useState([]);
@@ -40,8 +37,6 @@ const AgentDashboard = () => {
             (property) =>
               property.owner === user._id && property.status === "Available"
           ));
-
-
     } catch (error) {
       console.log(error);
     }
@@ -67,16 +62,32 @@ const AgentDashboard = () => {
     fetchOwnerContracts();
   }, [fetchOwnerContracts]);
 
-
-  const [bills, setBills] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(0); // All-time total
+  const [monthlyTotal, setMonthlyTotal] = useState(0); // Current month's total
 
   const fetchBills = useCallback(async () => {
     try {
       const response = await api.get(`/api/MyHome2U/bills/GetAllBills`);
+      
+      // Filter bills where the owner ID matches
       const filteredBills = response.data.bill.filter(
-        (bill) => bill.owner && bill.owner._id === user._id 
+        (bill) => bill.owner && bill.owner._id === user._id
       );
-      setBills(filteredBills);
+
+      // Calculate the total amount for 'Paid' bills
+      const total = filteredBills
+        .filter(bill => bill.status === 'Paid')
+        .reduce((sum, bill) => sum + bill.total, 0);
+
+      // Calculate the total amount for 'Paid' bills this month
+      const currentMonth = new Date().getMonth();
+      const monthlyTotal = filteredBills
+        .filter(bill => bill.status === 'Paid' && new Date(bill.paymentDate).getMonth() === currentMonth)
+        .reduce((sum, bill) => sum + bill.total, 0);
+
+      // Update state with the totals
+      setTotalAmount(total);
+      setMonthlyTotal(monthlyTotal);
     } catch (error) {
       console.log(error);
     }
@@ -85,14 +96,6 @@ const AgentDashboard = () => {
   useEffect(() => {
     fetchBills();
   }, [fetchBills]);
-
-
-
-
-
-
-
-
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
@@ -115,13 +118,22 @@ const AgentDashboard = () => {
               <h2 className="text-2xl font-semibold mb-2">Active Contracts</h2>
               <p className="text-xl">{ownerContract.length}</p>
             </div>
+          
             {/* Monthly Revenue */}
             <div className="bg-purple-500 shadow-lg rounded-lg p-6 text-white">
               <FaDollarSign className="text-4xl mb-4" />
               <h2 className="text-2xl font-semibold mb-2">Monthly Revenue</h2>
-              <p className="text-xl">{bills.length}</p>
+              <p className="text-xl">${monthlyTotal}</p>
+              <p className="text-sm">This Month</p>
             </div>
-            {/* Properties Under Review */}
+
+            {/* All-Time Revenue */}
+            <div className="bg-teal-500 shadow-lg rounded-lg p-6 text-white">
+              <FaDollarSign className="text-4xl mb-4" />
+              <h2 className="text-2xl font-semibold mb-2">All-Time Revenue</h2>
+              <p className="text-xl">${totalAmount}</p>
+            </div>
+        
             <div className="bg-yellow-500 shadow-lg rounded-lg p-6 text-white">
               <FaClipboardCheck className="text-4xl mb-4" />
               <h2 className="text-2xl font-semibold mb-2">

@@ -13,18 +13,33 @@ function ViewProperty() {
   const [visitingDate, setVisitingDate] = useState(null);
   const { user } = useSelector((state) => state.user);
   const [property, setProperty] = useState(null);
-  const [userBooking, setUserBooking] = useState(null);
+  const [hasBooked, setHasBooked] = useState(false);
 
   const getUserBooking = useCallback(async () => {
     try {
-      const response = await api.get(`/api/MyHome2U/Booking/GetUserBookings/${user._id}`);
-      setUserBooking(response.data.bookings);
+      const response = await api.get(`/api/MyHome2U/Booking/GetUserBookings/${user?._id}`);
+      const bookings = response.data.bookings || [];
+      
+      // Check if the user has already booked this property
+      const alreadyBooked = bookings.some(
+        booking => booking.property._id === property?._id
+      );
+      setHasBooked(alreadyBooked);
     } catch (error) {
       console.log(error);
     }
-  }, [user._id]);
+  }, [user?._id, property?._id]);
 
   const BookNow = () => {
+    if (hasBooked) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Already booked',
+        text: 'You have already booked this property.',
+        showConfirmButton: true,
+      });
+      return;
+    }
     setBook(true);
   };
 
@@ -43,8 +58,13 @@ function ViewProperty() {
 
   useEffect(() => {
     getProperty();
-    getUserBooking();
-  }, [getProperty, getUserBooking]);
+  }, [getProperty]);
+
+  useEffect(() => {
+    if (property) {
+      getUserBooking();
+    }
+  }, [property, getUserBooking]);
 
   if (!property) {
     return <div className="text-center text-gray-600">Loading...</div>;
@@ -82,11 +102,7 @@ function ViewProperty() {
     }
 
     // Check if the user has already booked this property
-    const hasAlreadyBooked = userBooking.some(
-      booking => booking.property._id === property._id
-    );
-
-    if (hasAlreadyBooked) {
+    if (hasBooked) {
       Swal.fire({
         icon: 'error',
         title: 'Already booked',
@@ -111,6 +127,8 @@ function ViewProperty() {
           showConfirmButton: false,
           timer: 2000
         });
+        setHasBooked(true); // Update local state to prevent further bookings
+        setBook(false); // Close the booking modal after successful booking
       } else {
         Swal.fire({
           icon: 'error',
@@ -203,45 +221,29 @@ function ViewProperty() {
       {Book && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-5 z-50">
           <div className="relative text-gray-900 bg-white p-8 rounded-md shadow-lg max-w-lg w-full">
-            <button className="absolute top-2 right-2 text-2xl font-bold" onClick={closebook}>
-              <MdClose />
+            <button className="absolute top-2 right-2" onClick={closebook}>
+              <MdClose size={24} />
             </button>
-            <h3 className="text-xl font-semibold mb-6 border-b pb-4">Booking Confirmation</h3>
-            <div className="space-y-4 text-gray-700">
-              <div className="flex justify-between">
-                <span className="font-medium">House Location:</span>
-                <span>{property.address}, {property.city}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-medium">Rental Price:</span>
-                <span>${property.price}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-medium">Deposit:</span>
-                <span>${property.deposit}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-medium">Total Amount:</span>
-                <span>${property.price + property.deposit}</span>
-              </div>
-              <div className="flex justify-between">
-                <label htmlFor="visitingDate" className="font-medium">Select Visiting Date:</label>
-                <input
-                  type="date"
-                  id="visitingDate"
-                  className="border border-gray-300 rounded px-2 py-1"
-                  value={visitingDate}
-                  onChange={(e) => setVisitingDate(e.target.value)}
-                />
-              </div>
-              <button
-                className="bg-black text-white py-2 px-4 rounded-md w-full mt-6 hover:bg-indigo-400 transition-colors duration-300"
-                onClick={handleBooking}
-                disabled={processing}
-              >
-                {processing ? 'Processing...' : 'Confirm Booking'}
-              </button>
-            </div>
+            <h2 className="text-2xl font-bold mb-4">Book Property</h2>
+            <p className="mb-4 text-gray-600">You are about to book the property located at {property.address} on {property.city}.</p>
+            <label className="block mb-4">
+              <span className="text-gray-700">Select Visiting Date:</span>
+              <input
+                type="date"
+                value={visitingDate || ""}
+                onChange={(e) => setVisitingDate(e.target.value)}
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                min={new Date().toISOString().split('T')[0]} // Prevent past dates
+                required
+              />
+            </label>
+            <button
+              className="bg-black text-white px-5 py-2 rounded-md hover:bg-indigo-400 transition-colors duration-300"
+              onClick={handleBooking}
+              disabled={processing}
+            >
+              {processing ? "Processing..." : "Confirm Booking"}
+            </button>
           </div>
         </div>
       )}

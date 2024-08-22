@@ -22,13 +22,16 @@ function PublicListProperty() {
         getProperty();
     }, [getProperty]);
 
+    // Filter the propertyList to include only properties with status 'Available'
+    const availableProperties = propertyList.filter(property => property.status === 'Available');
+
     return (
         <div className="relative mx-auto p-10">
             <h1 className="text-center text-3xl font-bold mb-4">Explore Our Properties</h1>
             <p className="text-center text-2xl mb-8">A collection of our top properties</p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-                {propertyList.map((property) => (
+                {availableProperties.map((property) => (
                     <Link to={`/ViewSingleProperty/${property._id}`} key={property._id}>
                         <div className="relative flex flex-col shadow-lg rounded-lg bg-white overflow-hidden transition-transform transform hover:scale-105">
                             <img
@@ -54,7 +57,7 @@ function PublicListProperty() {
                                 </div>
                                 <div className="flex items-center text-gray-600 mb-3 space-x-4">
                                     <div className="flex items-center">
-                                        <FaBed className="mr-1 text-indigo-600"  />
+                                        <FaBed className="mr-1 text-indigo-600" />
                                         <p>{property.bedrooms} Beds</p>
                                     </div>
                                     <div className="flex items-center">
