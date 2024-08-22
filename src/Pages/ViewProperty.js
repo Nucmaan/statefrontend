@@ -13,6 +13,16 @@ function ViewProperty() {
   const [visitingDate, setVisitingDate] = useState(null);
   const { user } = useSelector((state) => state.user);
   const [property, setProperty] = useState(null);
+  const [userBooking, setUserBooking] = useState(null);
+
+  const getUserBooking = useCallback(async () => {
+    try {
+      const response = await api.get(`/api/MyHome2U/Booking/GetUserBookings/${user._id}`);
+      setUserBooking(response.data.bookings);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [user._id]);
 
   const BookNow = () => {
     setBook(true);
@@ -27,21 +37,21 @@ function ViewProperty() {
       const response = await api.get(`/api/MyHome2U/property/getsingleproperty/${id}`);
       setProperty(response.data.property);
     } catch (error) {
-   console.log(error);
+      console.log(error);
     }
   }, [id]);
 
   useEffect(() => {
     getProperty();
-  }, [getProperty]);
+    getUserBooking();
+  }, [getProperty, getUserBooking]);
 
   if (!property) {
     return <div className="text-center text-gray-600">Loading...</div>;
   }
 
   const handleBooking = async () => {
-
-    if(!user){
+    if (!user) {
       Swal.fire({
         icon: 'error',
         title: 'Please login to book property',
@@ -51,7 +61,7 @@ function ViewProperty() {
       return;
     }
 
-    if(user._id === property.owner){
+    if (user._id === property.owner) {
       Swal.fire({
         icon: 'error',
         title: 'Cannot book your own property',
@@ -61,11 +71,26 @@ function ViewProperty() {
       return;
     }
 
-    if(user.role === 'admin' || user.role === 'agent'){
+    if (user.role === 'admin' || user.role === 'agent') {
       Swal.fire({
         icon: 'error',
         title: 'Cannot book property as an admin or agent',
         text: 'You are not authorized to book a property use user account.',
+        showConfirmButton: true,
+      });
+      return;
+    }
+
+    // Check if the user has already booked this property
+    const hasAlreadyBooked = userBooking.some(
+      booking => booking.property._id === property._id
+    );
+
+    if (hasAlreadyBooked) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Already booked',
+        text: 'You have already booked this property.',
         showConfirmButton: true,
       });
       return;
@@ -80,13 +105,13 @@ function ViewProperty() {
         visitingDate: visitingDate,
       });
       if (response.status === 201) {
-          Swal.fire({
+        Swal.fire({
           icon: 'success',
           title: 'Booking confirmed successfully!',
           showConfirmButton: false,
           timer: 2000
         });
-      }else{
+      } else {
         Swal.fire({
           icon: 'error',
           title: 'Failed to confirm booking',
@@ -95,9 +120,7 @@ function ViewProperty() {
         });
       }
     } catch (error) {
-  
-    console.log(error);
-
+      console.log(error);
     } finally {
       setProcessing(false);
     }
@@ -190,7 +213,7 @@ function ViewProperty() {
                 <span>{property.address}, {property.city}</span>
               </div>
               <div className="flex justify-between">
-                <span className="font-medium">Price:</span>
+                <span className="font-medium">Rental Price:</span>
                 <span>${property.price}</span>
               </div>
               <div className="flex justify-between">
@@ -198,31 +221,27 @@ function ViewProperty() {
                 <span>${property.deposit}</span>
               </div>
               <div className="flex justify-between">
-                <span className="font-medium">Total Price:</span>
+                <span className="font-medium">Total Amount:</span>
                 <span>${property.price + property.deposit}</span>
               </div>
               <div className="flex justify-between">
-                <span className="font-medium">Status:</span>
-                <span>{property.status}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="font-medium">Visit Date:</span>
-                <input 
+                <label htmlFor="visitingDate" className="font-medium">Select Visiting Date:</label>
+                <input
                   type="date"
-                  id="visit-date"
+                  id="visitingDate"
+                  className="border border-gray-300 rounded px-2 py-1"
                   value={visitingDate}
                   onChange={(e) => setVisitingDate(e.target.value)}
-                  className="text-gray-800 p-2 border rounded-md"
                 />
               </div>
+              <button
+                className="bg-black text-white py-2 px-4 rounded-md w-full mt-6 hover:bg-indigo-400 transition-colors duration-300"
+                onClick={handleBooking}
+                disabled={processing}
+              >
+                {processing ? 'Processing...' : 'Confirm Booking'}
+              </button>
             </div>
-            <button
-              onClick={handleBooking}
-              disabled={processing}
-              className="bg-indigo-600 text-white mt-6 py-2 px-6 rounded-md w-full hover:bg-indigo-400 transition-colors duration-300"
-            >
-              {processing ? "Processing..." : "Confirm Booking"}
-            </button>
           </div>
         </div>
       )}

@@ -4,6 +4,8 @@ import SideBar from "./SideBar";
 import { useSelector } from "react-redux";
 import api from "../api";
 import { useSnackbar } from "notistack";
+import Swal from "sweetalert2";
+
 
 const UserBooking = () => {
   const [userBooking, setUserBooking] = useState([]);
@@ -40,16 +42,32 @@ const UserBooking = () => {
   }, [fetchUserBookings]);
 
   const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to cancel this booking?")) {
-      try {
-        await api.delete(`/api/MyHome2U/Booking/DeleteBooking/${id}`);
-        setUserBooking((prevBookings) =>
-          prevBookings.filter((booking) => booking._id !== id)
-        );
-      } catch (error) {
-        enqueueSnackbar("Failed to cancel the booking.", { variant: "error" });
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you really want to cancel this booking?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, cancel it!',
+      cancelButtonText: 'No, keep it',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await api.delete(`/api/MyHome2U/Booking/DeleteBooking/${id}`);
+          setUserBooking((prevBookings) =>
+            prevBookings.filter((booking) => booking._id !== id)
+          );
+          Swal.fire(
+            'Cancelled!',
+            'Your booking has been cancelled.',
+            'success'
+          );
+        } catch (error) {
+          enqueueSnackbar("Failed to cancel the booking.", { variant: "error" });
+        }
       }
-    }
+    });
   };
   
 
