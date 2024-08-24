@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import logo from "../Images/MyHomeLogo.png";
+import logo from "../Images/logo.png";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { IoLogoYoutube } from "react-icons/io";
 import { AiFillTikTok } from "react-icons/ai";

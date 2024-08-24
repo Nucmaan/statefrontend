@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
-import logo from "../Images/MyHomeLogo.png";
+import logo from "../Images/logo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { SignOutStart, SignOutSuccess, SignOutFailure } from "../Redux/User/UserSlice";
 import { useSnackbar } from 'notistack';
@@ -65,7 +65,7 @@ function Navbar() {
       <div className="flex justify-between items-center py-2">
         <div>
           <Link to="/">
-            <img src={logo} alt="Logo" className="w-33 h-12" />
+            <img src={logo} alt="Logo" className="w-[190PX] h-16" />
           </Link>
         </div>
 
