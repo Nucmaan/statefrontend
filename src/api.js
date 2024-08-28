@@ -1,8 +1,6 @@
 import axios from 'axios';
 
-const baseURL = process.env.REACT_APP_BASE_URL;
-
-console.log('Base URL:', baseURL);
+const baseURL = 'http://backendm2u.myhome2u.online';
 
 const api = axios.create({
   baseURL: baseURL,
