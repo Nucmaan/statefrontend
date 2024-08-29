@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const baseURL = 'https://backendm2u.myhome2u.online';
+const baseURL = 'http://localhost:5000';
+
+//http://localhost:5000
+//https://backendm2u.myhome2u.online
 
 console.log(baseURL);
 

@@ -71,10 +71,18 @@ const EditAgentProfile = () => {
       dispatch(userUpdateStarted());
 
       const formData = new FormData();
-      formData.append("name", name);
-      formData.append("email", email);
-      formData.append("phone", phone);
-      formData.append("password", password);
+      if(name){
+        formData.append("name", name);
+      }
+      if(email){
+        formData.append("email", email);
+      }
+      if(phone) {
+        formData.append("phone", phone);
+      }
+      if(password){
+        formData.append("password", password);
+      }
       formData.append("gender", gender); // Add gender to form data
       if (avatar) {
         formData.append("avatar", avatar);

@@ -76,11 +76,22 @@ const EditUserProfile = () => {
       dispatch(userUpdateStarted());
       const formData = new FormData();
 
-      formData.append("name", name);
-      formData.append("email", email);
-      formData.append("phone", phone);
-      formData.append("password", password);
-      formData.append("avatar", avatar);
+      if(name){
+        formData.append("name", name);
+      }
+      if(email){
+        formData.append("email", email);
+      }
+      if(phone){
+        formData.append("phone", phone);
+      }
+      if(password){
+        formData.append("password", password);
+
+      }
+      if(avatar){
+        formData.append("avatar", avatar);
+      }
 
       const response = await api.put(
         `/api/MyHome2U/user/updateSingleUser/${id}`,

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { FaEdit, FaSearch } from "react-icons/fa";
 import { BsCalendarDate } from "react-icons/bs";
-import AgentSidebar from "./AgentSidebar"; // Make sure this path and export are correct
+import AgentSidebar from "./AgentSidebar";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
@@ -21,7 +21,7 @@ function AgentPayments() {
     try {
       const response = await api.get(`/api/MyHome2U/bills/GetAllBills`);
       const filteredBills = response.data.bill.filter(
-        (bill) => bill.owner && bill.owner._id === user._id 
+        (bill) => bill.owner && bill.owner._id === user._id
       );
       setBills(filteredBills);
     } catch (error) {
@@ -37,10 +37,10 @@ function AgentPayments() {
 
   const filteredBills = bills
     .filter((bill) =>
-      bill.user.name.toLowerCase().includes(filterName.toLowerCase())
+      bill.user?.name?.toLowerCase().includes(filterName.toLowerCase())
     )
     .filter((bill) =>
-      bill.status.toLowerCase().includes(filterStatus.toLowerCase())
+      bill.status?.toLowerCase().includes(filterStatus.toLowerCase())
     )
     .filter((bill) => {
       if (!filterDate[0] || !filterDate[1]) return true;
@@ -126,66 +126,40 @@ function AgentPayments() {
                   Amount
                 </th>
                 <th className="py-2 md:py-3 px-2 md:px-4 text-left text-xs md:text-sm font-medium text-gray-600">
-                  Utilities
-                </th>
-                <th className="py-2 md:py-3 px-2 md:px-4 text-left text-xs md:text-sm font-medium text-gray-600">
-                  Total
+                  Status
                 </th>
                 <th className="py-2 md:py-3 px-2 md:px-4 text-left text-xs md:text-sm font-medium text-gray-600">
                   Due Date
                 </th>
                 <th className="py-2 md:py-3 px-2 md:px-4 text-left text-xs md:text-sm font-medium text-gray-600">
-                  Payment Date
-                </th>
-                <th className="py-2 md:py-3 px-2 md:px-4 text-left text-xs md:text-sm font-medium text-gray-600">
-                  Payment Method
-                </th>
-                <th className="py-2 md:py-3 px-2 md:px-4 text-left text-xs md:text-sm font-medium text-gray-600">
-                  Status
-                </th>
-                <th className="py-2 md:py-3 px-2 md:px-4 text-right text-xs md:text-sm font-medium text-gray-600">
                   Actions
                 </th>
               </tr>
             </thead>
             <tbody>
               {filteredBills.map((bill) => (
-                <tr key={bill._id} className="border-b hover:bg-gray-50">
-                  <td className="py-2 md:py-3 px-2 md:px-4 text-gray-700 text-xs md:text-sm">
-                    {bill.property.title}
+                <tr key={bill._id} className="border-b border-gray-200">
+                  <td className="py-2 md:py-3 px-2 md:px-4 text-xs md:text-sm font-medium text-gray-800">
+                    {bill.property?.name || "N/A"}
                   </td>
-                  <td className="py-2 md:py-3 px-2 md:px-4 text-gray-700 text-xs md:text-sm">
-                    {bill.user.name}
+                  <td className="py-2 md:py-3 px-2 md:px-4 text-xs md:text-sm font-medium text-gray-800">
+                    {bill.user?.name || "N/A"}
                   </td>
-                  <td className="py-2 md:py-3 px-2 md:px-4 text-gray-700 text-xs md:text-sm">
-                    ${bill.amount.toFixed(2)}
-                  </td>
-                  <td className="py-2 md:py-3 px-2 md:px-4 text-gray-700 text-xs md:text-sm">
-                    ${bill.utilities.toFixed(2)}
-                  </td>
-                  <td className="py-2 md:py-3 px-2 md:px-4 text-gray-700 text-xs md:text-sm">
+                  <td className="py-2 md:py-3 px-2 md:px-4 text-xs md:text-sm font-medium text-gray-800">
                     ${bill.total.toFixed(2)}
                   </td>
-                  <td className="py-2 md:py-3 px-2 md:px-4 text-gray-700 text-xs md:text-sm">
-                    {new Date(bill.dueDate).toLocaleDateString()}
+                  <td className="py-2 md:py-3 px-2 md:px-4 text-xs md:text-sm font-medium text-gray-800">
+                    {bill.status || "N/A"}
                   </td>
-                  <td className="py-2 md:py-3 px-2 md:px-4 text-gray-700 text-xs md:text-sm">
-                    {bill.paymentDate
-                      ? new Date(bill.paymentDate).toLocaleDateString()
-                      : "N/A"}
+                  <td className="py-2 md:py-3 px-2 md:px-4 text-xs md:text-sm font-medium text-gray-800">
+                    {new Date(bill.dueDate).toLocaleDateString() || "N/A"}
                   </td>
-                  <td className="py-2 md:py-3 px-2 md:px-4 text-gray-700 text-xs md:text-sm">
-                    {bill.paymentMethod || "N/A"}
-                  </td>
-                  <td className="py-2 md:py-3 px-2 md:px-4 text-gray-700 text-xs md:text-sm">
-                    {bill.status}
-                  </td>
-                  <td className="py-2 md:py-3 px-2 md:px-4 text-right text-gray-700 text-xs md:text-sm">
+                  <td className="py-2 md:py-3 px-2 md:px-4 text-xs md:text-sm font-medium text-gray-800">
                     <Link
-                      to={`/agent/Bills/update-Bill/${bill._id}`}
-                      className="text-blue-500 hover:text-blue-700 transition-colors duration-200"
+                    to={`/agent/Bills/update-Bill/${bill._id}`}
+                      className="text-blue-500 hover:text-blue-700"
                     >
-                      <FaEdit />
+                      <FaEdit className="inline" /> Edit
                     </Link>
                   </td>
                 </tr>

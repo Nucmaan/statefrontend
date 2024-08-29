@@ -33,7 +33,7 @@ function SideBar() {
   return (
     <div className={`flex flex-col h-screen bg-black border-t-2 border-white text-white transition-all duration-300  ${isOpen ? 'w-48' : 'w-16'}`}>
       <div className="flex items-center justify-between p-4">
-        <span className={`text-xl font-semibold ${!isOpen && 'hidden'}`}>Admin Panel</span>
+        <span className={`text-xl font-semibold ${!isOpen && 'hidden'}`}>User Panel</span>
         <button onClick={() => setIsOpen(!isOpen)} className="text-xl focus:outline-none">
           <BsThreeDotsVertical />
         </button>
