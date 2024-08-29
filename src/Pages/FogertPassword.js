@@ -14,10 +14,10 @@ function ForgetPassword() {
 
     try {
 
-
       const response = await api.post('/api/MyHome2U/user/ForgetPassword', { email });
       if (response.status === 200) {
         enqueueSnackbar('We sent a link to your email. Please check your inbox.', { variant: 'success' });
+        setEmail('');
       } else {
         enqueueSnackbar(response.data.message, { variant: 'error' });
       }
