@@ -3,3 +3,6 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/myhobpsv/ali.myhome2u.online
     - /bin/cp * $DEPLOYPATH
+
+
+    
