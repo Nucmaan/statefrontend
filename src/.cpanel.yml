@@ -1,6 +1,16 @@
-
-    ---
+---
 deployment:
   tasks:
+    # Set the deployment path
     - export DEPLOYPATH=/home/myhobpsv/ali.myhome2u.online/
-    - /bin/cp -R images $DEPLOYPATH
+    
+    # Install dependencies
+    - npm install
+    
+    # Build the React application
+    - npm run build
+    
+    # Copy the build files to the deployment path
+    - /bin/cp -R build/* $DEPLOYPATH
+    
+
