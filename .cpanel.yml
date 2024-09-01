@@ -1,17 +1,7 @@
 ---
 deployment:
   tasks:
-    # Set the deployment path
     - export DEPLOYPATH=/home/myhobpsv/ali.myhome2u.online/
-    
-    # Install dependencies
-    - source /home/myhobpsv/nodevenv/ali.myhome2u.online/20/bin/activate && npm install
-    
-    # Build the React application (if applicable)
-    - npm run build
-    
-    # Copy the build files to the deployment path
-    - /bin/cp -R build/* $DEPLOYPATH
-    
-    # Start the Node.js application
-    - nohup npm start > /home/myhobpsv/ali.myhome2u.online/app.log 2>&1 &
+    - /bin/cp -R images $DEPLOYPATH
+
+
