@@ -4,13 +4,17 @@ deployment:
     # Set the deployment path
     - export DEPLOYPATH=/home/myhobpsv/ali.myhome2u.online/
     
+    # Navigate to the project directory (if not already there)
+    - cd /path/to/your/project
+
     # Install dependencies
     - npm install
     
     # Build the React application
     - npm run build
-    
+
     # Copy the build files to the deployment path
     - /bin/cp -R build/* $DEPLOYPATH
-    
 
+    # Set correct permissions (if needed)
+    - chmod -R 755 $DEPLOYPATH
