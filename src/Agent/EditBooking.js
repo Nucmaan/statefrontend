@@ -94,8 +94,6 @@ function EditBooking() {
               <FaEdit className="mr-2" />
               Update Status
             </button>
-
-            
           </div>
         </div>
       </div>
